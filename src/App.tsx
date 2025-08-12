@@ -1,8 +1,10 @@
 import React from 'react';
+import { router } from './routes';
+import { RouterProvider } from 'react-router-dom';
 
 function App() {
   return (
-    <div>Controle Peso</div>
+    <RouterProvider router={router} />
   );
 }
 
