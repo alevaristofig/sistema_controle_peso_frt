@@ -17,7 +17,10 @@ const Home = ()  => {
             <div className={styles.content}>
                 <Titulo nome="Home">
                     <IconeHome color="#fff" fontSize={24} />
-                </Titulo>                
+                </Titulo>
+                <div className="container py-4">
+                    <div>Conteudo</div>
+                </div>                
             </div>            
         </>
     )
