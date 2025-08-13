@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 
+import Cabecalho from "../../componentes/Cabecalho";
+
+import styles from './Home.module.css';
+
 const Home = ()  => {
 
     return(
         <>
-            <div>Home</div>
+            <Cabecalho />
+            <div className={styles.content}>
+                <div>Home</div>
+            </div>            
         </>
     )
 }
