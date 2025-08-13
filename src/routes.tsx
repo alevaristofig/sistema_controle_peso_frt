@@ -4,7 +4,7 @@ import Home from './paginas/Home';
 
 const router = createBrowserRouter([
     {
-        path: '/home',
+        path: '/',
         element: <Home />
     }
 ]);
