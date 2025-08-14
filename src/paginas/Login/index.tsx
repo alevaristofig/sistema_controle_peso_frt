@@ -16,9 +16,9 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-         let params = new URLSearchParams(window.location.search);
+         let params: URLSearchParams  = new URLSearchParams(window.location.search);
 
-         if(params == '') {   
+         if(params.size === 0) {   
             let codeVerifier = generateRandomString();
             sessionStorage.setItem("codeVerifier", codeVerifier);
 
@@ -32,8 +32,8 @@ const Login = () => {
 
             getCodeChallenge(); 
          } else {
-             const gerarToken = async () => {
-                let token = await gerarAccessToken(params.get("code"));
+             const gerarToken = async () => {                
+                let token = await gerarAccessToken(params.get('code')!);
 
                 if(token != '') {
                     sessionStorage.setItem("token", token);
@@ -61,7 +61,8 @@ const Login = () => {
     }
 
     const base64urlencode = (codigo: string) => {
-        return codigo.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+        let codigoBase64 = CryptoJS.enc.Utf8.parse(codigo);
+        return codigoBase64.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
     }
 
     const challenge_from_verifier = (codeVerifier: string) => {

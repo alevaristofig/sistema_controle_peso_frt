@@ -15,7 +15,7 @@ const Home = ()  => {
     const { buscar } = usePessoa();
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
-    const [dadosPessoa] = useState<Array>(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [buscarError,setBuscarErro] = useState<boolean>(false);
     const [nome,setNome] = useState<string>('');
     const [altura,setAltura] = useState<number>();

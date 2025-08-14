@@ -4,3 +4,5 @@ declare module "*.jpeg" {
 }
 
 declare module "*.module.css"
+
+declare module "*crypto-js"
