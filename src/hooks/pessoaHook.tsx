@@ -4,7 +4,7 @@ import axios from "axios";
 
 const usePessoa = () => {
 
-    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
    // const [urlSemAutenticacao] = useState('http://localhost:8080/v1');
   //  const [removertoken,setRemovertoken] = useState('removertoken');
 
