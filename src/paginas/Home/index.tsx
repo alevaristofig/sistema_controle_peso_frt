@@ -11,6 +11,14 @@ const Home = ()  => {
 
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
+    const [buscarError,setBuscarErro] = useState(false);
+
+    useEffect(() => {
+       /* if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }*/
+    },[])
+
     return(
         <>
             <Cabecalho />
