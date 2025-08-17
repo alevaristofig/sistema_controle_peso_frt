@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import { FiHome } from 'react-icons/fi';
@@ -10,7 +10,7 @@ import Titulo from "../../componentes/Titulo";
 
 import styles from './Home.module.css';
 
-const Home = ()  => {
+const Home = (): ReactElement  => {
 
     const { buscar } = usePessoa();
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
