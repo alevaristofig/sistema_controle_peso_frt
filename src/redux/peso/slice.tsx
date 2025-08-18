@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { IPesoState } from "../../interfaces/peso/pesostate.interface";
+import { IPeso } from "../../interfaces/peso/peso.interface";
 
 const initialState: IPesoState = {
     pesos: {
@@ -18,7 +19,7 @@ export const pesoSlice = createSlice({
         buscarPrimeiroPeso: (state) => {
             state.loading = true;
         },
-        buscarPrimeiroPesoSucesso: (state, action: PayloadAction<string>) => {
+        buscarPrimeiroPesoSucesso: (state, action: PayloadAction<IPeso>) => {
             state.loading = false;
             state.primeiroPeso = action.payload;
         },

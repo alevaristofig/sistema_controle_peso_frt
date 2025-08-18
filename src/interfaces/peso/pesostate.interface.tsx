@@ -4,7 +4,7 @@ export interface IPesoState {
     pesos: {
         dados: IPeso []
     },
-    primeiroPeso: number | null,
+    primeiroPeso: IPeso | null,
     ultimoPeso: number | null,
     loading: boolean
 }
