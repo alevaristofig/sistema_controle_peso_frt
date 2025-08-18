@@ -7,21 +7,20 @@ import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessao } from '../../interfaces/sessao.interface';
+import { IPesoState } from '../../interfaces/peso/pesostate.interface';
 
-function setUrl(): Promise<ISessao> {    
-    return {
-              "url": JSON.parse(sessionStorage.getItem('urls')!),             
-              "primeiroPeso": "buscarprimeiropeso",
-              "ultimoPeso": "buscarultimopeso",
-              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa')!)
-           }
+
+const setUrl: ISessao = {
+    url: JSON.parse(sessionStorage.getItem('urls')!),
+    primeiroPeso: "buscarprimeiropeso",
+    ultimoPeso: "buscarultimopeso",
+    pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
-
 
 function* buscarPrimeiroPeso(action: AnyAction) {
     try {   
 
-        let urls: ISessao = yield call(setUrl); 
+        let urls = setUrl; 
 
         const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.primeiroPeso}/${urls.pessoa.id}`,{
             headers: {
