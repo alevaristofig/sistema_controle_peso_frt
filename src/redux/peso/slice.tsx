@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from 'react-toastify';
 
 import { IPesoState } from "../../interfaces/peso/pesostate.interface";
 import { IPeso } from "../../interfaces/peso/peso.interface";
@@ -23,8 +24,20 @@ export const pesoSlice = createSlice({
             state.loading = false;
             state.primeiroPeso = action.payload;
         },
-        buscarPrimeiroPesoError: (state) => {
+        buscarPrimeiroPesoError: (state, action: any) => {
             state.loading = false;
+            toast.error(action.payload);
+        },
+        buscarUltimoPeso: (state) => {
+            state.loading = true;            
+        },
+        buscarUltimoPesoSucesso: (state, action: PayloadAction<IPeso>) => {
+            state.loading = false;
+            state.ultimoPeso = action.payload;
+        },
+        buscarUltimoPesoError: (state, action: any) => {
+            state.loading = false;  
+            toast.error(action.payload);          
         },
     }
 })

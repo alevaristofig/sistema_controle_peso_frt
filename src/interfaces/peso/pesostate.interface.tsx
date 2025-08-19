@@ -5,6 +5,6 @@ export interface IPesoState {
         dados: IPeso []
     },
     primeiroPeso: IPeso | null,
-    ultimoPeso: number | null,
+    ultimoPeso: IPeso | null,
     loading: boolean
 }
