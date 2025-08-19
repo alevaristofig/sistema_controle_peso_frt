@@ -33,7 +33,7 @@ const Home = (): ReactElement  => {
     const [altura,setAltura] = useState<number>();
     const [endereco,setEndereco] = useState<string>('');
     const [treinosFeitos,setTreinosFeitos] = useState<ITreino[]>([]);
-    const [treinosNaoFeitos,setTreinosNaoFeitos] = useState([]);
+    const [treinosNaoFeitos,setTreinosNaoFeitos] = useState<ITreino[]>([]);
 
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePerson = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
@@ -61,6 +61,14 @@ const Home = (): ReactElement  => {
         }        
     }
 
+    const buscarQuantidadeTreinoNaoFeito = async(treino: string): Promise<void> => {
+        let dados = await listarQuantidadeTreinos(treino);
+
+        if(dados) {
+            setTreinosNaoFeitos([dados]);
+        }        
+    }
+
     useEffect(() => {
        /* if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
@@ -68,6 +76,7 @@ const Home = (): ReactElement  => {
 
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
+        buscarQuantidadeTreinoNaoFeito('N');
     },[]);
 
     return(
