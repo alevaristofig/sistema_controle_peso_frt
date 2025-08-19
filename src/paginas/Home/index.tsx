@@ -11,11 +11,13 @@ import { GiWeightLiftingUp } from 'react-icons/gi';
 import { RootState } from "../../redux/root-reducer";
 
 import usePessoa from "../../hooks/pessoaHook";
+import useTreino from "../../hooks/treinoHook";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
 
 import styles from './Home.module.css';
+import { ITreino } from "../../interfaces/pessoa/treino.interface";
 
 const Home = (): ReactElement  => {
 
@@ -23,13 +25,14 @@ const Home = (): ReactElement  => {
 
     const { primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso);
     const { buscar } = usePessoa();    
+    const { listarQuantidadeTreinos } = useTreino();
 
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [buscarError,setBuscarErro] = useState<boolean>(false);
     const [nome,setNome] = useState<string>('');
     const [altura,setAltura] = useState<number>();
     const [endereco,setEndereco] = useState<string>('');
-    const [treinosFeitos,setTreinosFeitos] = useState([]);
+    const [treinosFeitos,setTreinosFeitos] = useState<ITreino[]>([]);
     const [treinosNaoFeitos,setTreinosNaoFeitos] = useState([]);
 
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
@@ -50,12 +53,21 @@ const Home = (): ReactElement  => {
         }
     }
 
+    const buscarQuantidadeTreinoFeito = async(treino: string): Promise<void> => {
+        let dados = await listarQuantidadeTreinos(treino);
+
+        if(dados) {
+            setTreinosFeitos([dados]);
+        }        
+    }
+
     useEffect(() => {
        /* if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }*/
 
         buscarDados();
+        buscarQuantidadeTreinoFeito('S');
     },[]);
 
     return(
@@ -130,7 +142,7 @@ const Home = (): ReactElement  => {
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <IconePeso2 color="#000" fontSize={24} className='float-start' /> 
                                         <span className='ms-2 float-start'>
-                                            <TreinoPessoa treinoFeitosDados={treinosFeitos} treinoNaoFeitosDados={treinosNaoFeitos} />                                                          
+                                            
                                         </span>
                                     </div>
                                 </div>
