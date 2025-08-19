@@ -29,6 +29,8 @@ const Home = (): ReactElement  => {
     const [nome,setNome] = useState<string>('');
     const [altura,setAltura] = useState<number>();
     const [endereco,setEndereco] = useState<string>('');
+    const [treinosFeitos,setTreinosFeitos] = useState([]);
+    const [treinosNaoFeitos,setTreinosNaoFeitos] = useState([]);
 
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePerson = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
@@ -127,6 +129,9 @@ const Home = (): ReactElement  => {
                                 <div className='row'>
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <IconePeso2 color="#000" fontSize={24} className='float-start' /> 
+                                        <span className='ms-2 float-start'>
+                                            <TreinoPessoa treinoFeitosDados={treinosFeitos} treinoNaoFeitosDados={treinosNaoFeitos} />                                                          
+                                        </span>
                                     </div>
                                 </div>
                             </div>
