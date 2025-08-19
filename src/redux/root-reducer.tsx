@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import { pesoSlice } from "./peso/slice";
+import  pesoSlice  from "./peso/slice";
 
 const rootReducer = combineReducers({
     peso: pesoSlice
