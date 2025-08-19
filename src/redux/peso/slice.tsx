@@ -42,6 +42,7 @@ export const pesoSlice = createSlice({
     }
 })
 
-export const { buscarPrimeiroPeso, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError} = pesoSlice.actions;
+export const { buscarPrimeiroPeso, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, 
+               buscarUltimoPeso, buscarUltimoPesoSucesso, buscarUltimoPesoError } = pesoSlice.actions;
 
 export default pesoSlice.reducer;

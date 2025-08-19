@@ -3,7 +3,7 @@ import { AnyAction } from 'redux-saga';
 
 import axios, { AxiosResponse } from 'axios';
 
-import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError } from './slice';
+import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessao } from '../../interfaces/sessao.interface';
@@ -34,6 +34,24 @@ function* buscarPrimeiroPeso(action: AnyAction) {
     }
 }
 
+function* buscarUltimoPeso(action: AnyAction) {
+    try {   
+
+        let urls = setUrl; 
+
+        const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.ultimoPeso}/${urls.pessoa.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
+
+        yield put(buscarUltimoPesoSucesso(response.data));
+    } catch(error: any) {         
+        yield put(buscarUltimoPesoError(error));
+    }
+}
+
 export default all([
-    takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso)
+    takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso),
+    takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso)
 ])
