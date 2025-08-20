@@ -1,6 +1,11 @@
 import { ITreino } from "../../interfaces/pessoa/treino.interface";
 
-const TreinoPessoa = (treinoFeitosDados: ITreino[], treinoNaoFeitosDados: ITreino[]) => {
+interface ITreinoPessoa {
+    treinoFeitosDados: ITreino[],
+    treinoNaoFeitosDados: ITreino[]
+}
+
+const TreinoPessoa: React.FC<ITreinoPessoa> = ({treinoFeitosDados, treinoNaoFeitosDados}) => {
     return(
         <div>
             {

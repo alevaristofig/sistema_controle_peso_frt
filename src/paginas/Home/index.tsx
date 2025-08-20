@@ -25,7 +25,7 @@ import { ITreino } from "../../interfaces/pessoa/treino.interface";
 
 const Home = (): ReactElement  => {
 
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     const { primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso);
     const { buscar } = usePessoa();    
@@ -84,8 +84,8 @@ const Home = (): ReactElement  => {
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
         buscarQuantidadeTreinoNaoFeito('N');
-        dispatch(buscarPrimeiroPeso());
-        dispatch(buscarUltimoPeso());
+       // dispatch(buscarPrimeiroPeso());
+       // dispatch(buscarUltimoPeso());
     },[]);
 
     return(
