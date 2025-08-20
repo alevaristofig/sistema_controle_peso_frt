@@ -7,6 +7,7 @@ import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { GiWeightLiftingUp } from 'react-icons/gi';
+import { MdLibraryBooks } from 'react-icons/md';
 
 import { RootState } from "../../redux/root-reducer";
 
@@ -15,6 +16,7 @@ import { buscarPrimeiroPeso, buscarUltimoPeso } from "../../redux/peso/slice";
 import usePessoa from "../../hooks/pessoaHook";
 import useTreino from "../../hooks/treinoHook";
 
+import TreinoPessoa from '../../componentes/Treinos/treinoPessoa';
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
 
@@ -36,11 +38,14 @@ const Home = (): ReactElement  => {
     const [endereco,setEndereco] = useState<string>('');
     const [treinosFeitos,setTreinosFeitos] = useState<ITreino[]>([]);
     const [treinosNaoFeitos,setTreinosNaoFeitos] = useState<ITreino[]>([]);
+    const [urlGuia] = useState<string>('https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf');
 
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePerson = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePeso = LiaWeightHangingSolid as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePeso2 = GiWeightLiftingUp as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+    const IconeGuia = MdLibraryBooks as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+
 
     const buscarDados = async() => {
         let dados = await buscar(dadosPessoa.id);
@@ -157,6 +162,20 @@ const Home = (): ReactElement  => {
                                         <span className='ms-2 float-start'>
                                             <TreinoPessoa treinoFeitosDados={treinosFeitos} treinoNaoFeitosDados={treinosNaoFeitos} />                                                          
                                         </span>
+                                        <span className='ms-3 float-end'>
+                                            <Link to={`/treino/0`} className="btn btn-info">Ver Treinos</Link>
+                                        </span>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div className='row'>
+                                    <div className="text-body-secondary pt-3 col marginLinha">
+                                        <IconeGuia color="#000" fontSize={24} className='float-start' />  
+                                        <span className='ms-2 float-start'>   
+                                            <a className='linkGuia' href={urlGuia} target='_blank'>
+                                                Guia Alimentar Para a População Brasileira
+                                            </a>
+                                        </span> 
                                     </div>
                                 </div>
                             </div>

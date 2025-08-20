@@ -54,3 +54,5 @@ const TreinoPessoa = (treinoFeitosDados: ITreino[], treinoNaoFeitosDados: ITrein
         </div>
     )
 }
+
+export default TreinoPessoa;
