@@ -20,8 +20,10 @@ import TreinoPessoa from '../../componentes/Treinos/treinoPessoa';
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
 
-import styles from './Home.module.css';
 import { ITreino } from "../../interfaces/pessoa/treino.interface";
+
+import styles from './Home.module.css';
+
 
 const Home = (): ReactElement  => {
 
@@ -114,8 +116,8 @@ const Home = (): ReactElement  => {
                                         <span className='ms-2'>{nome}</span>
                                         <span className='ms-2'>{altura}</span>
                                         <span className='ms-3'>{endereco}</span>
-                                        <span className='ms-3 float-end'>
-                                            <Link to={`/pessoadados/1`} className="btn btn-info">Editar</Link>
+                                        <span className='ms-3 mb-2 float-end'>
+                                            <Link to={`/pessoadados/1`} className="btn btn-info text-white">Editar</Link>
                                         </span>
                                     </div>
                                     <hr />                                    
@@ -129,7 +131,7 @@ const Home = (): ReactElement  => {
                                                 <span className='ms-2 fst-italic'>Não existem registros de pesos para exibir</span>
                                             :
                                                 <>
-                                                    <span className='ms-2'>Peso Inicial: {primeiroPeso.valor}</span>
+                                                    <span className='ms-2'>Peso Inicial: {primeiroPeso!.valor}</span>
                                                     <span className='ms-2'>Peso Atual: {ultimoPeso!.valor}</span>
                                                     <span className='ms-2'>
                                                         {
@@ -153,10 +155,11 @@ const Home = (): ReactElement  => {
                                                     </span>
                                                 </>
                                         }
-                                        <span className='ms-3 float-end'>
-                                            <Link to={`/peso/0`} className="btn btn-info">Ver Pesos</Link>
+                                        <span className='ms-3 mb-2 float-end'>
+                                            <Link to={`/peso/0`} className="btn btn-info text-white">Ver Pesos</Link>
                                         </span>
                                     </div>
+                                    <hr />  
                                 </div>
                                 <div className='row'>
                                     <div className="text-body-secondary pt-3 col marginLinha">
@@ -164,8 +167,8 @@ const Home = (): ReactElement  => {
                                         <span className='ms-2 float-start'>
                                             <TreinoPessoa treinoFeitosDados={treinosFeitos} treinoNaoFeitosDados={treinosNaoFeitos} />                                                          
                                         </span>
-                                        <span className='ms-3 float-end'>
-                                            <Link to={`/treino/0`} className="btn btn-info">Ver Treinos</Link>
+                                        <span className='ms-3 mb-2 float-end'>
+                                            <Link to={`/treino/0`} className="btn btn-info text-white">Ver Treinos</Link>
                                         </span>
                                     </div>
                                     <hr />

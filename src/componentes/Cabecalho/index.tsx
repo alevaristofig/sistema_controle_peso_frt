@@ -7,6 +7,8 @@ import styles from './Cabecalho.module.css';
 
 import avatarImg from '../../assets/coracao.jpeg';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 const Cabecalho = (): ReactElement => {
 
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
