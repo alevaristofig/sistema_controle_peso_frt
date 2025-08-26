@@ -1,5 +1,5 @@
 import { ReactElement, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 
@@ -25,11 +25,13 @@ import { ITreino } from "../../interfaces/pessoa/treino.interface";
 
 const Home = (): ReactElement  => {
 
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const { primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso);
     const { buscar } = usePessoa();    
     const { listarQuantidadeTreinos } = useTreino();
+
+    const navigate = useNavigate();
 
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [buscarError,setBuscarErro] = useState<boolean>(false);
@@ -77,15 +79,15 @@ const Home = (): ReactElement  => {
     }
 
     useEffect(() => {
-       /* if(sessionStorage.getItem('token') == null) {           
+        if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
-        }*/
+        }
 
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
         buscarQuantidadeTreinoNaoFeito('N');
-       // dispatch(buscarPrimeiroPeso());
-       // dispatch(buscarUltimoPeso());
+        dispatch(buscarPrimeiroPeso());
+        dispatch(buscarUltimoPeso());
     },[]);
 
     return(

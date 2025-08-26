@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import CryptoJS from 'crypto-js';
 
-const Login = () => {
+const Login = (): null => {
 
     const [clientId] = useState('sisetemacontrolepesobackend');
     const [authorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
@@ -32,10 +32,10 @@ const Login = () => {
 
             getCodeChallenge(); 
          } else {
-             const gerarToken = async () => {                
+             const gerarToken = async () => {             
                 let token = await gerarAccessToken(params.get('code')!);
 
-                if(token != '') {
+                if(token != '') {                    
                     sessionStorage.setItem("token", token);
                     let urls = await listarUrls();
                     let dadosToken = await buscarDadosToken(token);
@@ -46,8 +46,10 @@ const Login = () => {
                     navigate('/', {replace: true});
                 }
              }
+
+             gerarToken();
          }
-    });
+    },[]);
 
     const generateRandomString = () => {
         let text = "";
@@ -60,12 +62,12 @@ const Login = () => {
         return text;
     }
 
-    const base64urlencode = (codigo: string) => {
-        let codigoBase64 = CryptoJS.enc.Utf8.parse(codigo);
-        return codigoBase64.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    const base64urlencode = (codigo: ReturnType<typeof CryptoJS.SHA256>) => {           
+       // let codigoBase64 = CryptoJS.enc.Utf8.parse(codigo);
+        return codigo.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
     }
 
-    const challenge_from_verifier = (codeVerifier: string) => {
+    const challenge_from_verifier = (codeVerifier: string) => {        
         return base64urlencode(CryptoJS.SHA256(codeVerifier))
     }
 
@@ -127,4 +129,8 @@ const Login = () => {
           
         return result;
     }
+
+    return null;
 }
+
+export default Login;
