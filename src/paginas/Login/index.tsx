@@ -6,6 +6,7 @@ import CryptoJS from 'crypto-js';
 import { ILink } from '../../interfaces/link/link.interface';
 import { IApiLinks } from '../../interfaces/link/apilinks.interface';
 import { IRootResponse } from '../../interfaces/link/rootresponse.interface';
+import { IDadosPessoaToken } from '../../interfaces/pessoa/dadospessoatoken.interface';
 
 const Login = (): null => {
 
@@ -116,7 +117,7 @@ console.log(dadosToken);
         return result;
     }
 
-    const buscarDadosToken = async(token: string): Promise<string | boolean> => {
+    const buscarDadosToken = async(token: string): Promise<IDadosPessoaToken> => {
         const result = await axios.get(`${urlPadrao}/pessoas/buscardadostoken/${token}`,{
                 headers: {
                     "Authorization": `Bearer ${token}`,
