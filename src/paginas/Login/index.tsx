@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import CryptoJS from 'crypto-js';
+import { ILink } from '../../interfaces/link/link.interface';
+import { IApiLinks } from '../../interfaces/link/apilinks.interface';
+import { IRootResponse } from '../../interfaces/link/rootresponse.interface';
 
 const Login = (): null => {
 
@@ -22,8 +25,8 @@ const Login = (): null => {
             let codeVerifier = generateRandomString();
             sessionStorage.setItem("codeVerifier", codeVerifier);
 
-            const getCodeChallenge = async () => {
-              let codeChallenge = await challenge_from_verifier(codeVerifier);
+            const getCodeChallenge = (): void => {
+              let codeChallenge = challenge_from_verifier(codeVerifier);
 
               if(codeChallenge != '') {
                 window.location.href = `${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
@@ -39,11 +42,11 @@ const Login = (): null => {
                     sessionStorage.setItem("token", token);
                     let urls = await listarUrls();
                     let dadosToken = await buscarDadosToken(token);
-
+console.log(dadosToken);
                     sessionStorage.setItem('urls',JSON.stringify(urls._links));
                     sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
 
-                    navigate('/', {replace: true});
+                   // navigate('/', {replace: true});
                 }
              }
 
@@ -51,7 +54,7 @@ const Login = (): null => {
          }
     },[]);
 
-    const generateRandomString = () => {
+    const generateRandomString = (): string => {
         let text = "";
         let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       
@@ -62,16 +65,15 @@ const Login = (): null => {
         return text;
     }
 
-    const base64urlencode = (codigo: ReturnType<typeof CryptoJS.SHA256>) => {           
-       // let codigoBase64 = CryptoJS.enc.Utf8.parse(codigo);
+    const base64urlencode = (codigo: ReturnType<typeof CryptoJS.SHA256>): string => {           
         return codigo.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
     }
 
-    const challenge_from_verifier = (codeVerifier: string) => {        
+    const challenge_from_verifier = (codeVerifier: string): string => {        
         return base64urlencode(CryptoJS.SHA256(codeVerifier))
     }
 
-    const gerarAccessToken = async(code: string) => {
+    const gerarAccessToken = async(code: string): Promise<string> => {
         let params = {
             'grant_type': 'authorization_code',
             'code': code,
@@ -98,23 +100,23 @@ const Login = (): null => {
         return response;
     }
 
-    const listarUrls = async() => {
+    const listarUrls = async(): Promise<IRootResponse> => {
         const result = await axios.get(urlPadrao,{
                             headers: {
                                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                             }
                         })
-                        .then((response) => {                        
+                        .then((response) => {                                                   
                             return response.data;
                         })
-                        .catch((error) => {                            
+                        .catch(() => {                            
                             return false;
                         }); 
                             
         return result;
     }
 
-    const buscarDadosToken = async(token: string) => {
+    const buscarDadosToken = async(token: string): Promise<string | boolean> => {
         const result = await axios.get(`${urlPadrao}/pessoas/buscardadostoken/${token}`,{
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -123,7 +125,7 @@ const Login = (): null => {
               .then((response) => {                        
                   return response.data;
               })
-              .catch((error) => {                          
+              .catch(() => {                          
                   return false;
               }); 
           
