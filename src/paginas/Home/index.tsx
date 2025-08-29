@@ -80,7 +80,7 @@ const Home = (): ReactElement  => {
         }        
     }
 
-    useEffect(() => {
+    useEffect(() => {        
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }

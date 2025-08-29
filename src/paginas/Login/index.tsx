@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import CryptoJS from 'crypto-js';
-import { ILink } from '../../interfaces/link/link.interface';
-import { IApiLinks } from '../../interfaces/link/apilinks.interface';
+
 import { IRootResponse } from '../../interfaces/link/rootresponse.interface';
 import { IDadosPessoaToken } from '../../interfaces/pessoa/dadospessoatoken.interface';
 
@@ -39,16 +38,17 @@ const Login = (): null => {
              const gerarToken = async () => {             
                 let token = await gerarAccessToken(params.get('code')!);
 
-                if(token != '') {                    
+                if(token !== '') { 
+                                     
                     sessionStorage.setItem("token", token);
                     let urls = await listarUrls();
                     let dadosToken = await buscarDadosToken(token);
-console.log(dadosToken);
+
                     sessionStorage.setItem('urls',JSON.stringify(urls._links));
                     sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
 
-                   // navigate('/', {replace: true});
-                }
+                    navigate('/', {replace: true});
+                } 
              }
 
              gerarToken();
@@ -94,8 +94,8 @@ console.log(dadosToken);
             .then((response) => {   
               return response.data.access_token;
             })
-            .catch((error) => {
-              return false;      
+            .catch(() => {
+              return '';      
             });
         
         return response;
