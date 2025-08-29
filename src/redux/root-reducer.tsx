@@ -1,9 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
 import  pesoSlice  from "./peso/slice";
+import  pessoaSlice  from "./pessoa/slice";
 
 const rootReducer = combineReducers({
-    peso: pesoSlice
+    peso: pesoSlice,
+    pessoa: pessoaSlice,
 })
 
 

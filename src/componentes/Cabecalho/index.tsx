@@ -27,7 +27,7 @@ const Cabecalho = (): ReactElement => {
                 </Link>
 
                 <Link to="/pessoa">
-                    <IconePessoa color="#fff" size={24} /> Pessoa
+                    <IconePessoa color="#fff" fontSize={24} /> Pessoa
                 </Link>
             </div>
         </>
