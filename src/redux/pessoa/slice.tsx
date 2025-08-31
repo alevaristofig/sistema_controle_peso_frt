@@ -12,9 +12,21 @@ const initialState: IPessoaState = {
 export const pessoaSlice = createSlice({
     name: 'pessoa',
     initialState,
-    reducers: {}
+    reducers: {
+        listar: (state,action) => {
+            state.loading = true;            
+        },
+        listarSucesso: (state,action) => {
+            state.loading = false;
+            state.pessoas = action.payload;
+        },
+        listarError: (state) => {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao listar as Pessoas!");
+        },
+    }
 });
 
-export const {} = pessoaSlice.actions;
+export const { listar, listarSucesso, listarError } = pessoaSlice.actions;
 
 export default pessoaSlice.reducer;
