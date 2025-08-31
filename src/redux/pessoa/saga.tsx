@@ -4,16 +4,18 @@ import { AnyAction } from 'redux-saga';
 import { listarSucesso, listarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
+import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
+import { IPessoa } from '../../interfaces/pessoa/pessoa.interface';
 
-const setUrl: ISessao = {
+const setUrl: ISessaoPessoa = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
 
-function* listar() {
+function* listar(): Generator<any, void, AxiosResponse<IPessoa[]>> {
     try {
 
-        let urls = yield call(setUrl);  
+        let urls = setUrl;   
 
         const response = yield call(axios.get,`${urls.url.pessoas.href}`);
 
@@ -23,4 +25,6 @@ function* listar() {
     }
 }
 
-export default all([])
+export default all([
+    takeEvery('pessoa/listar', listar),
+])
