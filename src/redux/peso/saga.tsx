@@ -6,12 +6,12 @@ import axios, { AxiosResponse } from 'axios';
 import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
-import { ISessao } from '../../interfaces/sessao.interface';
+import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
 import { IPesoState } from '../../interfaces/peso/pesostate.interface';
 
 
-const setUrl: ISessao = {
-    url: JSON.parse(sessionStorage.getItem('urls')!),
+const setUrl: ISessaoPeso = {
+   url: JSON.parse(sessionStorage.getItem('urls')!),
     primeiroPeso: "buscarprimeiropeso",
     ultimoPeso: "buscarultimopeso",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
