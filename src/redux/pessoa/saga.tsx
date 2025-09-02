@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { listarSucesso, listarError } from './slice';
+import { listarSucesso, listarError, atualizarSucesso, atualizarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
@@ -30,6 +30,33 @@ function* listar(): Generator<any, void, AxiosResponse<IPessoaResponse>> {
     }
 }
 
+function* atualizar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
+    try {
+        let data = {
+            'nome': action.payload.nome,
+            'email': action.payload.email,
+            'altura': action.payload.altura,
+            'endereco': action.payload.endereco,
+            'senha': action.payload.senha,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
+        };
+
+        let urls = setUrl;  
+
+        yield call(axios.put,`${urls.url.pessoas.href}/${action.payload.pessoa}`,data,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
+
+        yield put(atualizarSucesso());
+    } catch(error: any) {
+        yield put(atualizarError(error.response.data.userMessage));
+    }
+}
+
 export default all([
     takeEvery('pessoa/listar', listar),
+    takeEvery('pessoa/atualizar', atualizar),
 ])
