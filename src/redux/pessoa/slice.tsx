@@ -13,12 +13,12 @@ export const pessoaSlice = createSlice({
     name: 'pessoa',
     initialState,
     reducers: {
-        listar: (state,action) => {
+        listar: (state) => {
             state.loading = true;            
         },
         listarSucesso: (state,action) => {
             state.loading = false;
-            state.pessoas = action.payload;
+            state.pessoas.dados = action.payload;
         },
         listarError: (state) => {
             state.loading = false;

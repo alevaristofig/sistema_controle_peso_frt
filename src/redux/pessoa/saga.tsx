@@ -6,20 +6,25 @@ import { listarSucesso, listarError } from './slice';
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
 import { IPessoa } from '../../interfaces/pessoa/pessoa.interface';
+import { IPessoaResponse } from '../../interfaces/pessoa/pessoaresponse.interface';
 
 const setUrl: ISessaoPessoa = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
 
-function* listar(): Generator<any, void, AxiosResponse<IPessoa[]>> {
+function* listar(): Generator<any, void, AxiosResponse<IPessoaResponse>> {
     try {
 
         let urls = setUrl;   
 
-        const response = yield call(axios.get,`${urls.url.pessoas.href}`);
+        const response = yield call(axios.get,`${urls.url.pessoas.href}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
 
-        yield put(listarSucesso(response.data));
+        yield put(listarSucesso(response.data._embedded.pessoaModelList));
     } catch(error) {
         yield put(listarError());
     }
