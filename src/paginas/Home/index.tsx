@@ -13,8 +13,8 @@ import { RootState } from "../../redux/root-reducer";
 
 import { buscarPrimeiroPeso, buscarUltimoPeso } from "../../redux/peso/slice";
 
-import usePessoa from "../../hooks/pessoaHook";
-import useTreino from "../../hooks/treinoHook";
+import usePessoa from "../../hooks/Pessoa/pessoaHook";
+import useTreino from "../../hooks/Treino/treinoHook";
 
 import TreinoPessoa from '../../componentes/Treinos/treinoPessoa';
 import Cabecalho from "../../componentes/Cabecalho";
