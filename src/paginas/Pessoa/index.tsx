@@ -1,7 +1,7 @@
 import { useEffect, useState, ReactElement } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import { VscPerson } from "react-icons/vsc";
 
@@ -35,6 +35,9 @@ const Pessoa = (): ReactElement => {
         <>
             <Cabecalho />
             <div className={styles.content}>
+                <div>
+                    <ToastContainer />
+                </div> 
                 <Titulo nome="Pessoa">
                     <IconePessoa color="#fff" fontSize={24} />
                 </Titulo>
@@ -71,7 +74,7 @@ const Pessoa = (): ReactElement => {
                                                             <td>{p.email}</td>
                                                             <td>{p.endereco}</td>
                                                             <td>
-                                                                <Link to={`/pessoadados/${p.id}`} className="btn btn-info text-white">Editar</Link>
+                                                                <Link to={`/editarpessoa/${p.id}`} className="btn btn-info text-white">Editar</Link>
                                                             </td>
                                                         </tr>
                                                     )
