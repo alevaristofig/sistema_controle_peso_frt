@@ -15,13 +15,13 @@ import styles from '../Home/Home.module.css';
 
 const Pessoa = (): ReactElement => {
 
-     const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-     const { loading, pessoas } = useSelector((state: RootState) => state.pessoa); 
+    const { loading, pessoas } = useSelector((state: RootState) => state.pessoa); 
 
-     const navigate = useNavigate();
+    const navigate = useNavigate();
 
-      const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+    const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
      useEffect(() => {
         if(sessionStorage.getItem('token') == null) {           
