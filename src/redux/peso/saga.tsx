@@ -4,7 +4,7 @@ import { AnyAction } from 'redux-saga';
 import axios, { AxiosResponse } from 'axios';
 
 import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError,
-         listarSucesso, listarError } from './slice';
+         listarSucesso, listarError, apgarSucesso, apgarError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
@@ -77,8 +77,27 @@ function* buscarUltimoPeso(action: AnyAction) {
     }
 }
 
+function* apagar(action: AnyAction): Generator<any, void, void> {
+    try {
+
+        let urls = setUrl;   
+
+        yield call(axios.delete,`${urls.url.pesos.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
+
+        yield put(apgarSucesso());
+
+    } catch(error) {
+        yield put(apgarError());
+    }
+}
+
 export default all([
     takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso),
     takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso),
     takeEvery('peso/listar',listar),
+    takeEvery('peso/apagar',apagar),
 ])
