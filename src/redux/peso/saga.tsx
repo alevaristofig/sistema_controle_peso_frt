@@ -79,5 +79,6 @@ function* buscarUltimoPeso(action: AnyAction) {
 
 export default all([
     takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso),
-    takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso)
+    takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso),
+    takeEvery('peso/listar',listar),
 ])
