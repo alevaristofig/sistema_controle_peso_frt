@@ -17,14 +17,14 @@ export const pesoSlice = createSlice({
     name: 'peso',
     initialState,
     reducers: {
-        listar: (state,action) => {                        
+        listar: (state,action: PayloadAction<IPeso>) => {                        
             state.loading = true;
         },
         listarSucesso(state,action) {
             state.loading = false;
             state.pesos = action.payload;
         },
-        listarError(state,action) {
+        listarError(state) {
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Pesos!");         
         },
@@ -54,6 +54,7 @@ export const pesoSlice = createSlice({
 })
 
 export const { buscarPrimeiroPeso, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, 
-               buscarUltimoPeso, buscarUltimoPesoSucesso, buscarUltimoPesoError } = pesoSlice.actions;
+               buscarUltimoPeso, buscarUltimoPesoSucesso, buscarUltimoPesoError, listar,
+               listarSucesso, listarError } = pesoSlice.actions;
 
 export default pesoSlice.reducer;

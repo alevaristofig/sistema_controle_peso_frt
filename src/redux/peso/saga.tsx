@@ -3,7 +3,8 @@ import { AnyAction } from 'redux-saga';
 
 import axios, { AxiosResponse } from 'axios';
 
-import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError } from './slice';
+import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError,
+         listarSucesso, listarError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
@@ -11,10 +12,34 @@ import { IPesoState } from '../../interfaces/peso/pesostate.interface';
 
 
 const setUrl: ISessaoPeso = {
-   url: JSON.parse(sessionStorage.getItem('urls')!),
+    url: JSON.parse(sessionStorage.getItem('urls')!),
+    listar: "listar",
     primeiroPeso: "buscarprimeiropeso",
     ultimoPeso: "buscarultimopeso",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
+}
+
+function* listar(action: AnyAction) {
+    try {      
+        let urls = setUrl;  
+    
+        const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
+    
+        let responsePeso = {
+            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.pesoModelList,
+            paginacao: response.data.page,
+            links: response.data._links,
+            url: 'peso'
+        }
+           
+            yield put(listarSucesso(responsePeso));
+        } catch(error) {            
+            yield put(listarError());
+        }
 }
 
 function* buscarPrimeiroPeso(action: AnyAction) {
