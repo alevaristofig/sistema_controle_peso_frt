@@ -9,6 +9,7 @@ import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSuc
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
 import { IPesoState } from '../../interfaces/peso/pesostate.interface';
+import { IPesoResponse } from '../../interfaces/peso/pesoresponse.interface';
 
 
 const setUrl: ISessaoPeso = {
@@ -19,11 +20,11 @@ const setUrl: ISessaoPeso = {
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
 
-function* listar(action: AnyAction) {
+function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
     try {      
         let urls = setUrl;  
     
-        const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
+        const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${urls.url.pesos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
