@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
-import { listar } from "../../redux/peso/slice";
+import { listar, apagar } from "../../redux/peso/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
+import Paginacao from '../../compomentes/Paginacao';
 
 import styles from '../Home/Home.module.css';
 
@@ -15,7 +16,7 @@ const Peso = (): ReactElement => {
 
     const dispatch = useDispatch();
 
-    const { loading, pesos } = useSelector((state: RootState) => state.peso); 
+    const { loading, pesos, primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso); 
 
     const navigate = useNavigate();
 
@@ -108,8 +109,51 @@ const Peso = (): ReactElement => {
                                                     )
                                                 })
                                             }
+                                            <tr>
+                                                <td>Total Imc</td>
+                                                <td>
+                                                    <span>{primeiroPeso!.imc} - {ultimoPeso!.imc} = </span>
+                                                    {
+                                                        ultimoPeso!.imc - primeiroPeso!.imc < 0
+                                                        ?
+                                                            <span className='text-success ms-1'>                                                                        
+                                                                {(ultimoPeso!.imc - primeiroPeso!.imc).toFixed(2)}
+                                                            </span>
+                                                        :
+                                                            <span className='text-danger ms-1'>
+                                                                {(ultimoPeso!.imc - primeiroPeso!.imc).toFixed(2)}
+                                                            </span>
+                                                    }
+                                                </td>
+                                                <td>Total Peso Perdido</td>
+                                                <td colSpan={3}>
+                                                    <span>{primeiroPeso!.valor} - {ultimoPeso!.valor} = </span>
+                                                    {
+                                                        primeiroPeso!.valor - ultimoPeso!.valor > 0
+                                                        ?
+                                                            <span className='text-success ms-2'>
+                                                                {(primeiroPeso!.valor - ultimoPeso!.valor).toFixed(2)}
+                                                            </span>
+                                                        :
+                                                            <span className='text-danger ms-2'>
+                                                                {(primeiroPeso!.valor - ultimoPeso!.valor).toFixed(2)}
+                                                            </span>
+                                                                
+                                                    }
+                                                </td>
+
+                                            </tr>
                                         </tbody>
                                     </table>
+                                    {
+                                        pesos.paginacao.totalPages > 1
+                                        ?
+                                            <div className='row'>
+                                                <Paginacao dados={pesos} />
+                                            </div>
+                                        :
+                                            ''
+                                    }
                                 </div>
                             </div>
                     }
