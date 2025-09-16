@@ -29,7 +29,7 @@ export const pesoSlice = createSlice({
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Pesos!");         
         },
-        buscarPrimeiroPeso: (state) => {
+        buscarPrimeiroPeso: (state) => {            
             state.loading = true;
         },
         buscarPrimeiroPesoSucesso: (state, action: PayloadAction<IPeso>) => {

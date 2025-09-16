@@ -45,7 +45,6 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
 
 function* buscarPrimeiroPeso(action: AnyAction) {
     try {   
-
         let urls = setUrl; 
 
         const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.primeiroPeso}/${urls.pessoa.id}`,{

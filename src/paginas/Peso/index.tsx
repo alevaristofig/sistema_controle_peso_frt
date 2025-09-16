@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
-import { listar, apagar } from "../../redux/peso/slice";
+import { listar, buscarPrimeiroPeso, buscarUltimoPeso, apagar } from "../../redux/peso/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
@@ -31,6 +31,9 @@ const Peso = (): ReactElement => {
             'page': page
         }));
 
+        dispatch(buscarPrimeiroPeso());
+        dispatch(buscarUltimoPeso());
+
     },[]);
 
     const formatarData = (dataFormatada: Date): string => {
@@ -51,14 +54,14 @@ const Peso = (): ReactElement => {
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
-                </div> 
+                </div>                 
                 <div className="container py-4">
                     {
                         pesos.dados.length === 0 
                         ?
                             <div className="row mt-4">
                                 <div className="col">
-                                    <span>Nenhuma pessoa encontrada</span>                                    
+                                    <span>Nenhum peso encontrada</span>                                    
                                 </div>
                             </div>
                         :
@@ -116,7 +119,15 @@ const Peso = (): ReactElement => {
                                             <tr>
                                                 <td>Total Imc</td>
                                                 <td>
-                                                    <span>{primeiroPeso!.imc} - {ultimoPeso!.imc} = </span>
+                                                    <span>
+                                                        {
+                                                            primeiroPeso && ultimoPeso
+                                                            ?
+                                                                `${primeiroPeso.imc} - ${ultimoPeso.imc}`
+                                                            :
+                                                                ''
+                                                        } =
+                                                    </span>
                                                     {
                                                         ultimoPeso!.imc - primeiroPeso!.imc < 0
                                                         ?
