@@ -2,7 +2,8 @@ import { IPeso } from "./peso.interface"
 
 export interface IPesoState {
     pesos: {
-        dados: IPeso []
+        dados: IPeso [],
+        paginacao: any
     },
     primeiroPeso: IPeso | null,
     ultimoPeso: IPeso | null,

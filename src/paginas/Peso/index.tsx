@@ -8,7 +8,7 @@ import { listar, apagar } from "../../redux/peso/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
-import Paginacao from '../../compomentes/Paginacao';
+import Paginacao from '../../componentes/Paginacao';
 
 import styles from '../Home/Home.module.css';
 
