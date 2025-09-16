@@ -61,7 +61,7 @@ const Peso = (): ReactElement => {
                         ?
                             <div className="row mt-4">
                                 <div className="col">
-                                    <span>Nenhum peso encontrada</span>                                    
+                                    <span>Nenhum peso encontrado</span>                                    
                                 </div>
                             </div>
                         :
