@@ -23,7 +23,7 @@ const setUrl: ISessaoPeso = {
 function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
     try {      
         let urls = setUrl;  
-    
+   
         const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${urls.url.pesos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,

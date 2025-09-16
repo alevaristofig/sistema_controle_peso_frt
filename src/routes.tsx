@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <EditarPessoa />
     },
     {
-        path: '/peso',
+        path: '/peso/:page',
         element: <Peso />
     },
 ]);

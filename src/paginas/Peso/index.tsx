@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -18,6 +18,8 @@ const Peso = (): ReactElement => {
 
     const { loading, pesos, primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso); 
 
+    const { page } = useParams();
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,7 +27,9 @@ const Peso = (): ReactElement => {
             navigate('/login');
         }
 
-        dispatch(listar());
+        dispatch(listar({
+            'page': page
+        }));
 
     },[]);
 
