@@ -1,33 +1,28 @@
-import React, { ReactElement, useRef, useEffect } from "react"
+import { ReactElement } from "react"
 
-const Paginacao = (dados: any): ReactElement => {
+const Paginacao = (dados: any): ReactElement => {   
 
-    const divPaginacao = useRef<HTMLDivElement>(null);
+    const montarLinks = () => { 
+        const links = [];
 
-    /*const montarPaginas = () => {        
-        if(divPaginacao !== null) { 
-            console.log(divPaginacao.current);
-            //divPaginacao!.current!.innerText = "Paginacao";
-           //  divPaginacao!.current!.createElement('div');
-           let div = React.createElement("div",{className: "col"});
+        links.push(<li className='page-item'><a className='page-link'href={`/${dados.url}/0`}>Primeiro</a></li>);
 
-           divPaginacao!.current!.appendChild(div);
+        for(var i=1; i< dados.pesos.totalPages+1; i++) {           
+           links.push(<li className="page-item"><a className="page-link" href={`/${dados.url}/${i-1}`}>{i}</a></li>);
         }
-    }*/
 
-   /* useEffect(() => {
-        montarPaginas()
-    },[]);*/
+        links.push(<li className='page-item'><a className='page-link' href={`/${dados.url}/${i-2}`}>Último</a></li>);
+
+        return links;
+    }
 
     return(
         <>
-            <div id="divPaginacao" ref={divPaginacao}>   
+            <div id="divPaginacao">   
                 <div className='col'>
-                    <nav aria-label='Navegação de página exemplo'>
-                        <ul className='pagination justify-content-center'>
-                            <li className='page-item'>
-                                <a className='page-link'href='/${dados.url}/0'>Primeiro</a>
-                            </li>
+                    <nav aria-label='Navegação das páginas'>
+                        <ul className='pagination justify-content-center'>                            
+                            {montarLinks()}                            
                         </ul> 
                     </nav> 
                 </div>                     

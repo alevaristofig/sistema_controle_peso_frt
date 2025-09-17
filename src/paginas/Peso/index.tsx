@@ -164,7 +164,7 @@ const Peso = (): ReactElement => {
                                         pesos.paginacao.totalPages > 1
                                         ?
                                             <div className='row'>
-                                                <Paginacao dados={pesos} />
+                                                <Paginacao pesos={pesos.paginacao} url={pesos.url}/>
                                             </div>
                                         :
                                             ''

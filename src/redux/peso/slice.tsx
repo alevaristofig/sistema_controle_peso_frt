@@ -7,7 +7,8 @@ import { IPeso } from "../../interfaces/peso/peso.interface";
 const initialState: IPesoState = {
     pesos: {
         'dados': [],
-        paginacao: null
+        paginacao: null,
+        url: ''
     },
     primeiroPeso: null,
     ultimoPeso: null,
