@@ -6,15 +6,16 @@ import CryptoJS from 'crypto-js';
 
 import { IRootResponse } from '../../interfaces/link/rootresponse.interface';
 import { IDadosPessoaToken } from '../../interfaces/pessoa/dadospessoatoken.interface';
+import { ITokenResponse } from '../../interfaces/pessoa/token.interface';
 
 const Login = (): null => {
 
-    const [clientId] = useState('sisetemacontrolepesobackend');
-    const [authorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
-    const [tokenUrl] = useState('http://localhost:8080/oauth2/token');    
-    const [callbackUrl] = useState('http://localhost:3000/login');        
-    const [urlPadrao] = useState('http://localhost:8080/v1');
-    const [password] = useState('ZTmgTeTXlP373rI');
+    const [clientId] = useState<string>('sisetemacontrolepesobackend');
+    const [authorizeUrl] = useState<string>('http://localhost:8080/oauth2/authorize');
+    const [tokenUrl] = useState<string>('http://localhost:8080/oauth2/token');    
+    const [callbackUrl] = useState<string>('http://localhost:3000/login');        
+    const [urlPadrao] = useState<string>('http://localhost:8080/v1');
+    const [password] = useState<string>('ZTmgTeTXlP373rI');
 
     const navigate = useNavigate();
 
@@ -38,11 +39,12 @@ const Login = (): null => {
              const gerarToken = async () => {             
                 let token = await gerarAccessToken(params.get('code')!);
 
-                if(token !== '') { 
+                if(token.access_token !== '') { 
                                      
-                    sessionStorage.setItem("token", token);
+                    sessionStorage.setItem('token', token.access_token);
+                    sessionStorage.setItem('refresh_token',token.refresh_token!);
                     let urls = await listarUrls();
-                    let dadosToken = await buscarDadosToken(token);
+                    let dadosToken = await buscarDadosToken(token.access_token);
 
                     sessionStorage.setItem('urls',JSON.stringify(urls._links));
                     sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
@@ -74,7 +76,7 @@ const Login = (): null => {
         return base64urlencode(CryptoJS.SHA256(codeVerifier))
     }
 
-    const gerarAccessToken = async(code: string): Promise<string> => {
+    const gerarAccessToken = async(code: string): Promise<ITokenResponse> => {
         let params = {
             'grant_type': 'authorization_code',
             'code': code,
@@ -92,7 +94,7 @@ const Login = (): null => {
               } 
             })
             .then((response) => {   
-              return response.data.access_token;
+              return response.data;
             })
             .catch(() => {
               return '';      
