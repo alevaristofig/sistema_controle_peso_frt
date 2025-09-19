@@ -22,7 +22,7 @@ export const exercicioSlice = createSlice({
             state.loading = false;
             state.exercicios = action.payload;
         },
-        listarError(state,action) {
+        listarError(state) {
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Exercícios!");         
         },
