@@ -16,6 +16,8 @@ const Cabecalho = (): ReactElement => {
     const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePeso = LiaWeightHangingSolid as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+    const IconeExercicio = LiaRunningSolid as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+    
 
     return(
         <>
@@ -34,6 +36,10 @@ const Cabecalho = (): ReactElement => {
 
                 <Link to="/peso/0">
                     <IconePeso color="#fff" fontSize={24} /> Peso
+                </Link>
+
+                <Link to="/exercicio/0">
+                    <IconeExercicio  color="#fff" fontSize={24} /> Exercício
                 </Link>
             </div>
         </>
