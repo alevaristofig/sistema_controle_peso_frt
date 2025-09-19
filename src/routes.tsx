@@ -5,6 +5,7 @@ import Home from './paginas/Home';
 import Pessoa from './paginas/Pessoa';
 import EditarPessoa from './paginas/Pessoa/editarPessoa';
 import Peso from './paginas/Peso';
+import Exercicio from './paginas/Exercicio';
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         path: '/peso/:page',
         element: <Peso />
     },
+    {
+        path: '/exercicio/:page',
+        element: <Exercicio />
+    }
 ]);
 
 export { router }

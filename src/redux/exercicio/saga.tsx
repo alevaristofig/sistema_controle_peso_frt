@@ -37,5 +37,5 @@ function* listar(action: AnyAction) {
 }
 
 export default all([
-
+    takeEvery('exercicio/listar', listar),
 ]);
