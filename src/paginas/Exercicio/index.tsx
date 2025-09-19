@@ -98,6 +98,15 @@ const Exercicio = (): ReactElement => {
                                             }
                                         </tbody>
                                     </table>
+                                    {
+                                        exercicios.paginacao.totalPages > 1
+                                        ?
+                                            <div className='row'>
+                                                <Paginacao pesos={exercicios.paginacao} url={exercicios.url}/>
+                                            </div>
+                                        :
+                                            ''
+                                    }
                                 </div>
                             </div>
                     }
