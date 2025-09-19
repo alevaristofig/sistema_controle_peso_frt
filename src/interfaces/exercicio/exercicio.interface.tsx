@@ -2,7 +2,7 @@ export interface IExercicio {
     id: number,
     nome: string,
     tempo: number,
-    frequente: number,
+    frequencia: number,
     dataCadastro: Date,
     dataAtualizacao: Date
 }

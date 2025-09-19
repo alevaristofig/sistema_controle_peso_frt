@@ -9,7 +9,7 @@ import { ISessaoExercicio } from '../../interfaces/sessao/sessao-exercicio.inter
 
 const setUrl: ISessaoExercicio = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
-    listar: "listar",
+    listar: "listarexerciciospaginacao",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
 
