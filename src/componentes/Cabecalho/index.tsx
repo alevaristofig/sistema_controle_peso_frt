@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid, LiaRunningSolid  } from 'react-icons/lia';
+import { GiWeightLiftingUp } from 'react-icons/gi';
 
 import styles from './Cabecalho.module.css';
 
@@ -17,6 +18,7 @@ const Cabecalho = (): ReactElement => {
     const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePeso = LiaWeightHangingSolid as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconeExercicio = LiaRunningSolid as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+    const IconeTreino = GiWeightLiftingUp as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     
 
     return(
@@ -40,6 +42,10 @@ const Cabecalho = (): ReactElement => {
 
                 <Link to="/exercicio/0">
                     <IconeExercicio  color="#fff" fontSize={24} /> Exercício
+                </Link>
+
+                <Link to="/exercicio/0">
+                    <IconeTreino  color="#fff" fontSize={24} /> Treino
                 </Link>
             </div>
         </>
