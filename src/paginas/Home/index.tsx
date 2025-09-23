@@ -20,7 +20,7 @@ import TreinoPessoa from '../../componentes/Treinos/treinoPessoa';
 import Cabecalho from "../../componentes/Cabecalho";
 import Titulo from "../../componentes/Titulo";
 
-import { ITreino } from "../../interfaces/pessoa/treino.interface";
+import { ITreino } from "../../interfaces/treino/treino.interface";
 
 import styles from './Home.module.css';
 

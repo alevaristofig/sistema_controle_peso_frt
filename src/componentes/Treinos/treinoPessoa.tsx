@@ -1,4 +1,4 @@
-import { ITreino } from "../../interfaces/pessoa/treino.interface";
+import { ITreino } from "../../interfaces/treino/treino.interface";
 
 interface ITreinoPessoa {
     treinoFeitosDados: ITreino[],
