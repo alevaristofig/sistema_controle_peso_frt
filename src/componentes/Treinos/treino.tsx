@@ -9,9 +9,8 @@ interface ITreinos {
 const Treino: React.FC<ITreinos> = ({treinosDados}) => {
     return(
         <>
-            {
-                /*
-                typeof treinosDados.dados == 'object' 
+            {                
+               /* typeof treinosDados.dados == 'object' 
                 ?
                     treinosDados.dados.map((d,i) => {
                         return(
@@ -27,8 +26,7 @@ const Treino: React.FC<ITreinos> = ({treinosDados}) => {
                         )
                     })
                 :
-                    ''
-                    */
+                    ''    */                
             }
         </>
     )

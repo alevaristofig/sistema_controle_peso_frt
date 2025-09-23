@@ -1,6 +1,10 @@
 import { ITreino } from './treino.interface';
 
 export interface ITreinoState {
-    treinos: ITreino[],
+    treinos: {
+        dados: ITreino [],
+        paginacao: any,
+        url: string
+    },   
     loading: boolean
 }

@@ -3,7 +3,11 @@ import { toast } from 'react-toastify';
 import { ITreinoState } from "../../interfaces/treino/treinostate";
 
 const initialState: ITreinoState = {
-    treinos: [],
+    treinos: {
+        'dados': [],
+        paginacao: null,
+        url: ''
+    },
     loading: false
 }
 

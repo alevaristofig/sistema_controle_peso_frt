@@ -23,8 +23,15 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<ITreinoR
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         });
+console.log(response.data)
+       /* let responsePessoaExercicio = {
+            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.pessoaExercicioModelList,
+            paginacao: response.data.page,
+         //   links: response.data._links,
+            url: 'treino'
+        }*/
 
-        yield put(listarSucesso(response.data._embedded.pessoaExercicioModelList));
+        yield put(listarSucesso(response.data));
     } catch(error) {
         yield put(listarError());
     }

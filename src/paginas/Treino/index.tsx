@@ -37,7 +37,7 @@ const Treino = (): ReactElement => {
              <div className={styles.content}>
                 <div>
                     <ToastContainer />
-                </div>
+                </div>                
                 <div className="container py-4">
                     {
                         loading
