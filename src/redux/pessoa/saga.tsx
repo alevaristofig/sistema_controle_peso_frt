@@ -4,6 +4,7 @@ import { AnyAction } from 'redux-saga';
 import { listarSucesso, listarError, atualizarSucesso, atualizarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
+
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
 import { IPessoa } from '../../interfaces/pessoa/pessoa.interface';
 import { IPessoaResponse } from '../../interfaces/pessoa/pessoaresponse.interface';
