@@ -6,6 +6,7 @@ import Pessoa from './paginas/Pessoa';
 import EditarPessoa from './paginas/Pessoa/editarPessoa';
 import Peso from './paginas/Peso';
 import Exercicio from './paginas/Exercicio';
+import Treino from './paginas/Treino';
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: '/exercicio/:page',
         element: <Exercicio />
+    },
+    {
+        path: '/treino/:page',
+        element: <Treino />
     }
 ]);
 
