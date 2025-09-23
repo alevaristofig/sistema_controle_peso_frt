@@ -13,12 +13,12 @@ const setUrl: ISessaoTreino = {
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!),
 }
 
-function* listar(): Generator<any, void, AxiosResponse<ITreinoResponse>> {
+function* listar(action: AnyAction): Generator<any, void, AxiosResponse<ITreinoResponse>> {
     try {
 
         let urls = setUrl;   
 
-        const response = yield call(axios.get,`${urls.url.pessoaexercicio.href}`,{
+        const response = yield call(axios.get,`${urls.url.pessoaexercicio.href}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }

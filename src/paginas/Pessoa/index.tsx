@@ -23,7 +23,7 @@ const Pessoa = (): ReactElement => {
 
     const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
-     useEffect(() => {
+    useEffect(() => {
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }

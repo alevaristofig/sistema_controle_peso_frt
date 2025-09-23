@@ -44,7 +44,7 @@ const Cabecalho = (): ReactElement => {
                     <IconeExercicio  color="#fff" fontSize={24} /> Exercício
                 </Link>
 
-                <Link to="/exercicio/0">
+                <Link to="/treino/0">
                     <IconeTreino  color="#fff" fontSize={24} /> Treino
                 </Link>
             </div>
