@@ -8,6 +8,7 @@ const initialState: IExercicioState = {
         paginacao: null,
         url: ''
     },
+    exerciciosSemPaginacao: [],
     loading: false
 }
 
@@ -26,9 +27,19 @@ export const exercicioSlice = createSlice({
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Exercícios!");         
         },
+        listarSemPaginacao(state) {            
+            state.loading = true;
+        },
+        listarSemPaginacaoSucesso(state,action) {
+            state.loading = false;
+            state.exerciciosSemPaginacao = action.payload;
+        },
+        listarSemPaginacaoError(state) {
+            state.loading = false;                
+        },
     }
 });
 
-export const { listar, listarSucesso, listarError } = exercicioSlice.actions;
+export const { listar, listarSucesso, listarError, listarSemPaginacao, listarSemPaginacaoSucesso, listarSemPaginacaoError } = exercicioSlice.actions;
 
 export default exercicioSlice.reducer;

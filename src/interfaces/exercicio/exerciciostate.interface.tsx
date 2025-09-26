@@ -6,5 +6,6 @@ export interface IExercicioState {
         paginacao: any,
         url: string
     },
+    exerciciosSemPaginacao: Array<any>,
     loading: boolean
 }

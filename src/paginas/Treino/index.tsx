@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { listar } from "../../redux/treino/slice";
+import { listarSemPaginacao } from "../../redux/exercicio/slice";
 
 import Treinos from "../../componentes/Treinos/treino";
 
@@ -40,8 +41,7 @@ const Treino = (): ReactElement => {
              <div className={styles.content}>
                 <div>
                     <ToastContainer />
-                </div>   
-                 <pre>{JSON.stringify(treinos, null, 2)}</pre>            
+                </div>                             
                 <div className="container py-4">
                     {
                         loading

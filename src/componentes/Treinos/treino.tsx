@@ -6,7 +6,6 @@ import { ITreinoState } from "../../interfaces/treino/treinostate";
 
 interface ITreinos {
     treinosDados: ITreinoComponente,
-    exercicio: IExercicio
 }
 
 
