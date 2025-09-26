@@ -20,6 +20,7 @@ const Treino = (): ReactElement => {
     const dispatch = useDispatch();
 
     const { loading, treinos } = useSelector((state: RootState) => state.treino); 
+    const { exerciciosSemPaginacao } = useSelector((state: RootState) => state.exercicio);
 
     const { page } = useParams();
 
@@ -33,6 +34,8 @@ const Treino = (): ReactElement => {
         dispatch(listar({
             'page': page
         }));
+
+        dispatch(listarSemPaginacao());
     },[]);
 
     return(
@@ -53,6 +56,17 @@ const Treino = (): ReactElement => {
                             <div className='row'>                                
                               <Treinos treinosDados={treinos} />                                                               
                             </div>
+                    }
+                    {
+                        exerciciosSemPaginacao.length === 0
+                        ?
+                            <div className="row mt-4">
+                                <div className="col">
+                                    <span>Nenhum exercício encontrado </span>                                    
+                                </div>
+                            </div>
+                        :
+                            <div>Achou</div>
                     }
                 </div>
              </div>

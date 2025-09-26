@@ -23,7 +23,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<ITreinoR
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         });
-console.log(response.data._embedded.pessoaExercicioModelList);
+
         let responsePessoaExercicio = {
             dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.pessoaExercicioModelList,
             paginacao: response.data.page,

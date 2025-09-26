@@ -4,4 +4,5 @@ export interface ISessaoExercicio {
     url: {exercicios: { href: string} },
     pessoa: IPessoa,
     listar: string,
+    listarexercicios: string,
 }

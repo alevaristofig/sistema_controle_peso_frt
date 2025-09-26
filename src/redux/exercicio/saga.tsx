@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { listarSucesso, listarError } from './slice';
+import { listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
@@ -11,6 +11,7 @@ import { IExercicioResponse } from '../../interfaces/exercicio/exercicioresponse
 const setUrl: ISessaoExercicio = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
     listar: "listarexerciciospaginacao",
+    listarexercicios: "listarexercicios",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
 
@@ -22,7 +23,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IExercic
                             headers: {
                                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                             }
-                        });
+        });
 
         let responseExercicio = {
             dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.exercicioModelList,
@@ -37,6 +38,25 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IExercic
     }    
 }
 
+function* listarSemPaginacao() {
+    try {
+
+        let urls = setUrl; 
+
+        const response: AxiosResponse<IExercicioResponse>= yield call(axios.get,`${urls.url.exercicios.href}/${urls.listarexercicios}/${urls.pessoa.id}`,{
+                            headers: {
+                                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                            }
+        });
+
+        yield put(listarSemPaginacaoSucesso(response.data))
+    } catch(error) {       
+        yield put(listarSemPaginacaoError());
+    }
+    
+}
+
 export default all([
     takeEvery('exercicio/listar', listar),
+    takeEvery('exercicio/listarSemPaginacao', listarSemPaginacao),
 ]);
