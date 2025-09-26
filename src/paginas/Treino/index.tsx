@@ -1,4 +1,4 @@
-import { useEffect, useState, ReactElement } from "react";
+import { useEffect, useState, ReactElement, FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
@@ -26,17 +26,79 @@ const Treino = (): ReactElement => {
 
     const navigate = useNavigate();
 
+    const [data,setData] = useState<string>('');
+    const [diaSemana,setDiaSemana] = useState<string>('');
+
     useEffect(() => {
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }
     
+        let dataAtual = new Date();
+
+        setData(dataAtual.toLocaleDateString());
+
         dispatch(listar({
             'page': page
         }));
 
         dispatch(listarSemPaginacao());
+
+        formatarDiaSemana(dataAtual);
     },[]);
+
+    const formatarDiaSemana = (dataFormatacao: Date): void => {
+        switch(dataFormatacao.getDay()) {
+            case 0:
+                setDiaSemana('Domingo');
+            break;
+
+            case 1:
+                setDiaSemana('Segunda-Feira');
+            break;
+
+            case 2:
+                setDiaSemana('Terça-Feira');
+            break;
+
+            case 3:
+                setDiaSemana('Quarta-Feira');
+            break;
+
+            case 4:
+                setDiaSemana('Quinta-Feira');
+            break;
+
+            case 5:
+                setDiaSemana('Sexta-Feira');
+            break;
+
+            case 6:
+                setDiaSemana('Sabado');
+            break;
+        }
+    }
+
+    const registrarValoresTreino = (e: FormEvent<HTMLFormElement>) => {
+
+    }
+
+    const registrarTreino = () => {
+
+    }
+
+    const mostrarDivTreino = () => {
+        if(typeof treinos.dados == 'object') {
+
+            let dataAtual = new Date();            
+            let dataDivTreino = dataAtual.toLocaleDateString().split('/');
+            dataDivTreino = dataDivTreino[2]+'-'+dataDivTreino[1]+'-'+dataDivTreino[0];
+
+            let result = treinos.dados.findIndex((e) => e.data.substring(0,10) === dataDivTreino);
+
+            return result;
+        }
+    }
 
     return(
         <>
@@ -66,7 +128,37 @@ const Treino = (): ReactElement => {
                                 </div>
                             </div>
                         :
-                            <div>Achou</div>
+                            <>
+                                <form method='post' onSubmit={registrarTreino}>
+                                    <div className="row">
+                                        {
+                                            exerciciosSemPaginacao.map((e,i) => {     
+                                                if(mostrarDivTreino() === -1) {                                                                                                                                       
+                                                        return(                                                                                                       
+                                                            <div className="col-sm-3 mb-4" key={i}>
+                                                                <div className="card">
+                                                                    <div className="card-body">
+                                                                        <h5 className="card-title">{e.nome}</h5>  
+                                                                        <p>{diaSemana} - {data}</p>                                  
+                                                                        <div className="form-check form-switch">
+                                                                            <input 
+                                                                                className="form-check-input" 
+                                                                                type="checkbox"
+                                                                                value={e.id}                                                                             
+                                                                                onChange={(e) => registrarValoresTreino(e)}                                                                            
+                                                                            />
+                                                                            <label className="form-check-label">Feito</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                
+                                                        )  
+                                                    }                                          
+                                                })
+                                        }
+                                    </div>
+                                </form>
+                            </>
                     }
                 </div>
              </div>
