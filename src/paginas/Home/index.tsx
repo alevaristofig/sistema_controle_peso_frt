@@ -80,8 +80,8 @@ const Home = (): ReactElement  => {
         }        
     }
 
-    useEffect(() => {        
-        if(sessionStorage.getItem('token') == null) {           
+    useEffect(() => {            
+        if(sessionStorage.getItem('token') === null || sessionStorage.getItem('token') === undefined) {           
             navigate('/login');
         }
 

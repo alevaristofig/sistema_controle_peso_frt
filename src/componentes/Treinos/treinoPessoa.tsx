@@ -14,10 +14,10 @@ const TreinoPessoa: React.FC<ITreinoPessoa> = ({treinoFeitosDados, treinoNaoFeit
                     treinoNaoFeitosDados.map((t,i) => {
                         return (
                             <>
-                                <span className='ms-2 fst-italic'>{t.nome}:</span>
+                                <span className='ms-2 fst-italic'>{}:</span>
                                     <span className='ms-2' >
                                         <label>Feitos: 0 | 
-                                        Não Feitos: {t.quantidade}                                    
+                                        Não Feitos: {}                                    
                                     </label>                                                        
                                 </span>
                             </>                
@@ -29,9 +29,9 @@ const TreinoPessoa: React.FC<ITreinoPessoa> = ({treinoFeitosDados, treinoNaoFeit
                         treinoFeitosDados.map((t,i) => {
                             return (
                                 <>
-                                    <span className='ms-2 fst-italic'>{t.nome}:</span>
+                                    <span className='ms-2 fst-italic'>{}:</span>
                                     <span className='ms-2' >
-                                        <label>Feitos: {t.quantidade} | 
+                                        <label>Feitos: {} | 
                                             Não Feitos: 0                                    
                                         </label>                                                        
                                     </span>
@@ -44,10 +44,10 @@ const TreinoPessoa: React.FC<ITreinoPessoa> = ({treinoFeitosDados, treinoNaoFeit
                             treinoFeitosDados.map((t,i) => {
                                 return (
                                     <>
-                                        <span className='ms-2 fst-italic'>{t.nome}:</span>
+                                        <span className='ms-2 fst-italic'>{}:</span>
                                         <span className='ms-2' >
-                                            <label>Feitos: {t.quantidade} | 
-                                                Não Feitos: {treinoNaoFeitosDados[i].quantidade}                                   
+                                            <label>Feitos: {} | 
+                                                Não Feitos: {}                                   
                                             </label>                                                        
                                         </span>
                                     </>                

@@ -79,8 +79,8 @@ const Treino = (): ReactElement => {
         }
     }
 
-    const registrarValoresTreino = (e: FormEvent<HTMLFormElement>) => {
-
+    const registrarValoresTreino = (e: React.ChangeEvent<HTMLFormElement>) => {
+       // e.preventDefault();
     }
 
     const registrarTreino = () => {
@@ -91,10 +91,9 @@ const Treino = (): ReactElement => {
         if(typeof treinos.dados == 'object') {
 
             let dataAtual = new Date();            
-            let dataDivTreino = dataAtual.toLocaleDateString().split('/');
-            dataDivTreino = dataDivTreino[2]+'-'+dataDivTreino[1]+'-'+dataDivTreino[0];
+            let dataDivTreino = dataAtual.toISOString().split('T')[0];            
 
-            let result = treinos.dados.findIndex((e) => e.data.substring(0,10) === dataDivTreino);
+            let result = treinos.dados.findIndex((e) => new Date(e.data).toISOString().substring(0,10) === dataDivTreino);
 
             return result;
         }
@@ -145,7 +144,7 @@ const Treino = (): ReactElement => {
                                                                                 className="form-check-input" 
                                                                                 type="checkbox"
                                                                                 value={e.id}                                                                             
-                                                                                onChange={(e) => registrarValoresTreino(e)}                                                                            
+                                                                                onChange={(e) => registrarValoresTreino}                                                                            
                                                                             />
                                                                             <label className="form-check-label">Feito</label>
                                                                         </div>
