@@ -4,6 +4,7 @@ import peso from '../redux/peso/saga';
 import pessoa from '../redux/pessoa/saga';
 import exercicio from '../redux/exercicio/saga';
 import treino from '../redux/treino/saga';
+import alimento from '../redux/alimento/saga';
 
 export default function* rootSaga() {
     yield all([
@@ -11,5 +12,6 @@ export default function* rootSaga() {
         pessoa,
         exercicio,
         treino,
+        alimento,
     ])
 }
