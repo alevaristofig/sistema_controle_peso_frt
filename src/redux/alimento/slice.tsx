@@ -11,9 +11,21 @@ const initialState = {
 export const alimentoSlice = createSlice({
     name: 'alimento',
     initialState,
-    reducers: {}
+    reducers: {
+        listar: (state,action) => {
+            state.loading = true;
+        },
+        listarSucesso: (state,action) => {
+            state.loading = false;
+            state.alimentos = action.payload            
+        },
+        listarError: (state) => {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao listar os Alimentos!");
+        },
+    }
 });
 
-export const {} = alimentoSlice.actions;
+export const { listar, listarSucesso, listarError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;
