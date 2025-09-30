@@ -6,6 +6,7 @@ import { listarSucesso, listarError } from './slice';
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoAlimento } from '../../interfaces/sessao/sessao-alimento.interface';
 import { IAlimentoResponse } from '../../interfaces/alimento/alimento-response.interface';
+import { IAlimento } from '../../interfaces/alimento/alimento.interface';
 
 const setUrl: ISessaoAlimento = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -23,7 +24,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         });
-
+      
         let responseAlimento = {
             dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.alimentoModelList,
             paginacao: response.data.page,

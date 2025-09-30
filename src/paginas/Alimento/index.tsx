@@ -30,6 +30,16 @@ const Alimento = (): ReactElement => {
         }));
     },[]);
 
+    const formatarData = (dataFormatada: Date): string => {
+        let data = new Date(dataFormatada);
+
+        return data.toLocaleDateString('pt-BR');
+    }
+
+    const apagarAlimento = (id: number): void => {
+
+    }
+
     return(
         <>
             <Cabecalho />
@@ -41,8 +51,62 @@ const Alimento = (): ReactElement => {
                     <div className="row">
                         <div className="col">
                             <Link to="/cadastroalimento" className="btn btn-success">Novo Alimento</Link>
-                        </div>
+                        </div>                        
                     </div>
+                    {
+                        loading
+                        ?
+                            <div className="spinner-border text-primary mt-3" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        :
+                            alimentos.dados.length == 0
+                            ?
+                                <div className="row mt-4">
+                                    <div className="col">
+                                        <span>Nenhuma alimento encontrado </span>                                    
+                                    </div>
+                                </div>
+                            :
+                                <div className="row mt-4">
+                                    <div className="col-sm table-responsive">
+                                        <table className="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Peso</th>
+                                                    <th>Imc</th>
+                                                    <th>Data</th>
+                                                    <th>Diferença Peso</th>
+                                                    <th>#</th>                                                        
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                     alimentos.dados?.map((a,i) => {
+                                                        return(
+                                                            <tr key={i}>
+                                                                <td>{a.id}</td>
+                                                                <td>{a.nome}</td>
+                                                                <td>{a.quantidade}</td>
+                                                                <td>{a.calorias}</td>
+                                                                <td>{formatarData(a.dataCadastro)}</td>
+                                                                <td>{formatarData(a.dataAtualizacao)}</td>
+                                                                <td>
+                                                                    <Link to={`/editaralimento/${a.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                    <button type='button' 
+                                                                            className="btn btn-danger float-start" 
+                                                                            onClick={() => apagarAlimento(a.id)}>Apagar</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                     })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                    }
                 </div>
             </div>
         </>

@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
+import { IAlimentoState } from "../../interfaces/alimento/alimento-state.interface";
 
-const initialState = {
+const initialState: IAlimentoState = {
     alimentos: {
-        'dados': []
+        dados: [],
+        paginacao: null,
+        url: ''
     },
     loading: false
 }
