@@ -9,6 +9,7 @@ import { IAlimentoResponse } from '../../interfaces/alimento/alimento-response.i
 
 const setUrl: ISessaoAlimento = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
+    listar: "listaralimentospaginacao",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!),
 }
 
@@ -17,7 +18,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
 
         let urls = setUrl; 
 
-        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.pessoa.id}?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
