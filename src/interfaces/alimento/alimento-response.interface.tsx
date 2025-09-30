@@ -3,7 +3,7 @@ import { IAlimento } from "./alimento.interface"
 
 export interface IAlimentoResponse {
     _embedded: {
-        pesoModelList: IAlimento[]
+        alimentoModelList: IAlimento[]
     },
     _links: any,
     page: IPage,
