@@ -7,6 +7,7 @@ import EditarPessoa from './paginas/Pessoa/editarPessoa';
 import Peso from './paginas/Peso';
 import Exercicio from './paginas/Exercicio';
 import Treino from './paginas/Treino';
+import Alimento from './paginas/Alimento';
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     {
         path: '/treino/:page',
         element: <Treino />
+    },
+    {
+        path: '/alimento/:page',
+        element: <Alimento />
     }
 ]);
 
