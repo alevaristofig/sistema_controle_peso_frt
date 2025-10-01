@@ -5,6 +5,7 @@ import  pessoaSlice  from "./pessoa/slice";
 import  exercicioSlice  from "./exercicio/slice";
 import  treinoSlice  from "./treino/slice";
 import  alimentoSlice from "./alimento/slice";
+import  dietaSlice  from "./dieta/slice";
 
 const rootReducer = combineReducers({
     peso: pesoSlice,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     exercicio: exercicioSlice,
     treino: treinoSlice,
     alimento: alimentoSlice,
+    dieta: dietaSlice,
 })
 
 
