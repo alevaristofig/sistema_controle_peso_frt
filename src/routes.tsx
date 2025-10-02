@@ -8,6 +8,7 @@ import Peso from './paginas/Peso';
 import Exercicio from './paginas/Exercicio';
 import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
+import Dieta from './paginas/Dieta';
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     {
         path: '/alimento/:page',
         element: <Alimento />
+    },
+    {
+        path: '/dieta/:page',
+        element: <Dieta />
     }
 ]);
 
