@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
@@ -9,13 +9,14 @@ import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
 
 import styles from '../Home/Home.module.css';
+import { IDietaResponse } from "../../interfaces/alimento/dieta-response.interface";
 
 const Dieta = (): ReactElement => {
 
     const { page } = useParams();
     const navigate = useNavigate();
 
-    const [dietas,setDietas] = useState();
+    const [dietas,setDietas] = useState<IDietaResponse>();
 
     useEffect(() => {
 

@@ -1,32 +1,35 @@
 import { useState } from "react";
 
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { IDietaResponse } from "../../interfaces/alimento/dieta-response.interface";
 
 const useDieta = () => {
 
-     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [urlListar] = useState<string>('listardietaspaginacao');
 
-     const listar = (page: number) => {
-        const response =  axios.get(`${url.dietas.href}/${urlListar}/${dadosPessoa.id}?page=${page}`,{
+     const listar = async (page: number): Promise<IDietaResponse> => {
+
+        try {
+            const response = await axios.get(`${url.dietas.href}/${urlListar}/${dadosPessoa.id}?page=${page}`,{
                                         headers: {
                                             "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                         }
-                                    })
-                                    .then((response) => {                                
-                                        return {
-                                            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.dietaModelList,
-                                            paginacao: response.data.page,
-                                            links: response.data._links,
-                                            url: 'dieta'
-                                        }
-                                    })
-                                    .catch((error) => {                                
-                                        return false;
                                     });
-        
-        return response;  
+
+            let dadosResponse = {
+                dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.dietaModelList,
+                paginacao: response.data.page,
+                links: response.data._links,
+                url: 'dieta'
+            }
+
+            return dadosResponse;  
+                                    
+        } catch(error: any) {
+            //tratar erro
+        }        
      }
 
      return { listar };
