@@ -9,11 +9,12 @@ import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
 
 import styles from '../Home/Home.module.css';
-import { IDietaResponse } from "../../interfaces/alimento/dieta-response.interface";
+import { IDietaResponse } from "../../interfaces/dieta/dieta-response.interface";
 
 const Dieta = (): ReactElement => {
 
     const { page } = useParams();
+    //const { listar } = useDieta();
     const navigate = useNavigate();
 
     const [dietas,setDietas] = useState<IDietaResponse>();
@@ -24,8 +25,14 @@ const Dieta = (): ReactElement => {
             navigate('/login');
         }
 
+      //  buscarDietas(parseInt(page!));
 
-    },[])
+
+    },[]);
+
+    /*const buscarDietas = (page: number) => {
+        let resp = listar(page);
+    }*/
 
     return(
         <>

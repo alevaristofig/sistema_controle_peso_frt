@@ -1,4 +1,4 @@
-import { IDieta } from "../dieta/dieta.interface";
+import { IDieta } from "./dieta.interface";
 import { IPage } from "../page.interface";
 
 export interface IDietaResponse {

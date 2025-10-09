@@ -31,8 +31,8 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
             links: response.data._links,
             url: 'treino'
         }
-        
-                yield put(listarSucesso(responseAlimento));
+        console.log(responseAlimento)
+        yield put(listarSucesso(responseAlimento));
     } catch(error) {            
         yield put(listarError());
     }

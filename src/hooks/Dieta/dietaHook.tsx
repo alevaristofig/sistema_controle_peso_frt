@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import axios, { AxiosResponse } from "axios";
-import { IDietaResponse } from "../../interfaces/alimento/dieta-response.interface";
+import { IDietaResponse } from "../../interfaces/dieta/dieta-response.interface";
 
 const useDieta = () => {
 
@@ -9,7 +9,7 @@ const useDieta = () => {
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [urlListar] = useState<string>('listardietaspaginacao');
 
-     const listar = async (page: number): Promise<IDietaResponse> => {
+    /*const listar = async (page: number): Promise<IDietaResponse | undefined> => {
 
         try {
             const response = await axios.get(`${url.dietas.href}/${urlListar}/${dadosPessoa.id}?page=${page}`,{
@@ -18,21 +18,28 @@ const useDieta = () => {
                                         }
                                     });
 
-            let dadosResponse = {
-                dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.dietaModelList,
-                paginacao: response.data.page,
-                links: response.data._links,
-                url: 'dieta'
+            let dadosResponse;
+
+            if(response.data.page.totalElements > 0) {
+                dadosResponse = {
+                    dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.dietaModelList,
+                    paginacao: response.data.page,
+                    links: response.data._links,
+                    url: 'dieta'
+                }
+            } else {
+              
             }
+            
 
             return dadosResponse;  
                                     
         } catch(error: any) {
-            //tratar erro
+            console.log(error);
         }        
-     }
+     }*/
 
-     return { listar };
+     //return { listar };
 }
 
 export default useDieta;

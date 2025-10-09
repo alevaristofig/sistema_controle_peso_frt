@@ -14,9 +14,21 @@ const initialState: any  = {
 export const dietaSlice = createSlice({
      name: 'dieta',
     initialState,
-    reducers: {}
+    reducers: {
+        listar: (state,action) => {                                  
+            state.loading = true;
+        },
+        listarSucesso(state,action) {
+            state.loading = false;
+            state.exercicios = action.payload;
+        },
+        listarError(state) {
+            state.loading = false;  
+            toast.error("Ocorreu um erro ao listar os Exercícios!");         
+        },
+    }
 });
 
-export const {} = dietaSlice.actions;
+export const { listar, listarSucesso, listarError } = dietaSlice.actions;
 
 export default dietaSlice.reducer;

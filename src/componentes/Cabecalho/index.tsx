@@ -57,7 +57,7 @@ const Cabecalho = (): ReactElement => {
                 </Link>
 
                 <Link to="/dieta/0">
-                    <IconeDieta  color="#fff" fontSize={24} /> Alimento
+                    <IconeDieta  color="#fff" fontSize={24} /> Dieta
                 </Link>
             </div>
         </>
