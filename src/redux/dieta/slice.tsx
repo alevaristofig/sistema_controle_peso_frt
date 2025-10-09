@@ -24,7 +24,7 @@ export const dietaSlice = createSlice({
         },
         listarError(state) {
             state.loading = false;  
-            toast.error("Ocorreu um erro ao listar os Exercícios!");         
+            toast.error("Ocorreu um erro ao listar as Dietas!");         
         },
     }
 });

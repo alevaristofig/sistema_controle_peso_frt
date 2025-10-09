@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import { RootState } from "../../redux/root-reducer";
 import { listar } from "../../redux/dieta/slice";
 
-//import useDieta from "../../hooks/Dieta/dietaHook";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -17,7 +16,7 @@ import { IDietaResponse } from "../../interfaces/dieta/dieta-response.interface"
 const Dieta = (): ReactElement => {
 
     const { page } = useParams();
-    //const { listar } = useDieta();
+   
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,8 +31,6 @@ const Dieta = (): ReactElement => {
         dispatch(listar({
             'page': page
         }));
-      //  buscarDietas(parseInt(page!));
-
 
     },[]);
 
@@ -46,10 +43,6 @@ const Dieta = (): ReactElement => {
     const apagarDieta = (id: number) => {
 
     }
-
-    /*const buscarDietas = (page: number) => {
-        let resp = listar(page);
-    }*/
 
     return(
         <>
@@ -112,6 +105,15 @@ const Dieta = (): ReactElement => {
                                                 }
                                             </tbody>
                                         </table>
+                                        {
+                                        dietas.paginacao.totalPages > 1
+                                        ?
+                                            <div className='row'>
+                                                <Paginacao pesos={dietas.paginacao} url={dietas.url}/>
+                                            </div>
+                                        :
+                                            ''
+                                    }
                                     </div>
                                 </div>
                     }
