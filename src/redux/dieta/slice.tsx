@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
+import { IDietaState } from "../../interfaces/dieta/dieta-state.interface";
 
-const initialState: any  = {
+const initialState: IDietaState  = {
     dietas: {
         'dados': [],
         paginacao: null,
         url: ''
-    },
-    exerciciosSemPaginacao: [],
+    },    
     loading: false
 }
 
@@ -20,7 +20,7 @@ export const dietaSlice = createSlice({
         },
         listarSucesso(state,action) {
             state.loading = false;
-            state.exercicios = action.payload;
+            state.dietas = action.payload;
         },
         listarError(state) {
             state.loading = false;  

@@ -21,9 +21,7 @@ const Dieta = (): ReactElement => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading, dietas } = useSelector((state: RootState) => state.dieta); 
-
-    //const [dietas,setDietas] = useState<IDietaResponse>();
+    const { loading, dietas } = useSelector((state: RootState) => state.dieta);    
 
     useEffect(() => {
 
@@ -38,6 +36,16 @@ const Dieta = (): ReactElement => {
 
 
     },[]);
+
+    const formatarData = (dataFormatada: Date): string => {
+        let data = new Date(dataFormatada);
+
+        return data.toLocaleDateString('pt-BR');
+    }
+
+    const apagarDieta = (id: number) => {
+
+    }
 
     /*const buscarDietas = (page: number) => {
         let resp = listar(page);
@@ -83,6 +91,26 @@ const Dieta = (): ReactElement => {
                                                     <th scope="col">Ações</th> 
                                                 </tr>
                                             </thead>
+                                            <tbody>
+                                                {
+                                                    dietas.dados?.map((d,i) => {
+                                                        return(
+                                                            <tr key={i}>
+                                                                <td>{d.id}</td>
+                                                                <td>{d.nome}</td>
+                                                                <td>{formatarData(d.dataCadastro)}</td>
+                                                                <td>{formatarData(d.dataAtualizacao)}</td>
+                                                                <td>
+                                                                    <Link to={`/editardieta/${d.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                    <button type='button' 
+                                                                        className="btn btn-danger float-start" 
+                                                                        onClick={() => apagarDieta(d.id)}>Apagar</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
