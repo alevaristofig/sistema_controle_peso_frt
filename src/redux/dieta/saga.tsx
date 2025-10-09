@@ -10,7 +10,7 @@ import { IDietaResponse } from '../../interfaces/dieta/dieta-response.interface'
 
 const setUrl: ISessaoDieta = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
-    listar: "listar",
+    listar: "listaralimentospaginacao",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!),
 }
 

@@ -3,7 +3,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
-import useDieta from "../../hooks/Dieta/dietaHook";
+import { RootState } from "../../redux/root-reducer";
+import { listar } from "../../redux/dieta/slice";
+
+//import useDieta from "../../hooks/Dieta/dietaHook";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -15,9 +18,12 @@ const Dieta = (): ReactElement => {
 
     const { page } = useParams();
     //const { listar } = useDieta();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [dietas,setDietas] = useState<IDietaResponse>();
+    const { loading, dietas } = useSelector((state: RootState) => state.dieta); 
+
+    //const [dietas,setDietas] = useState<IDietaResponse>();
 
     useEffect(() => {
 
@@ -25,6 +31,9 @@ const Dieta = (): ReactElement => {
             navigate('/login');
         }
 
+        dispatch(listar({
+            'page': page
+        }));
       //  buscarDietas(parseInt(page!));
 
 
@@ -47,6 +56,37 @@ const Dieta = (): ReactElement => {
                             <Link to="/cadastrodieta" className="btn btn-success">Nova Dieta</Link>
                         </div>
                     </div>
+                    {
+                        loading
+                        ?
+                            <div className="spinner-border text-primary mt-3" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        :
+                            dietas.dados.length == 0
+                            ?
+                                <div className="row mt-4">
+                                    <div className="col">
+                                        <span>Nenhuma alimento encontrado </span>                                    
+                                    </div>
+                                </div>
+                            :
+                                <div className="row mt-4">
+                                    <div className="col-sm table-responsive">
+                                        <table className="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>                                     
+                                                    <th scope="col">Nome</th>
+                                                    <th scope="col">Data Cadastro</th>
+                                                    <th scope="col">Data Atualização</th>
+                                                    <th scope="col">Ações</th> 
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                    }
                 </div>
              </div>
         </>
