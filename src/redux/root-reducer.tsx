@@ -6,7 +6,7 @@ import  exercicioSlice  from "./exercicio/slice";
 import  treinoSlice  from "./treino/slice";
 import  alimentoSlice from "./alimento/slice";
 import  dietaSlice  from "./dieta/slice";
-import  historicoMedico, { historicoMedicoSlice } from './historicomedico/slice';
+import  historicoMedicoSlice from './historicomedico/slice';
 
 const rootReducer = combineReducers({
     peso: pesoSlice,

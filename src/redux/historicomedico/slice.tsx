@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
 const initialState = {
-    historicos: {
+    historicosMedicos: {
         'dados': [],
         paginacao: null,
         url: ''
@@ -13,7 +13,19 @@ const initialState = {
 export const historicoMedicoSlice = createSlice({
     name: 'historicomedico',
     initialState,
-    reducers: {}
+    reducers: {
+        listar: (state,action) => {                                  
+            state.loading = true;
+        },
+        listarSucesso(state,action) {
+            state.loading = false;
+            state.historicosMedicos = action.payload;
+        },
+        listarError(state) {
+            state.loading = false;  
+            toast.error("Ocorreu um erro ao listar os Exercícios!");         
+        },
+    }
 });
 
 export const {} = historicoMedicoSlice.actions;

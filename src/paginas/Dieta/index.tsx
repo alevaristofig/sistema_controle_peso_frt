@@ -47,7 +47,7 @@ const Dieta = (): ReactElement => {
     return(
         <>
             <Cabecalho />
-             <div className={styles.content}>
+            <div className={styles.content}>
                 <div>
                     <ToastContainer />
                 </div> 
