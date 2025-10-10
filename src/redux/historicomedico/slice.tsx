@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
+import { IHistoricoMedico } from "../../interfaces/historicomedico/historicomedico.interface";
+import { IHistoricoMedicoState } from "../../interfaces/historicomedico/historicomedico-state.interface";
 
-const initialState = {
+const initialState: IHistoricoMedicoState = {
     historicosMedicos: {
         'dados': [],
         paginacao: null,
