@@ -9,6 +9,7 @@ import Exercicio from './paginas/Exercicio';
 import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
 import Dieta from './paginas/Dieta';
+import HistoricoMedico from './paginas/HistoricoMedico';
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
     {
         path: '/dieta/:page',
         element: <Dieta />
+    },
+    {
+        path: '/historicomedico/:page',
+        element: <HistoricoMedico />
     }
 ]);
 
