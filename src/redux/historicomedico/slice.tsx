@@ -30,6 +30,6 @@ export const historicoMedicoSlice = createSlice({
     }
 });
 
-export const {} = historicoMedicoSlice.actions;
+export const { listar, listarSucesso, listarError } = historicoMedicoSlice.actions;
 
 export default historicoMedicoSlice.reducer;
