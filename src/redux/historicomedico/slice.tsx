@@ -9,6 +9,7 @@ const initialState: IHistoricoMedicoState = {
         paginacao: null,
         url: ''
     },   
+    modalToken: false,
     loading: false
 }
 
@@ -27,9 +28,12 @@ export const historicoMedicoSlice = createSlice({
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar o Histórico Médico!");         
         },
+        revalidarToken(state) {   
+            state.modalToken = true;                           
+        }
     }
 });
 
-export const { listar, listarSucesso, listarError } = historicoMedicoSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError } = historicoMedicoSlice.actions;
 
 export default historicoMedicoSlice.reducer;

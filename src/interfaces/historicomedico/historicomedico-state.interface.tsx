@@ -6,5 +6,6 @@ export interface IHistoricoMedicoState {
         paginacao: any,
         url: string
     },
+    modalToken: boolean,
     loading: boolean
 }
