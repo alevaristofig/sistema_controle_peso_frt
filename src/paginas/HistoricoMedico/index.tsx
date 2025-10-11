@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
+import { listar } from "../../redux/historicomedico/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -17,7 +18,7 @@ const HistoricoMedico = (): ReactElement => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading } = useSelector((state: RootState) => state.historicoMedico); 
+    const { loading, historicosMedicos } = useSelector((state: RootState) => state.historicoMedico); 
 
     useEffect(() => {
     
@@ -25,11 +26,21 @@ const HistoricoMedico = (): ReactElement => {
             navigate('/login');
         }
     
-        /*dispatch(listar({
+        dispatch(listar({
             'page': page
-        }));*/
+        }));
     
     },[]);
+
+    const formatarData = (dataFormatada: Date): string => {
+        let data = new Date(dataFormatada);
+
+        return data.toLocaleDateString('pt-BR');
+    }
+
+    const apagarHistoricoMedico = (id: number): void => {
+
+    }
 
     return(
         <>
@@ -51,7 +62,61 @@ const HistoricoMedico = (): ReactElement => {
                                 <span className="visually-hidden">Carregando...</span>
                             </div>
                         :
-                            'conteudo'
+                            historicosMedicos.dados.length == 0
+                            ?
+                                <div className="row mt-4">
+                                    <div className="col">
+                                        <span>Nenhuma alimento encontrado </span>                                    
+                                    </div>
+                                </div>
+                            :
+                                <div className="row mt-4">
+                                    <div className="col-sm table-responsive">
+                                        <table className="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Descrição</th>
+                                                    <th>Remedio</th>
+                                                    <th>Data Cadastro</th>
+                                                    <th>Data Atualização</th>
+                                                    <th>#</th>                                                        
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                     historicosMedicos.dados?.map((h,i) => {
+                                                        return (
+                                                            <tr key={i}>
+                                                                <td>{h.id}</td>
+                                                                <td>{h.descricao}</td>
+                                                                <td>{h.remedio}</td>
+                                                                <td>{formatarData(h.dataCadastro)}</td>
+                                                                <td>{formatarData(h.dataAtualizacao)}</td>
+                                                                <td>
+                                                                    <Link to={`/editarhistoricomedico/${h.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                    <button type='button' 
+                                                                                className="btn btn-danger float-start" 
+                                                                                onClick={() => apagarHistoricoMedico(h.id)}>Apagar</button>
+
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                     })
+                                                }
+                                            </tbody>
+                                        </table>
+                                        {
+                                             historicosMedicos.paginacao.totalPages > 1
+                                            ?
+                                                <div className='row'>
+                                                    <Paginacao pesos={historicosMedicos.paginacao} url={historicosMedicos.url}/>
+                                                </div>
+                                            :
+                                                ''
+                                        }
+                                    </div>
+                                </div>
                     }
                 </div>
             </div>

@@ -106,14 +106,14 @@ const Dieta = (): ReactElement => {
                                             </tbody>
                                         </table>
                                         {
-                                        dietas.paginacao.totalPages > 1
-                                        ?
-                                            <div className='row'>
-                                                <Paginacao pesos={dietas.paginacao} url={dietas.url}/>
-                                            </div>
-                                        :
-                                            ''
-                                    }
+                                            dietas.paginacao.totalPages > 1
+                                            ?
+                                                <div className='row'>
+                                                    <Paginacao pesos={dietas.paginacao} url={dietas.url}/>
+                                                </div>
+                                            :
+                                                ''
+                                        }
                                     </div>
                                 </div>
                     }
