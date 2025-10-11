@@ -66,7 +66,7 @@ const HistoricoMedico = (): ReactElement => {
                             ?
                                 <div className="row mt-4">
                                     <div className="col">
-                                        <span>Nenhuma alimento encontrado </span>                                    
+                                        <span>Nenhuma histórico médico encontrado </span>                                    
                                     </div>
                                 </div>
                             :

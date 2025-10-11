@@ -9,7 +9,7 @@ import { IHistoricoMedicoResponse } from '../../interfaces/historicomedico/histo
 
 const setUrl: ISessaoHistoricoMedico = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
-    listar: "listarexerciciospaginacao",
+    listar: "listarhistoricomedicopaginacao",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
 }
 
