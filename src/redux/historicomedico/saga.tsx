@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { listarSucesso, listarError } from './slice';
+import { revalidarToken, listarSucesso, listarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoHistoricoMedico } from '../../interfaces/sessao/sessao-historicomedico.interface';
@@ -31,8 +31,12 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IHistori
         }
 
         yield put(listarSucesso(responseHistoricoMedico));
-    } catch(erro: any) {
-        yield put(listarError());
+    } catch(error: any) {
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {
+            yield put(listarError(error.response.data.userMessage));
+        }        
     }    
 }
 

@@ -24,9 +24,9 @@ export const historicoMedicoSlice = createSlice({
             state.loading = false;
             state.historicosMedicos = action.payload;
         },
-        listarError(state) {
+        listarError(state,action) {
             state.loading = false;  
-            toast.error("Ocorreu um erro ao listar o Histórico Médico!");         
+            toast.error(action.payload);         
         },
         revalidarToken(state) {   
             state.modalToken = true;                           
