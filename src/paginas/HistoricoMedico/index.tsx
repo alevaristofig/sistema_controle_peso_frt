@@ -8,6 +8,7 @@ import { listar } from "../../redux/historicomedico/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
+import ModalToken from "../../componentes/Token";
 
 import styles from '../Home/Home.module.css';
 
@@ -18,7 +19,7 @@ const HistoricoMedico = (): ReactElement => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading, historicosMedicos } = useSelector((state: RootState) => state.historicoMedico); 
+    const { loading, historicosMedicos, modalToken } = useSelector((state: RootState) => state.historicoMedico); 
 
     useEffect(() => {
     
@@ -45,6 +46,13 @@ const HistoricoMedico = (): ReactElement => {
     return(
         <>
             <Cabecalho />
+            {
+                modalToken
+                ?
+                    <ModalToken />
+                :
+                    ''
+            }
             <div className={styles.content}>
                 <div>
                     <ToastContainer />

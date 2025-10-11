@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
-import { IPesoState } from "../../interfaces/peso/pesostate.interface";
+import { IPesoState } from "../../interfaces/peso/peso-state.interface";
 import { IPeso } from "../../interfaces/peso/peso.interface";
 
 const initialState: IPesoState = {
@@ -12,6 +12,7 @@ const initialState: IPesoState = {
     },
     primeiroPeso: null,
     ultimoPeso: null,
+    modalToken: false,
     loading: false
 }
 
@@ -26,7 +27,7 @@ export const pesoSlice = createSlice({
             state.loading = false;
             state.pesos = action.payload;
         },
-        listarError(state) {
+        listarError(state, action) {
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Pesos!");         
         },
@@ -63,10 +64,13 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.success("Ocorreu um erro ao apagar o peso!");
         },
+        revalidarToken(state) {   
+            state.modalToken = true;                           
+        },
     }
 })
 
-export const { buscarPrimeiroPeso, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, 
+export const { revalidarToken, buscarPrimeiroPeso, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, 
                buscarUltimoPeso, buscarUltimoPesoSucesso, buscarUltimoPesoError, listar,
                listarSucesso, listarError, apagar, apgarSucesso, apgarError } = pesoSlice.actions;
 

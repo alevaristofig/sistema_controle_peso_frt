@@ -28,7 +28,7 @@ export const historicoMedicoSlice = createSlice({
             state.loading = false;  
             toast.error(action.payload);         
         },
-        revalidarToken(state) {   
+        revalidarToken(state) {              
             state.modalToken = true;                           
         }
     }

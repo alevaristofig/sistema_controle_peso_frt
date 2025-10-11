@@ -3,12 +3,12 @@ import { AnyAction } from 'redux-saga';
 
 import axios, { AxiosResponse } from 'axios';
 
-import { buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError,
+import { revalidarToken, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError,
          listarSucesso, listarError, apgarSucesso, apgarError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
-import { IPesoState } from '../../interfaces/peso/pesostate.interface';
+import { IPesoState } from '../../interfaces/peso/peso-state.interface';
 import { IPesoResponse } from '../../interfaces/peso/pesoresponse.interface';
 
 
@@ -38,8 +38,12 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
         }
            
             yield put(listarSucesso(responsePeso));
-        } catch(error) {            
-            yield put(listarError());
+        } catch(error: any) {    
+             if(error.response.status === 401) {
+                yield put(revalidarToken());
+            } else {        
+                yield put(listarError(error.response.data.userMessage));
+            }
         }
 }
 

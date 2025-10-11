@@ -31,8 +31,8 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IHistori
         }
 
         yield put(listarSucesso(responseHistoricoMedico));
-    } catch(error: any) {
-        if(error.response.status === 401) {
+    } catch(error: any) {        
+        if(error.response.status === 401) {            
             yield put(revalidarToken());
         } else {
             yield put(listarError(error.response.data.userMessage));

@@ -30,5 +30,6 @@ const ModalToken = (): ReactElement => {
             </Modal>
         </>
     )
-
 }
+
+export default ModalToken;
