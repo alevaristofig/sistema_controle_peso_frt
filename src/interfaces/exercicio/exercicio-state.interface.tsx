@@ -7,5 +7,6 @@ export interface IExercicioState {
         url: string
     },
     exerciciosSemPaginacao: Array<any>,
+    modalToken: boolean,
     loading: boolean
 }

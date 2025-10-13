@@ -6,5 +6,6 @@ export interface ITreinoState {
         paginacao: any,
         url: string
     },   
+    modalToken: boolean,
     loading: boolean
 }

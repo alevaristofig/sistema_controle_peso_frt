@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError } from './slice';
+import { revalidarToken, listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
@@ -33,8 +33,12 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IExercic
         }
 
         yield put(listarSucesso(responseExercicio));
-    } catch(erro: any) {
-        yield put(listarError());
+    } catch(error: any) {
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(listarError(error.response.data.userMessage));
+        } 
     }    
 }
 
@@ -50,8 +54,12 @@ function* listarSemPaginacao() {
         });
 
         yield put(listarSemPaginacaoSucesso(response.data))
-    } catch(error) {       
-        yield put(listarSemPaginacaoError());
+    } catch(error: any) {   
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(listarSemPaginacaoError(error.response.data.userMessage));
+        }     
     }
     
 }

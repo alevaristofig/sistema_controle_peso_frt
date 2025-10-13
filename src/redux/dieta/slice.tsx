@@ -8,6 +8,7 @@ const initialState: IDietaState  = {
         paginacao: null,
         url: ''
     },    
+    modalToken: false,
     loading: false
 }
 
@@ -22,13 +23,16 @@ export const dietaSlice = createSlice({
             state.loading = false;
             state.dietas = action.payload;
         },
-        listarError(state) {
+        listarError(state,action) {
             state.loading = false;  
-            toast.error("Ocorreu um erro ao listar as Dietas!");         
+            toast.error(action.payload);         
+        },
+        revalidarToken(state) {   
+            state.modalToken = true;                           
         },
     }
 });
 
-export const { listar, listarSucesso, listarError } = dietaSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError } = dietaSlice.actions;
 
 export default dietaSlice.reducer;

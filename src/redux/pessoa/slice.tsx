@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
-import { IPessoaState } from "../../interfaces/pessoa/pessoastate.interface";
+import { IPessoaState } from "../../interfaces/pessoa/pessoa-state.interface";
 
 const initialState: IPessoaState = {
     pessoas: {
         'dados': []
     },
+    modalToken: false,
     loading: false
 }
 
@@ -20,9 +21,9 @@ export const pessoaSlice = createSlice({
             state.loading = false;
             state.pessoas.dados = action.payload;
         },
-        listarError: (state) => {
+        listarError: (state,action) => {
             state.loading = false;
-            toast.error("Ocorreu um erro ao listar as Pessoas!");
+            toast.error(action.payload);
         },
         atualizar(state,action) {
             state.loading = true;
@@ -35,9 +36,12 @@ export const pessoaSlice = createSlice({
             state.loading = true;
             toast.error(action.payload);
         },
+        revalidarToken(state) {   
+            state.modalToken = true;                           
+        },
     }
 });
 
-export const { listar, listarSucesso, listarError, atualizar, atualizarSucesso, atualizarError } = pessoaSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError, atualizar, atualizarSucesso, atualizarError } = pessoaSlice.actions;
 
 export default pessoaSlice.reducer;

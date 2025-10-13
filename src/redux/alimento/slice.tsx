@@ -8,6 +8,7 @@ const initialState: IAlimentoState = {
         paginacao: null,
         url: ''
     },
+    modalToken: false,
     loading: false
 }
 
@@ -22,13 +23,16 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             state.alimentos = action.payload            
         },
-        listarError: (state) => {
+        listarError: (state,action) => {
             state.loading = false;
-            toast.error("Ocorreu um erro ao listar os Alimentos!");
+            toast.error(action.payload);
         },
+        revalidarToken(state) {              
+            state.modalToken = true;                           
+        }
     }
 });
 
-export const { listar, listarSucesso, listarError } = alimentoSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;

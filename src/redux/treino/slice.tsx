@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
-import { ITreinoState } from "../../interfaces/treino/treinostate";
+import { ITreinoState } from "../../interfaces/treino/treino-state";
 
 const initialState: ITreinoState = {
     treinos: {
@@ -8,6 +8,7 @@ const initialState: ITreinoState = {
         paginacao: null,
         url: ''
     },
+    modalToken: false,
     loading: false
 }
 
@@ -22,13 +23,16 @@ export const treinoSlice = createSlice({
             state.loading = false;
             state.treinos = action.payload;
         },
-        listarError: (state) => {
+        listarError: (state,action) => {
             state.loading = false;
-            toast.error("Ocorreu um erro ao listar os Treinos!");
+            toast.error(action.payload);
+        },
+        revalidarToken(state) {   
+            state.modalToken = true;                           
         }, 
     }
 });
 
-export const { listar, listarSucesso, listarError } = treinoSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError } = treinoSlice.actions;
 
 export default treinoSlice.reducer;

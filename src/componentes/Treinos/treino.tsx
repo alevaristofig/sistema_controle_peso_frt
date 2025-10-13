@@ -2,7 +2,7 @@ import { IExercicio } from "../../interfaces/exercicio/exercicio.interface";
 import { ITreinoComponente } from "../../interfaces/treino/treino-componente.interface";
 import { ITreinoResponse } from "../../interfaces/treino/treino-response.interface";
 import { ITreino } from "../../interfaces/treino/treino.interface";
-import { ITreinoState } from "../../interfaces/treino/treinostate";
+import { ITreinoState } from "../../interfaces/treino/treino-state";
 
 interface ITreinos {
     treinosDados: ITreinoComponente,

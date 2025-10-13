@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { listarSucesso, listarError, atualizarSucesso, atualizarError } from './slice';
+import { revalidarToken, listarSucesso, listarError, atualizarSucesso, atualizarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 
@@ -26,8 +26,12 @@ function* listar(): Generator<any, void, AxiosResponse<IPessoaResponse>> {
         });
 
         yield put(listarSucesso(response.data._embedded.pessoaModelList));
-    } catch(error) {
-        yield put(listarError());
+    } catch(error: any) {
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(listarError(error.response.data.userMessage));
+        }
     }
 }
 
@@ -53,7 +57,11 @@ function* atualizar(action: AnyAction): Generator<any, void, AxiosResponse<void>
 
         yield put(atualizarSucesso());
     } catch(error: any) {
-        yield put(atualizarError(error.response.data.userMessage));
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(atualizarError(error.response.data.userMessage));
+        }
     }
 }
 

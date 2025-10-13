@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { listarSucesso, listarError } from './slice';
+import { revalidarToken, listarSucesso, listarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 
@@ -32,8 +32,12 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<ITreinoR
         }
 
         yield put(listarSucesso(responsePessoaExercicio));
-    } catch(error) {
-        yield put(listarError());
+    } catch(error: any) {
+         if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(listarError(error.response.data.userMessage));
+        }
     }
 }
 

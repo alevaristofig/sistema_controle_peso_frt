@@ -6,5 +6,6 @@ export interface IAlimentoState {
         paginacao: any,
         url: string
     },
+    modalToken: boolean,
     loading: boolean
 }

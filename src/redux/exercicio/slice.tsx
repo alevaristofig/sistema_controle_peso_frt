@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
-import { IExercicioState } from "../../interfaces/exercicio/exerciciostate.interface";
+import { IExercicioState } from "../../interfaces/exercicio/exercicio-state.interface";
 
 const initialState: IExercicioState = {
     exercicios: {
@@ -9,6 +9,7 @@ const initialState: IExercicioState = {
         url: ''
     },
     exerciciosSemPaginacao: [],
+    modalToken: false,
     loading: false
 }
 
@@ -23,9 +24,9 @@ export const exercicioSlice = createSlice({
             state.loading = false;
             state.exercicios = action.payload;
         },
-        listarError(state) {
+        listarError(state,action) {
             state.loading = false;  
-            toast.error("Ocorreu um erro ao listar os Exercícios!");         
+            toast.error(action.payload);         
         },
         listarSemPaginacao(state) {            
             state.loading = true;
@@ -34,12 +35,17 @@ export const exercicioSlice = createSlice({
             state.loading = false;
             state.exerciciosSemPaginacao = action.payload;
         },
-        listarSemPaginacaoError(state) {
-            state.loading = false;                
+        listarSemPaginacaoError(state,action) {
+            state.loading = false; 
+            toast.error(action.payload);               
+        },
+        revalidarToken(state) {   
+            state.modalToken = true;                           
         },
     }
 });
 
-export const { listar, listarSucesso, listarError, listarSemPaginacao, listarSemPaginacaoSucesso, listarSemPaginacaoError } = exercicioSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError, listarSemPaginacao, 
+               listarSemPaginacaoSucesso, listarSemPaginacaoError } = exercicioSlice.actions;
 
 export default exercicioSlice.reducer;
