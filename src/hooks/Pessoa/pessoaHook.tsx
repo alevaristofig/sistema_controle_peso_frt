@@ -6,7 +6,7 @@ const usePessoa = () => {
 
     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
    // const [urlSemAutenticacao] = useState('http://localhost:8080/v1');
-  //  const [removertoken,setRemovertoken] = useState('removertoken');
+    const [removertoken] = useState<string>('removertoken');
 
     const buscar = async(id: number) => {
         const response = await axios.get(`${url.pessoas.href}/${id}`,{
@@ -28,7 +28,11 @@ const usePessoa = () => {
         return response;
     }
 
-    return { buscar }
+    const removerToken = async(token: string): Promise<void> => {
+        await axios.delete(`${url.pessoas.href}/${removertoken}/${token}`);
+    }
+
+    return { buscar, removerToken }
 
 }
 
