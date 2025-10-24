@@ -10,6 +10,7 @@ import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
 import Dieta from './paginas/Dieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
+import Logout from './paginas/Logout';
 
 const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
     {
         path: '/historicomedico/:page',
         element: <HistoricoMedico />
+    },
+    {
+        path: '/logout',
+        element: <Logout />
     }
 ]);
 

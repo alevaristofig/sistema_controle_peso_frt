@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 import usePessoa from "../../hooks/Pessoa/pessoaHook";
 
-const Logout = (): void => {
+const Logout = (): null => {
 
     const { removerToken } = usePessoa();
 
@@ -27,6 +27,8 @@ const Logout = (): void => {
     
             remover();
         },[]);
+
+    return null;
 }
 
 export default Logout;
