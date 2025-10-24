@@ -8,6 +8,7 @@ import { GiWeightLiftingUp } from 'react-icons/gi';
 import { FaBowlFood } from 'react-icons/fa6';
 import { BiFoodMenu } from "react-icons/bi";
 import { CiMedicalClipboard } from "react-icons/ci";
+import { TbLogout2 } from 'react-icons/tb';
 
 import styles from './Cabecalho.module.css';
 
@@ -25,6 +26,7 @@ const Cabecalho = (): ReactElement => {
     const IconeAlimento = FaBowlFood as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconeDieta = BiFoodMenu as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconeHistoricoMedico = CiMedicalClipboard as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+    const IconeLogout = TbLogout2 as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     
 
     return(
@@ -64,6 +66,10 @@ const Cabecalho = (): ReactElement => {
 
                 <Link to="/historicomedico/0">
                     <IconeHistoricoMedico color='#fff' fontSize={24} /> Histórico Médico
+                </Link>
+
+                <Link to="/logout">
+                    <IconeLogout color='#fff' fontSize={24} /> Sair
                 </Link>
             </div>
         </>
