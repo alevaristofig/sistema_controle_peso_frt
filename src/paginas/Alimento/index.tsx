@@ -103,6 +103,15 @@ const Alimento = (): ReactElement => {
                                                      })
                                                 }
                                             </tbody>
+                                             {
+                                                alimentos.paginacao.totalPages > 1
+                                                ?
+                                                    <div className='row'>
+                                                        <Paginacao pesos={alimentos.paginacao} url={alimentos.url}/>
+                                                    </div>
+                                                :
+                                                    ''
+                                            }
                                         </table>
                                     </div>
                                 </div>
