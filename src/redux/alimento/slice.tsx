@@ -27,12 +27,24 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
+        salvar: (state,action) => {
+            state.loading = true;
+        },
+        salvarSucesso: (state) => {
+            state.loading = false;
+            toast.success("Alimento cadastrado com Sucesso!");
+        },
+        salvarError: (state,action) => {
+            state.loading = false;
+            toast.error(action.payload);
+        },
         revalidarToken(state) {              
             state.modalToken = true;                           
         }
     }
 });
 
-export const { revalidarToken, listar, listarSucesso, listarError } = alimentoSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError,
+               salvar, salvarSucesso, salvarError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;
