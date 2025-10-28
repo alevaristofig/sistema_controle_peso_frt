@@ -2,3 +2,8 @@
     margin-left: 200px;
     padding: 1px 16px;
 }
+
+.obrigatorio{
+    color: #ff0000;
+    margin-left: 5px;
+}
