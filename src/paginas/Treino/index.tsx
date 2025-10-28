@@ -155,7 +155,7 @@ const Treino = (): ReactElement => {
                                                     }                                          
                                                 })
                                         }
-                                    </div>
+                                    </div>                                    
                                 </form>
                             </>
                     }

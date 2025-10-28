@@ -103,7 +103,7 @@ const Alimento = (): ReactElement => {
                                                      })
                                                 }
                                             </tbody>
-                                             {
+                                            {
                                                 alimentos.paginacao.totalPages > 1
                                                 ?
                                                     <div className='row'>

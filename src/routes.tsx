@@ -8,6 +8,7 @@ import Peso from './paginas/Peso';
 import Exercicio from './paginas/Exercicio';
 import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
+import CadastroAlimento from './paginas/Alimento/cadastroAlimento';
 import Dieta from './paginas/Dieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
 import Logout from './paginas/Logout';
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
     {
         path: '/alimento/:page',
         element: <Alimento />
+    },
+    {
+        path: '/cadastroalimento',
+        element: <CadastroAlimento />
     },
     {
         path: '/dieta/:page',
