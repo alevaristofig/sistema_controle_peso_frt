@@ -1,13 +1,22 @@
 import { ReactElement, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
+
+import { RootState } from "../../redux/root-reducer";
+import { salvar } from '../../redux/alimento/slice';
 
 import useAlimento from '../../hooks/Alimento/alimentoHook';
 
 import Cabecalho from "../../componentes/Cabecalho";
+import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 
 const CadastroAlimento = (): ReactElement => {
+
+    const dispatch = useDispatch();
+
+    const { modalToken, loading } = useSelector((state: RootState) => state.alimento); 
 
     const [nome, setNome] = useState<string>('');
     const [quantidade, setQuantidade] = useState<string>('');
@@ -21,15 +30,32 @@ const CadastroAlimento = (): ReactElement => {
 
     const salvarAlimento = (): void => {
 
+        dispatch(salvar({
+            'nome': nome,
+            'quantidade': quantidade,
+            'calorias': caloria  
+        }));
+
+        setNome('');
+        setQuantidade('');
+        setCaloria('');
     }
 
     return(
         <>
             <Cabecalho />
+             {
+                modalToken
+                ?
+                    <ModalToken />
+                :
+                    <div>Não deu certo</div>
+            }            
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
                 </div> 
+                <div>{modalToken}</div>
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarAlimento}>
                         <div className="row mt-3">

@@ -6,7 +6,6 @@ import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoAlimento } from '../../interfaces/sessao/sessao-alimento.interface';
 import { IAlimentoResponse } from '../../interfaces/alimento/alimento-response.interface';
-import { IAlimento } from '../../interfaces/alimento/alimento.interface';
 
 const setUrl: ISessaoAlimento = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -33,8 +32,8 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
         }
        
         yield put(listarSucesso(responseAlimento));
-    } catch(error: any) {   
-        if(error.response.status === 401) {
+    } catch(error: any) {          
+        if(error.response.status === 401) {            
             yield put(revalidarToken());
         } else {        
             yield put(listarError(error.response.data.userMessage));
@@ -51,14 +50,12 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
             'calorias': action.payload.calorias,  
-            'dataCadastro': action.payload.dataCadastro,
-            'dataAtualizacao': action.payload.dataAtualizacao,
             'pessoa': {
                 'id': urls.pessoa.id
             }          
         }
 
-        call(axios.get,`${urls.url.alimentos.href}/${dados}`,{
+        yield call(axios.post,`${urls.url.alimentos.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
@@ -66,7 +63,8 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
 
         yield put(salvarSucesso());
 
-    } catch(error: any) {   
+    } catch(error: any) {  
+        alert(error.response.status)        
         if(error.response.status === 401) {
             yield put(revalidarToken());
         } else {        

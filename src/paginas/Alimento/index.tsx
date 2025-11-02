@@ -8,6 +8,7 @@ import { listar } from "../../redux/alimento/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
+import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 
@@ -16,7 +17,7 @@ const Alimento = (): ReactElement => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading, alimentos } = useSelector((state: RootState) => state.alimento); 
+    const { modalToken, loading, alimentos } = useSelector((state: RootState) => state.alimento); 
 
     const { page } = useParams();
 
@@ -43,6 +44,13 @@ const Alimento = (): ReactElement => {
     return(
         <>
             <Cabecalho />
+            {
+                modalToken
+                ?
+                    <ModalToken />
+                :
+                    <div>Não deu certo</div>
+            }   
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
@@ -74,10 +82,11 @@ const Alimento = (): ReactElement => {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Peso</th>
-                                                    <th>Imc</th>
-                                                    <th>Data</th>
-                                                    <th>Diferença Peso</th>
+                                                    <th>Nome</th>
+                                                    <th>Quantidade</th>
+                                                    <th>Calorias</th>
+                                                    <th>Data Cadastro</th>
+                                                    <th>Data Atualização</th>
                                                     <th>#</th>                                                        
                                                 </tr>
                                             </thead>

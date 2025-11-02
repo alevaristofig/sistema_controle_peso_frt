@@ -31,6 +31,7 @@ export const alimentoSlice = createSlice({
             state.loading = true;
         },
         salvarSucesso: (state) => {
+            alert('ok certo')
             state.loading = false;
             toast.success("Alimento cadastrado com Sucesso!");
         },
@@ -38,7 +39,8 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
-        revalidarToken(state) {              
+        revalidarToken(state) { 
+            state.loading = false;                        
             state.modalToken = true;                           
         }
     }
