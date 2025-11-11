@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
-import { listar } from "../../redux/alimento/slice";
+import { listarSemPaginacao } from "../../redux/alimento/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -24,6 +24,8 @@ const CadastroDieta = (): ReactElement => {
             navigate('/login');
         }
 
+        dispatch(listarSemPaginacao());
+
     },[]);
 
     const salvarDados=  (): void => {
@@ -38,7 +40,25 @@ const CadastroDieta = (): ReactElement => {
                     <ToastContainer />
                 </div> 
                 <div className="container py-4">
-                    <form className="form-perfil" onSubmit={salvarDados}></form>
+                    <form className="form-perfil" onSubmit={salvarDados}>
+                        {
+                            loading
+                            ?
+                                <div className="spinner-border text-primary mt-3" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            :
+                                alimentos.dados.length === 0 
+                                ?
+                                    <div className="row mt-4">
+                                        <div className="col">
+                                            <span>Nenhuma alimento encontrado </span>                                    
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="row mt-3"></div>
+                        }
+                    </form>
                 </div>
              </div>
         </>
