@@ -10,6 +10,7 @@ import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
 import CadastroAlimento from './paginas/Alimento/cadastroAlimento';
 import Dieta from './paginas/Dieta';
+import CadastroDieta from './paginas/Dieta/cadastroDieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
 import Logout from './paginas/Logout';
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
     {
         path: '/dieta/:page',
         element: <Dieta />
+    },
+    {
+        path: '/cadastrodieta',
+        element: <CadastroDieta />
     },
     {
         path: '/historicomedico/:page',

@@ -56,7 +56,9 @@ const CadastroDieta = (): ReactElement => {
                                         </div>
                                     </div>
                                 :
-                                    <div className="row mt-3"></div>
+                                    <div className="row mt-3">
+                                        <div className="col"></div>
+                                    </div>
                         }
                     </form>
                 </div>

@@ -53,7 +53,7 @@ function* listarSemPaginacao(): Generator<any, void, AxiosResponse<IAlimentoResp
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         });
-
+console.log(response.data)
         yield put(listarSemPaginacaoSucesso(response));
     } catch(error: any) {               
         if(error.response.status === 401) {
