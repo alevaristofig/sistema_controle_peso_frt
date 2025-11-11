@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { revalidarToken, listarSucesso, listarError } from './slice';
+import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 
@@ -29,7 +29,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
             dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.dietaModelList,
             paginacao: response.data.page,
             links: response.data._links,
-            url: 'treino'
+            url: 'dieta'
         }
         
         yield put(listarSucesso(responseDieta));
@@ -42,6 +42,39 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
     }
 }
 
+function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaResponse>> {
+    try {
+
+        let urls = setUrl;
+
+        let dados = {
+            'dietaId': {
+                'id': action.payload.dietaId
+            },
+            'alimentoId': {
+                'id': action.payload.alimentoId
+            },
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
+        };
+
+        yield call(axios.post,`${urls.url.dietas.href}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });              
+
+        yield put(salvarSucesso());
+    } catch(error: any) {            
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(salvarError(error.response.data.userMessage));
+        } 
+    }
+}
+
 export default all([
     takeEvery('dieta/listar', listar),
+    takeEvery('dieta/salvar', salvar),
 ]);
