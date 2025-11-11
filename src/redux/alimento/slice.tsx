@@ -32,7 +32,7 @@ export const alimentoSlice = createSlice({
         },
         listarSemPaginacaoSucesso: (state,action) => {
             state.loading = false;
-            state.alimentos = action.payload    
+            state.alimentos.dados = action.payload    
         },
         listarSemPaginacaoError: (state,action) => {
             state.loading = false;

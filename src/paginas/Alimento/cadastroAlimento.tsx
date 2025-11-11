@@ -49,7 +49,7 @@ const CadastroAlimento = (): ReactElement => {
                 ?
                     <ModalToken />
                 :
-                    <div>Não deu certo</div>
+                    ''
             }            
             <div className={styles.content}>
                 <div>
