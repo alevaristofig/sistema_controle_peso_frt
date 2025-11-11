@@ -54,8 +54,7 @@ const CadastroAlimento = (): ReactElement => {
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
-                </div> 
-                <div>{modalToken}</div>
+                </div>                 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarAlimento}>
                         <div className="row mt-3">

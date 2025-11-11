@@ -27,11 +27,21 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
+        listarSemPaginacao: (state) => {
+            state.loading = true;
+        },
+        listarSemPaginacaoSucesso: (state,action) => {
+            state.loading = false;
+            state.alimentos = action.payload    
+        },
+        listarSemPaginacaoError: (state,action) => {
+            state.loading = false;
+            toast.error(action.payload);  
+        },
         salvar: (state,action) => {
             state.loading = true;
         },
-        salvarSucesso: (state) => {
-            alert('ok certo')
+        salvarSucesso: (state) => {           
             state.loading = false;
             toast.success("Alimento cadastrado com Sucesso!");
         },
@@ -47,6 +57,7 @@ export const alimentoSlice = createSlice({
 });
 
 export const { revalidarToken, listar, listarSucesso, listarError,
-               salvar, salvarSucesso, salvarError } = alimentoSlice.actions;
+               salvar, salvarSucesso, salvarError, listarSemPaginacao, listarSemPaginacaoSucesso,
+               listarSemPaginacaoError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;
