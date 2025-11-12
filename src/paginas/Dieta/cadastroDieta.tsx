@@ -11,6 +11,7 @@ import Paginacao from '../../componentes/Paginacao';
 import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
+import { IAlimentoId } from "../../interfaces/alimento/alimento-id.interface";
 
 const CadastroDieta = (): ReactElement => {
 
@@ -20,6 +21,7 @@ const CadastroDieta = (): ReactElement => {
     const navigate = useNavigate();
 
     const [nome,setNome] = useState<string>('');
+    const [alimentosDieta,setAlimentosDieta] = useState<IAlimentoId[]>([]);
 
     useEffect(() => {
 
@@ -31,12 +33,25 @@ const CadastroDieta = (): ReactElement => {
 
     },[]);
 
-    const registrarAlimentos = (e: React.ChangeEvent<HTMLInputElement>) => {
-        alert(e.target.checked+','+e.target.value)
+    const registrarAlimentos = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        let idAlimento = parseInt(e.target.value);
+
+        if(e.target.checked) { 
+            let dados = {
+                'idAlimento': idAlimento,
+            };
+
+            alimentosDieta.push(dados);           
+        } else {
+            let indice = alimentosDieta.findIndex((a) => a.idAlimento == idAlimento);
+            alimentosDieta.splice(indice,1);
+        }
+        
+         setAlimentosDieta(alimentosDieta);
     }
 
     const salvarDados =  (): void => {
-
+        
     }
 
     return(
