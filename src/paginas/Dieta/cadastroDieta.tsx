@@ -1,7 +1,7 @@
 import { ReactElement, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { listarSemPaginacao } from "../../redux/alimento/slice";
@@ -43,15 +43,47 @@ const CadastroDieta = (): ReactElement => {
 
             alimentosDieta.push(dados);           
         } else {
-            let indice = alimentosDieta.findIndex((a) => a.idAlimento == idAlimento);
+            let indice = alimentosDieta.findIndex((a) => a.idAlimento === idAlimento);
             alimentosDieta.splice(indice,1);
         }
         
          setAlimentosDieta(alimentosDieta);
     }
 
-    const salvarDados =  (): void => {
+    const salvarDados =  (e: React.ChangeEvent<HTMLFormElement>): void => {
+        e.preventDefault();
         
+        let dataAtual = new Date();
+        let dados = Array<any>;
+
+        if(alimentosDieta.length > 0) {            
+            alimentosDieta.forEach((element,i) => {
+                let obj = {
+                    'dietaId': 1,
+                    'alimentoId': element.idAlimento,
+                    'dataCadastro': dataAtual.toISOString(),
+                    'dataAtualizacao': null
+                }
+
+               // console.log(obj)
+
+               dados[i] = obj;
+
+               // 
+                   /* dispatch(salvarDietaAlimento({
+                        'dietaId': resultDieta,
+                        'alimentoId': element.idAlimento,
+                        'dataCadastro': dataAtual.toISOString(),
+                        'dataAtualizacao': null
+                    }));*/
+                });
+
+               // console.log(dados)
+        } else {
+            toast.error("É necessário selecionar algum Alimento!");   
+        }  
+        
+       // console.log(alimentosDieta);
     }
 
     return(
