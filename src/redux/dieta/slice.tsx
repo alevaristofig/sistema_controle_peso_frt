@@ -55,6 +55,7 @@ export const dietaSlice = createSlice({
     }
 });
 
-export const { revalidarToken, listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError } = dietaSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
+               salvarDietaAlimento, salvarDietaAlimentoSucesso, salvarDietaAlimentoError } = dietaSlice.actions;
 
 export default dietaSlice.reducer;

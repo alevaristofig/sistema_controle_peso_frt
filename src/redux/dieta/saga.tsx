@@ -1,7 +1,8 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError } from './slice';
+import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError, salvarDietaAlimentoSucesso,
+         salvarDietaAlimentoError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 
@@ -10,6 +11,7 @@ import { IDietaResponse } from '../../interfaces/dieta/dieta-response.interface'
 
 const setUrl: ISessaoDieta = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
+    url2: JSON.parse(sessionStorage.getItem('urls')!),
     listar: "listaralimentospaginacao",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!),
 }
@@ -70,6 +72,27 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
             yield put(revalidarToken());
         } else {        
             yield put(salvarError(error.response.data.userMessage));
+        } 
+    }
+}
+
+function* salvarDietaAlimento(action: AnyAction) {
+    try {
+
+        let urls = setUrl;
+
+        let dados = action.dados;
+
+        yield call(axios.post,`${urls.url2.alimentodieta.href}`,dados,{
+                    headers: {
+                        "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+                    }
+        });
+    } catch(error: any) {
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(salvarDietaAlimentoError(error.response.data.userMessage));
         } 
     }
 }
