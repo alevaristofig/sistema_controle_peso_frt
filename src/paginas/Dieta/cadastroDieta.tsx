@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { listarSemPaginacao } from "../../redux/alimento/slice";
+import { salvar } from "../../redux/dieta/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -56,10 +57,12 @@ const CadastroDieta = (): ReactElement => {
         let dataAtual = new Date();
         let dados = Array<any>;
 
+        const resultDieta = salvar(dados);
+        
         if(alimentosDieta.length > 0) {            
             alimentosDieta.forEach((element,i) => {
                 let obj = {
-                    'dietaId': 1,
+                    'dietaId': resultDieta,
                     'alimentoId': element.idAlimento,
                     'dataCadastro': dataAtual.toISOString(),
                     'dataAtualizacao': null

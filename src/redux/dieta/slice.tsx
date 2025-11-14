@@ -38,6 +38,17 @@ export const dietaSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
+        salvarDietaAlimento: (state,action) => {
+            state.loading = true;
+        },
+        salvarDietaAlimentoSucesso: (state,action) => {
+            state.loading = false;
+            toast.success("Alimento cadstrado na Dieta com Sucesso!");
+        },
+        salvarDietaAlimentoError: (state,action) => {
+            state.loading = false;
+            toast.error(action.payload);
+        },
         revalidarToken(state) {   
             state.modalToken = true;                           
         },
