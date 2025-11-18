@@ -2,12 +2,27 @@ import { useState } from "react";
 
 import axios, { AxiosResponse } from "axios";
 import { IDietaResponse } from "../../interfaces/dieta/dieta-response.interface";
+import { IDieta } from "../../interfaces/dieta/dieta.interface";
 
 const useDieta = () => {
 
     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [urlListar] = useState<string>('listardietaspaginacao');
+
+    const salvar = async (dados: IDieta) => {
+        try {
+            dados.pessoa = {
+                'id': dadosPessoa.id
+            };
+
+            const response = await axios.post(`${url.dietas.href}`, dados);
+
+            return response.data.id;
+        } catch(error: any) {
+            return error.response.data.userMessage;
+        }
+    }
 
     /*const listar = async (page: number): Promise<IDietaResponse | undefined> => {
 

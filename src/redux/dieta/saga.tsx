@@ -48,7 +48,7 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
     try {
 
         let urls = setUrl;
-
+alert('entrou')
         let dados = {
             'dietaId': {
                 'id': action.payload.dietaId
@@ -81,7 +81,16 @@ function* salvarDietaAlimento(action: AnyAction) {
 
         let urls = setUrl;
 
-        let dados = action.dados;
+        let dados = {
+            'dietaId': {
+                'id': action.payload.dietaId
+            },
+            'alimentoId': {
+                'id': action.payload.alimentoId
+            },
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
+        };
 
         yield call(axios.post,`${urls.url2.alimentodieta.href}`,dados,{
                     headers: {
@@ -100,4 +109,5 @@ function* salvarDietaAlimento(action: AnyAction) {
 export default all([
     takeEvery('dieta/listar', listar),
     takeEvery('dieta/salvar', salvar),
+    takeEvery('dieta/salvarDietaAlimento', salvarDietaAlimento),
 ]);

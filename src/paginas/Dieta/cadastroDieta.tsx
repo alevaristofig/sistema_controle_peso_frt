@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { listarSemPaginacao } from "../../redux/alimento/slice";
-import { salvar } from "../../redux/dieta/slice";
+import { salvar, salvarDietaAlimento } from "../../redux/dieta/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -55,38 +55,28 @@ const CadastroDieta = (): ReactElement => {
         e.preventDefault();
         
         let dataAtual = new Date();
-        let dados = Array<any>;
-
-        const resultDieta = salvar(dados);
+              
         
-        if(alimentosDieta.length > 0) {            
-            alimentosDieta.forEach((element,i) => {
-                let obj = {
-                    'dietaId': resultDieta,
-                    'alimentoId': element.idAlimento,
-                    'dataCadastro': dataAtual.toISOString(),
-                    'dataAtualizacao': null
-                }
+        if(alimentosDieta.length > 0) { 
+            let dados = {
+                'nome': nome,
+                'dataCadastro': dataAtual.toISOString(),
+                'dataAtualizacao': null
+            };
 
-               // console.log(obj)
-
-               dados[i] = obj;
-
-               // 
-                   /* dispatch(salvarDietaAlimento({
+            const resultDieta = salvar(dados);
+console.log(resultDieta)
+            /*alimentosDieta.forEach((element,i) => {
+                 dispatch(salvarDietaAlimento({
                         'dietaId': resultDieta,
                         'alimentoId': element.idAlimento,
                         'dataCadastro': dataAtual.toISOString(),
                         'dataAtualizacao': null
-                    }));*/
-                });
-
-               // console.log(dados)
+                    }));  
+                });   */           
         } else {
             toast.error("É necessário selecionar algum Alimento!");   
         }  
-        
-       // console.log(alimentosDieta);
     }
 
     return(
