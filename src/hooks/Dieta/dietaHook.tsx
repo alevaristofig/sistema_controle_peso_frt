@@ -10,7 +10,7 @@ const useDieta = () => {
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [urlListar] = useState<string>('listardietaspaginacao');
 
-    const salvar = async (dados: IDieta) => {
+    const salvar = async (dados: IDieta): Promise<IDietaResponse | undefined> => {
         try {
             dados.pessoa = {
                 'id': dadosPessoa.id
@@ -18,7 +18,7 @@ const useDieta = () => {
 
             const response = await axios.post(`${url.dietas.href}`, dados);
 
-            return response.data.id;
+            console.log(response.data)
         } catch(error: any) {
             return error.response.data.userMessage;
         }
@@ -54,7 +54,7 @@ const useDieta = () => {
         }        
      }*/
 
-     //return { listar };
+     return { salvar };
 }
 
 export default useDieta;
