@@ -1,9 +1,8 @@
 import { IPessoaId } from "../pessoa/pessoa-id.interface";
 
 export interface IDieta {
-    id: number,
     nome: string,
-    dataCadastro: Date,
-    dataAtualizacao: Date,
+    dataCadastro: Date | string,
+    dataAtualizacao: Date | null,
     pessoa: IPessoaId
 }

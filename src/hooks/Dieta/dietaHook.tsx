@@ -10,16 +10,20 @@ const useDieta = () => {
     const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [urlListar] = useState<string>('listardietaspaginacao');
 
-    const salvar = async (dados: IDieta): Promise<IDietaResponse | undefined> => {
+    const salvar = async (dados: IDieta): Promise<IDietaResponse | undefined> => {        
         try {
             dados.pessoa = {
                 'id': dadosPessoa.id
             };
 
-            const response = await axios.post(`${url.dietas.href}`, dados);
+            const response = await axios.post(`${url.dietas.href}`, dados, {
+                headers: {
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                }
+            });
 
-            console.log(response.data)
-        } catch(error: any) {
+            return response.data.id;
+        } catch(error: any) {           
             return error.response.data.userMessage;
         }
     }

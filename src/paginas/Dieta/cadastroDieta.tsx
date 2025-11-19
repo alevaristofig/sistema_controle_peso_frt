@@ -5,7 +5,9 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { listarSemPaginacao } from "../../redux/alimento/slice";
-import { salvar, salvarDietaAlimento } from "../../redux/dieta/slice";
+import { salvarDietaAlimento } from "../../redux/dieta/slice";
+
+import useDieta from "../../hooks/Dieta/dietaHook";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
@@ -19,8 +21,11 @@ const CadastroDieta = (): ReactElement => {
     const dispatch = useDispatch();
     const { modalToken, alimentos, loading } = useSelector((state: RootState) => state.alimento);
 
+    const { salvar } = useDieta();
+
     const navigate = useNavigate();
 
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [nome,setNome] = useState<string>('');
     const [alimentosDieta,setAlimentosDieta] = useState<IAlimentoId[]>([]);
 
@@ -61,7 +66,10 @@ const CadastroDieta = (): ReactElement => {
             let dados = {
                 'nome': nome,
                 'dataCadastro': dataAtual.toISOString(),
-                'dataAtualizacao': null
+                'dataAtualizacao': null,
+                'pessoa': {
+                    'id': dadosPessoa.id
+                }
             };
 
             const resultDieta = salvar(dados);

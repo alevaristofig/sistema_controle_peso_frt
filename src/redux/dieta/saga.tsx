@@ -48,7 +48,7 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
     try {
 
         let urls = setUrl;
-alert('entrou')
+
         let dados = {
             'dietaId': {
                 'id': action.payload.dietaId
