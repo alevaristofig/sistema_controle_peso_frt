@@ -56,7 +56,7 @@ const CadastroDieta = (): ReactElement => {
          setAlimentosDieta(alimentosDieta);
     }
 
-    const salvarDados =  (e: React.ChangeEvent<HTMLFormElement>): void => {
+    const salvarDados = async  (e: React.ChangeEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         
         let dataAtual = new Date();
@@ -72,16 +72,23 @@ const CadastroDieta = (): ReactElement => {
                 }
             };
 
-            const resultDieta = salvar(dados);
-console.log(resultDieta)
-            /*alimentosDieta.forEach((element,i) => {
-                 dispatch(salvarDietaAlimento({
+            const resultDieta = 1;//await salvar(dados);
+
+            if(typeof resultDieta !== 'string') { 
+                console.log(alimentosDieta)
+               /* alimentosDieta.forEach((element,i) => {
+                    dispatch(salvarDietaAlimento({
                         'dietaId': resultDieta,
                         'alimentoId': element.idAlimento,
                         'dataCadastro': dataAtual.toISOString(),
                         'dataAtualizacao': null
                     }));  
-                });   */           
+                });*/
+                
+                toast.success("Dieta cadastrada com Sucesso!");
+             } else {
+                toast.error(resultDieta);
+             }                  
         } else {
             toast.error("É necessário selecionar algum Alimento!");   
         }  
