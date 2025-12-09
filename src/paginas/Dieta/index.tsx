@@ -88,8 +88,8 @@ const Dieta = (): ReactElement => {
                                                 {
                                                     dietas.dados?.map((d,i) => {
                                                         return(
-                                                            <tr key={i}>
-                                                                <td>{d.id}</td>
+                                                            <tr key={i}>  
+                                                                <td>{d.id}</td>                                                              
                                                                 <td>{d.nome}</td>
                                                                 <td>{formatarData(d.dataCadastro)}</td>
                                                                 <td>{formatarData(d.dataAtualizacao)}</td>

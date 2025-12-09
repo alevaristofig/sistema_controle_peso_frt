@@ -12,7 +12,7 @@ import { IDietaResponse } from '../../interfaces/dieta/dieta-response.interface'
 const setUrl: ISessaoDieta = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
     url2: JSON.parse(sessionStorage.getItem('urls')!),
-    listar: "listaralimentospaginacao",
+    listar: "listardietaspaginacao",
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!),
 }
 
@@ -26,7 +26,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         });
-      
+      console.log(response.data);
         let responseDieta = {
             dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.dietaModelList,
             paginacao: response.data.page,
