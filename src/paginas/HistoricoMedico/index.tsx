@@ -60,7 +60,7 @@ const HistoricoMedico = (): ReactElement => {
                 <div className="container py-4">
                     <div className="row">
                         <div className="col">
-                            <Link to="/cadastrodieta" className="btn btn-success">Novo Histórico Médico</Link>
+                            <Link to="/cadastrohistoricomedico" className="btn btn-success">Novo Histórico Médico</Link>
                         </div>
                     </div>
                     {

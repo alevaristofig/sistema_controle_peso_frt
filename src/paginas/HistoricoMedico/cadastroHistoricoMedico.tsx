@@ -1,5 +1,6 @@
 import { ReactElement, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { salvar } from "../../redux/historicomedico/slice";
@@ -21,9 +22,13 @@ const CadastroDieta = (): ReactElement => {
     const salvarHistoricoMedico = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
+        let dataAtual = new Date();
+
         dispatch(salvar({
             descricao: descricao,
-            remedio: remedio
+            remedio: remedio,
+            dataCadastro: dataAtual.toISOString(),
+            dataAtualizacao: null
         }));
 
         setDescricao('');
@@ -33,7 +38,17 @@ const CadastroDieta = (): ReactElement => {
     return(
         <>
             <Cabecalho />
+            {
+                modalToken
+                ?
+                    <ModalToken />
+                :
+                    ''
+             }
             <div className={styles.content}>
+                <div>
+                    <ToastContainer />
+                </div> 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarHistoricoMedico}>
                         <div className="row mt-3">

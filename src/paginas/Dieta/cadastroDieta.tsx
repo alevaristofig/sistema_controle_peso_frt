@@ -103,7 +103,7 @@ const CadastroDieta = (): ReactElement => {
                     <ModalToken />
                 :
                     ''
-            }
+             }
              <div className={styles.content}>
                 <div>
                     <ToastContainer />

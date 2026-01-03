@@ -71,4 +71,5 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IHistori
 
 export default all([
     takeEvery('historicomedico/listar', listar),
+    takeEvery('historicomedico/salvar', salvar),
 ]);
