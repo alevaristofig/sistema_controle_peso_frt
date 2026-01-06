@@ -5,6 +5,8 @@ import InputMask from 'react-input-mask';
 
 import { RootState } from "../../redux/root-reducer";
 
+import usePeso from "../../hooks/Peso/pesoHook";
+
 import Cabecalho from "../../componentes/Cabecalho";
 import ModalToken from '../../componentes/Token';
 
@@ -17,10 +19,12 @@ const CadastroPeso = (): ReactElement => {
     const [dataCadastro,setDataCadastro] = useState('');
     const [dataAtualizacao,setDataAtualizacao] = useState<string>("");
 
+    const { formatarPeso } = usePeso();
+
     const inputRef = useRef(null);
 
-    const mascaraPeso = (): void => {
-
+    const mascaraPeso = (peso: string): void => {
+        setPesoValor(formatarPeso(peso));
     }
 
     const calcularImc = (): void => {
