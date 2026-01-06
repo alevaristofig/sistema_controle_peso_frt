@@ -27,8 +27,11 @@ const CadastroPeso = (): ReactElement => {
         setPesoValor(formatarPeso(peso));
     }
 
-    const calcularImc = (): void => {
+    const calcularImc = (peso: string): void => {
+        let pesoAux = parseFloat(peso);
+        let imcValor = pesoAux / (1.70 * 1.70);       
 
+        setImc(imcValor.toFixed(2));
     }
 
     const salvarPeso = (e: React.ChangeEvent<HTMLFormElement>): void => {
