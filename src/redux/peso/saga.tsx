@@ -4,7 +4,7 @@ import { AnyAction } from 'redux-saga';
 import axios, { AxiosResponse } from 'axios';
 
 import { revalidarToken, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError,
-         listarSucesso, listarError, apgarSucesso, apgarError } from './slice';
+         listarSucesso, listarError, apgarSucesso, apgarError, salvarSucesso, salvarError } from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
@@ -45,6 +45,26 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
                 yield put(listarError(error.response.data.userMessage));
             }
         }
+}
+
+function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
+    try {
+        let urls = setUrl;  
+
+         yield call(axios.post,`${urls.url.pesos.href}`,action.payload.dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+            }
+        }); 
+
+        yield put(salvarSucesso());
+    } catch(error: any) {        
+            if(error.response.status === 401) {            
+                yield put(revalidarToken());
+            } else {
+                yield put(salvarError(error.response.data.userMessage));
+            }        
+        }  
 }
 
 function* buscarPrimeiroPeso(action: AnyAction) {
@@ -102,5 +122,6 @@ export default all([
     takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso),
     takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso),
     takeEvery('peso/listar',listar),
+    takeEvery('peso/salvar',salvar),
     takeEvery('peso/apagar',apagar),
 ])
