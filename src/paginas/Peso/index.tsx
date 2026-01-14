@@ -56,6 +56,11 @@ const Peso = (): ReactElement => {
                     <ToastContainer />
                 </div>                 
                 <div className="container py-4">
+                    <div className="row">
+                        <div className="col">
+                            <Link to="/cadastropeso" className="btn btn-success">Novo Peso</Link>
+                        </div>
+                    </div>
                     {
                         pesos.dados.length === 0 
                         ?

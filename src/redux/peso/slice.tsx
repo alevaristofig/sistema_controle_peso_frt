@@ -32,7 +32,7 @@ export const pesoSlice = createSlice({
             toast.error("Ocorreu um erro ao listar os Pesos!");         
         },
         salvar(state,action) {
-                    state.loading = true;
+            state.loading = true;
         },
         salvarSucesso(state) {
             state.loading = false;

@@ -49,15 +49,21 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
 
 function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
     try {
-        let urls = setUrl;  
-
-         yield call(axios.post,`${urls.url.pesos.href}`,action.payload.dados,{
+        let urls = setUrl; 
+        
+        action.payload.dados = {
+            pessoa: {
+                id: urls.pessoa.id
+            }
+        }
+console.log(action.payload.dados)
+       /* yield call(axios.post,`${urls.url.pesos.href}`,action.payload.dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         }); 
 
-        yield put(salvarSucesso());
+        yield put(salvarSucesso());*/
     } catch(error: any) {        
             if(error.response.status === 401) {            
                 yield put(revalidarToken());
