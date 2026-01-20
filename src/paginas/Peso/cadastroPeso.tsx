@@ -26,10 +26,18 @@ const CadastroPeso = (): ReactElement => {
 
     const { formatarPeso } = usePeso();
 
-    //const inputRef = useRef<ReactInputMask | null>(null);
-
-    const mascaraPeso = (peso: string): void => {
-        setPesoValor(formatarPeso(peso));
+    const mascaraPeso = (peso: string): void => {  
+        // console.log('peso valor',peso,pesoValor);
+       // let t = formatarPeso(peso);       
+       // setPesoValor(formatarPeso(peso));
+       const formatador = new Intl.NumberFormat('pt-BR', {
+            style: 'unit',
+            unit: 'kilogram', // Ou 'gram', 'metricTon'
+            maximumFractionDigits: 2, // Casas decimais
+        });
+        console.log(peso,formatador.format(parseFloat(peso)));
+      // setPesoValor(formatador.format(peso));
+       //console.log(t,pesoValor);
     }
 
     const calcularImc = (peso: string): void => {
@@ -80,10 +88,9 @@ const CadastroPeso = (): ReactElement => {
                                 <label className="form-label">Peso</label>
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
                                 <input 
-                                    type='text' 
-                                    id='inputPeso'
+                                    type='text'                                     
                                     className="form-control"  
-                                    value={pesoValor}                                                                                 
+                                                                                                                                                                                         
                                     onChange={(e) => mascaraPeso(e.target.value)} 
                                     onBlur={(e) => calcularImc(e.target.value)}
                                     required
@@ -105,7 +112,10 @@ const CadastroPeso = (): ReactElement => {
                             <div className="col">
                                 <label className="form-label">Data</label>
                                 <label className="form-label obrigatorio">*</label>                                
-                                <input type="date"  onChange={ e => setDataCadastro(e.target.value)}/>                            
+                                <input 
+                                    type="date"  
+                                    className="form-control"
+                                    onChange={ e => setDataCadastro(e.target.value)}/>                            
                             </div>
                         </div>
                         <div className="row mt-3">
