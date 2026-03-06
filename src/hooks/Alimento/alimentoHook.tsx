@@ -1,6 +1,27 @@
 import { useState } from "react";
+import axios from "axios";
+import { IAlimento } from "../../interfaces/alimento/alimento.interface";
 
 const useAlimento = () => {
+
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
+
+    const buscar = async (id: number): Promise<IAlimento> => {
+        const result = await axios.get(`${url.alimentos.href}/${id}`,{
+                                        headers: {
+                                            "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                        }
+                                    })
+                                    .then((response) => {                            
+                                        return response.data;
+                                    })
+                                    .catch((error) => {                                
+                                        return error.response.data.userMessage
+                                   });
+
+        return result;
+    }
 
     const formatarCaloria = (caloria: string): string | number => {
          if(caloria === '') {
@@ -19,7 +40,7 @@ const useAlimento = () => {
         }
     }
 
-    return { formatarCaloria };
+    return { formatarCaloria, buscar };
 }
 
 export default useAlimento;
