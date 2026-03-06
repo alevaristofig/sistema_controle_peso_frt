@@ -69,6 +69,6 @@ export const alimentoSlice = createSlice({
 
 export const { revalidarToken, listar, listarSucesso, listarError,
                salvar, salvarSucesso, salvarError, listarSemPaginacao, listarSemPaginacaoSucesso,
-               listarSemPaginacaoError } = alimentoSlice.actions;
+               listarSemPaginacaoError, atualizar, atualizarSucesso, atualizarError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;

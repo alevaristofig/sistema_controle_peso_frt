@@ -2,11 +2,12 @@ import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
 import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError, listarSemPaginacaoSucesso,
-         listarSemPaginacaoError } from './slice';
+         listarSemPaginacaoError, atualizarSucesso, atualizarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoAlimento } from '../../interfaces/sessao/sessao-alimento.interface';
 import { IAlimentoResponse } from '../../interfaces/alimento/alimento-response.interface';
+import { IAlimento } from '../../interfaces/alimento/alimento.interface';
 
 const setUrl: ISessaoAlimento = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -95,8 +96,40 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
     }
 }
 
+function* atualizar(action: AnyAction): Generator<any, void, AxiosResponse<IAlimento>> {
+    try {
+
+        let urls = setUrl; 
+
+        let dados = {
+            'nome': action.payload.nome,
+            'quantidade': action.payload.quantidade,
+            'calorias': action.payload.calorias,  
+            'pessoa': {
+                'id': urls.pessoa.id
+            }          
+        }
+
+        yield call(axios.put,`${urls.url.alimentos.href}/${action.payload.id}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+
+        yield put(atualizarSucesso());
+
+    } catch(error: any) {               
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(atualizarError(error.response.data.userMessage));
+        }                 
+    }
+}
+
 export default all([
     takeEvery('alimento/listar', listar),
     takeEvery('alimento/salvar', salvar),
     takeEvery('alimento/listarSemPaginacao', listarSemPaginacao),
+    takeEvery('alimento/atualizar', atualizar),
 ]);
