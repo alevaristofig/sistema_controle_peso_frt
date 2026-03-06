@@ -49,6 +49,17 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
+        atualizar: (state, action) => {
+            state.loading = false;
+        },
+        atualizarSucesso: (state) => {
+            state.loading = false;
+            toast.success("Alimento atualizado com Sucesso!");
+        },
+        atualizarError: (state, action) => {
+            state.loading = false;
+            toast.error(action.payload);
+        },
         revalidarToken(state) { 
             state.loading = false;                        
             state.modalToken = true;                           
