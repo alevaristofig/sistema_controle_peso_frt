@@ -13,6 +13,7 @@ import CadastroAlimento from './paginas/Alimento/cadastroAlimento';
 import EditarAlimento from './paginas/Alimento/editarAlimento';
 import Dieta from './paginas/Dieta';
 import CadastroDieta from './paginas/Dieta/cadastroDieta';
+import EditarDieta from './paginas/Dieta/editarDieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
 import CadastroHistoricoMedico from './paginas/HistoricoMedico/cadastroHistoricoMedico';
 import Logout from './paginas/Logout';
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
     {
         path: '/cadastrodieta',
         element: <CadastroDieta />
+    },
+    {
+        path: '/editardieta/:id',
+        element: <EditarDieta />
     },
     {
         path: '/historicomedico/:page',
