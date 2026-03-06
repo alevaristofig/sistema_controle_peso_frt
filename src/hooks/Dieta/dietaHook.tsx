@@ -28,6 +28,22 @@ const useDieta = () => {
         }
     }
 
+    const buscar = async (id: number): Promise<IDieta> => {
+        const result = await axios.get(`${url.dietas.href}/${id}`,{
+                                        headers: {
+                                            "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                        }
+                                    })
+                                    .then((response) => {                            
+                                        return response.data;
+                                    })
+                                    .catch((error) => {                                
+                                        return error.response.data.userMessage
+                                   });
+
+        return result;
+    }
+
     /*const listar = async (page: number): Promise<IDietaResponse | undefined> => {
 
         try {
@@ -58,7 +74,7 @@ const useDieta = () => {
         }        
      }*/
 
-     return { salvar };
+     return { salvar, buscar };
 }
 
 export default useDieta;
