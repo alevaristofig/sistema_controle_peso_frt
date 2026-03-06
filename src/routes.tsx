@@ -10,11 +10,13 @@ import Exercicio from './paginas/Exercicio';
 import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
 import CadastroAlimento from './paginas/Alimento/cadastroAlimento';
+import EditarAlimento from './paginas/Alimento/editarAlimento';
 import Dieta from './paginas/Dieta';
 import CadastroDieta from './paginas/Dieta/cadastroDieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
 import CadastroHistoricoMedico from './paginas/HistoricoMedico/cadastroHistoricoMedico';
 import Logout from './paginas/Logout';
+
 
 const router = createBrowserRouter([
     {
@@ -56,6 +58,10 @@ const router = createBrowserRouter([
     {
         path: '/cadastroalimento',
         element: <CadastroAlimento />
+    },
+    {
+        path: '/editaralimento/:id',
+        element: <EditarAlimento />
     },
     {
         path: '/dieta/:page',

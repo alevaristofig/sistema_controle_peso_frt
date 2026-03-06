@@ -89,8 +89,7 @@ const CadastroPeso = (): ReactElement => {
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
                                 <input 
                                     type='text'                                     
-                                    className="form-control"  
-                                                                                                                                                                                         
+                                    className="form-control"                                                                                                                                                                                           
                                     onChange={(e) => mascaraPeso(e.target.value)} 
                                     onBlur={(e) => calcularImc(e.target.value)}
                                     required
