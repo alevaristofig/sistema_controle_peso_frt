@@ -1,38 +1,48 @@
 import { ReactElement, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
-import { salvar } from "../../redux/historicomedico/slice";
+import { salvar } from "../../redux/exercicio/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 
-const CadastroDieta = (): ReactElement => {
-
+const CadastroExecicio = (): ReactElement => {
     const dispatch = useDispatch();
     const { modalToken, loading } = useSelector((state: RootState) => state.historicoMedico);
 
+    const navigate = useNavigate();
 
-    const [descricao,setDescricao] = useState<string>('');
-    const [remedio,setRemedio] = useState<string>('');
+    const [nome,setNome] = useState<string>('');
+    const [frequencia,setFrequencia] = useState<string>('');
+    const [tempo,setTempo] = useState<string>('');
 
-    const salvarHistoricoMedico = (e: React.ChangeEvent<HTMLFormElement>): void => {
+    useEffect(() => {
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+    });
+
+    const salvarExercicio = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
         let dataAtual = new Date();
-
+       
         dispatch(salvar({
-            descricao: descricao,
-            remedio: remedio,
-            dataCadastro: dataAtual.toISOString(),
-            dataAtualizacao: null
+            'nome': nome,
+            'frequencia': frequencia,
+            'tempo': tempo,
+            'dataCadastro': dataAtual.toISOString(),
+            'dataAtualizar': null
         }));
 
-        setDescricao('');
-        setRemedio('');
+        setNome('');
+        setFrequencia('');
+        setTempo('');
     }
 
     return(
@@ -48,31 +58,44 @@ const CadastroDieta = (): ReactElement => {
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
-                </div> 
+                </div>
                 <div className="container py-4">
-                    <form className="form-perfil" onSubmit={salvarHistoricoMedico}>
+                    <form className="form-perfil" onSubmit={salvarExercicio}>
                         <div className="row mt-3">
                             <div className="col">
-                                <label className="form-label">Descrição</label>
+                                <label className="form-label">Nome</label>
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
                                 <input 
                                     type='text'
                                     className="form-control" 
-                                    value={descricao}                                 
-                                    onChange={(e) => setDescricao(e.target.value)} 
+                                    value={nome}                                 
+                                    onChange={(e) => setNome(e.target.value)} 
                                     required 
                                 />
                             </div>
                         </div>
                         <div className="row mt-3">
                             <div className="col">
-                                <label className="form-label">Remédio</label>
+                                <label className="form-label">Frequência</label>
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
                                 <input 
                                     type='text'
                                     className="form-control" 
-                                    value={remedio}                                 
-                                    onChange={(e) => setRemedio(e.target.value)} 
+                                    value={frequencia}                                 
+                                    onChange={(e) => setFrequencia(e.target.value)} 
+                                    required 
+                                />
+                            </div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <label className="form-label">Tempo</label>
+                                <label className={`form-label ${styles.obrigatorio}`}>*</label>
+                                <input 
+                                    type='text'
+                                    className="form-control" 
+                                    value={tempo}                                 
+                                    onChange={(e) => setTempo(e.target.value)} 
                                     required 
                                 />
                             </div>
@@ -89,4 +112,4 @@ const CadastroDieta = (): ReactElement => {
     )
 }
 
-export default CadastroDieta;
+export default CadastroExecicio;
