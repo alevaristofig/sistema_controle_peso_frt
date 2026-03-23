@@ -1,7 +1,8 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { revalidarToken, listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError } from './slice';
+import { revalidarToken, listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError,
+         salvarSucesso, salvarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
@@ -60,11 +61,44 @@ function* listarSemPaginacao() {
         } else {        
             yield put(listarSemPaginacaoError(error.response.data.userMessage));
         }     
+    }    
+}
+
+function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
+    try {
+
+        let urls = setUrl; 
+
+        let dados = {
+            'nome': action.payload.nome,
+            'frequencia': action.payload.frequencia,
+            'tempo': action.payload.tempo,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizar': action.payload.dataAtualizar,
+            'pessoa': {
+                'id': urls.pessoa.id
+            }         
+        }
+
+        yield call(axios.post,`${urls.url.exercicios.href}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+            }
+        });
+
+        yield put(salvarSucesso());
+
+    } catch(error: any) {               
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(salvarError(error.response.data.userMessage));
+        }                 
     }
-    
 }
 
 export default all([
     takeEvery('exercicio/listar', listar),
     takeEvery('exercicio/listarSemPaginacao', listarSemPaginacao),
+    takeEvery('exercicio/salvar', salvar),
 ]);
