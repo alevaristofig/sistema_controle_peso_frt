@@ -14,7 +14,8 @@ export const pessoaSlice = createSlice({
     name: 'pessoa',
     initialState,
     reducers: {
-        listar: (state) => {            
+        listar: (state) => {  
+            console.log('entrou slice')          
             state.loading = true;            
         },
         listarSucesso: (state,action) => {

@@ -18,7 +18,7 @@ function* listar(): Generator<any, void, AxiosResponse<IPessoaResponse>> {
     try {
 
         let urls = setUrl;   
-
+console.log('entrou saga', urls)
         const response = yield call(axios.get,`${urls.url.pessoas.href}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
@@ -27,6 +27,7 @@ function* listar(): Generator<any, void, AxiosResponse<IPessoaResponse>> {
 
         yield put(listarSucesso(response.data._embedded.pessoaModelList));
     } catch(error: any) {
+         console.log(error)
         if(error.response.status === 401) {
             yield put(revalidarToken());
         } else {        

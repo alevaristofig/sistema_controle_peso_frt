@@ -1,5 +1,5 @@
 import { useEffect, useState, ReactElement } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -20,6 +20,7 @@ const Pessoa = (): ReactElement => {
     const { loading, pessoas } = useSelector((state: RootState) => state.pessoa); 
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
@@ -27,9 +28,12 @@ const Pessoa = (): ReactElement => {
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }
-
-        dispatch(listar());
-     },[]);
+console.log('entrou',pessoas)
+        if(pessoas.dados.length === 0) {
+            console.log('entrou buscar')
+            dispatch(listar());
+        }        
+     },[location.pathname]);
 
     return(
         <>
