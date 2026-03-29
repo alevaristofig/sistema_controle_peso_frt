@@ -25,9 +25,9 @@ const Pessoa = (): ReactElement => {
     const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
     useEffect(() => {
-        if(sessionStorage.getItem('token') == null) {           
+       /* if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
-        }
+        }*/
 console.log('entrou',pessoas)
         if(pessoas.dados.length === 0) {
             console.log('entrou buscar')

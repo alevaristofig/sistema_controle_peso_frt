@@ -7,6 +7,7 @@ import CryptoJS from 'crypto-js';
 import { IRootResponse } from '../../interfaces/link/rootresponse.interface';
 import { IDadosPessoaToken } from '../../interfaces/pessoa/dadospessoatoken.interface';
 import { ITokenResponse } from '../../interfaces/pessoa/token.interface';
+import { authService } from '../../service/auth';
 
 const Login = (): null => {
 
@@ -41,13 +42,15 @@ const Login = (): null => {
 
                 if(token.access_token !== '') { 
                                      
-                    sessionStorage.setItem('token', token.access_token);
-                    sessionStorage.setItem('refresh_token',token.refresh_token!);
+                    //sessionStorage.setItem('token', token.access_token);
+                    //sessionStorage.setItem('refresh_token',token.refresh_token!);
                     let urls = await listarUrls();
                     let dadosToken = await buscarDadosToken(token.access_token);
 
-                    sessionStorage.setItem('urls',JSON.stringify(urls._links));
-                    sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
+                    //sessionStorage.setItem('urls',JSON.stringify(urls._links));
+                    //sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
+
+                    authService.setAuth(token.access_token,token.refresh_token!,dadosToken, urls._links);
 
                     navigate('/', {replace: true});
                 } 
