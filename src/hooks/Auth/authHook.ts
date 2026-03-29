@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, UseDispatch, useSelector } from "react-redux";
-import { setAuth, logout } from "../../redux/store/authSlice";
+import { setAuth, logout } from "../../redux/auth/slice";
 import { authService } from "../../service/auth";
 
 export const useAuth = () => {
@@ -17,6 +17,7 @@ export const useAuth = () => {
         if(!user && auth.isAuthenticated) {
             dispatch(logout());
         }
+            
     },[dispatch]);
 
     return auth;

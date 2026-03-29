@@ -18,6 +18,7 @@ import EditarDieta from './paginas/Dieta/editarDieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
 import CadastroHistoricoMedico from './paginas/HistoricoMedico/cadastroHistoricoMedico';
 import Logout from './paginas/Logout';
+import { ProtectedRoute } from './ProtectedRoute';
 
 
 const router = createBrowserRouter([
@@ -26,72 +27,77 @@ const router = createBrowserRouter([
         element: <Login />
     },
     {
-        path: '/',
-        element: <Home />
-    },
-    {
-        path: '/pessoa',
-        element: <Pessoa />
-    },
-    {
-        path: '/editarpessoa/:id',
-        element: <EditarPessoa />
-    },
-    {
-        path: '/peso/:page',
-        element: <Peso />
-    },
-    {
-        path: '/cadastropeso',
-        element: <CadastroPeso />
-    },
-    {
-        path: '/exercicio/:page',
-        element: <Exercicio />
-    },
-    {
-        path: '/cadastroexercicio',
-        element: <CadastroExecicio />
-    },
-    {
-        path: '/treino/:page',
-        element: <Treino />
-    },
-    {
-        path: '/alimento/:page',
-        element: <Alimento />
-    },
-    {
-        path: '/cadastroalimento',
-        element: <CadastroAlimento />
-    },
-    {
-        path: '/editaralimento/:id',
-        element: <EditarAlimento />
-    },
-    {
-        path: '/dieta/:page',
-        element: <Dieta />
-    },
-    {
-        path: '/cadastrodieta',
-        element: <CadastroDieta />
-    },
-    {
-        path: '/editardieta/:id',
-        element: <EditarDieta />
-    },
-    {
-        path: '/historicomedico/:page',
-        element: <HistoricoMedico />
-    },
-    {
-        path: '/cadastrohistoricomedico',
-        element: <CadastroHistoricoMedico />
-    },
-    {
-        path: '/logout',
-        element: <Logout />
+        element: <ProtectedRoute />,
+        children: [            
+        {
+            path: '/',
+            element: <Home />
+        },
+        {
+            path: '/pessoa',
+            element: <Pessoa />
+        },
+        {
+            path: '/editarpessoa/:id',
+            element: <EditarPessoa />
+        },
+        {
+            path: '/peso/:page',
+            element: <Peso />
+        },
+        {
+            path: '/cadastropeso',
+            element: <CadastroPeso />
+        },
+        {
+            path: '/exercicio/:page',
+            element: <Exercicio />
+        },
+        {
+            path: '/cadastroexercicio',
+            element: <CadastroExecicio />
+        },
+        {
+            path: '/treino/:page',
+            element: <Treino />
+        },
+        {
+            path: '/alimento/:page',
+            element: <Alimento />
+        },
+        {
+            path: '/cadastroalimento',
+            element: <CadastroAlimento />
+        },
+        {
+            path: '/editaralimento/:id',
+            element: <EditarAlimento />
+        },
+        {
+            path: '/dieta/:page',
+            element: <Dieta />
+        },
+        {
+            path: '/cadastrodieta',
+            element: <CadastroDieta />
+        },
+        {
+            path: '/editardieta/:id',
+            element: <EditarDieta />
+        },
+        {
+            path: '/historicomedico/:page',
+            element: <HistoricoMedico />
+        },
+        {
+            path: '/cadastrohistoricomedico',
+            element: <CadastroHistoricoMedico />
+        },
+        {
+            path: '/logout',
+            element: <Logout />
+        }
+        ]
     }
 ]);
 

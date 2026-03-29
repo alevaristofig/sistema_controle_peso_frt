@@ -4,7 +4,7 @@ const TOKEN_KEY = "auth_token";
 const USER_KEY = "user_data";
 
 export const authService = {
-    isAuthenticated: () => !!Cookies.get(TOKEN_KEY);
+    isAuthenticated: () => !!Cookies.get(TOKEN_KEY),
 
     getUser: () => {
         const user = Cookies.get(USER_KEY);
