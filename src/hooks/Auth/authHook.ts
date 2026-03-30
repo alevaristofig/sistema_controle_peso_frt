@@ -8,13 +8,13 @@ export const useAuth = () => {
     const auth = useSelector((state: any) => state.auth);
 
     useEffect(() => {
-        const user = authService.getUser();
+        const dadosUsuario = authService.getUser();
 
-        if(user && !auth.isAuthenticated) {
-            dispatch(setAuth(user));
+        if(dadosUsuario && !dadosUsuario.isAuthenticated) {            
+            dispatch(setAuth(dadosUsuario));
         }
 
-        if(!user && auth.isAuthenticated) {
+        if(!dadosUsuario && auth.isAuthenticated) {            
             dispatch(logout());
         }
             

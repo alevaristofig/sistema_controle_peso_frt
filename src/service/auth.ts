@@ -14,6 +14,12 @@ export const authService = {
         return user ? JSON.parse(user) : null; 
     },
 
+    getUrls: () => {
+        const urls = Cookies.get(URLS);
+
+        return urls ? JSON.parse(urls) : null;
+    },
+
     setAuth: (token: string, refresh_token: string, user: any, urls: any) => {
         Cookies.set(TOKEN_KEY,token,{ expires: 1});
         Cookies.set(REFRESH_TOKEN_KEY,refresh_token,{ expires: 1});

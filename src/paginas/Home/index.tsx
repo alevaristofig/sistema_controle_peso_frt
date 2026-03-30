@@ -80,16 +80,17 @@ const Home = (): ReactElement  => {
         }        
     }
 
-    useEffect(() => {            
-        if(sessionStorage.getItem('token') === null || sessionStorage.getItem('token') === undefined) {           
+    useEffect(() => {  
+        console.log('entrou')          
+        /*if(sessionStorage.getItem('token') === null || sessionStorage.getItem('token') === undefined) {           
             navigate('/login');
-        }
+        }*/
 
-        buscarDados();
+       /* buscarDados();
         buscarQuantidadeTreinoFeito('S');
         buscarQuantidadeTreinoNaoFeito('N');
         dispatch(buscarPrimeiroPeso());
-        dispatch(buscarUltimoPeso());
+        dispatch(buscarUltimoPeso());*/
     },[]);
 
     return(

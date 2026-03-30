@@ -28,12 +28,13 @@ const Pessoa = (): ReactElement => {
        /* if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }*/
-console.log('entrou',pessoas)
+/*console.log('entrou',pessoas)
         if(pessoas.dados.length === 0) {
             console.log('entrou buscar')
             dispatch(listar());
-        }        
-     },[location.pathname]);
+        }*/
+        dispatch(listar());        
+     },[]);
 
     return(
         <>

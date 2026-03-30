@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IDadosPessoaToken } from "../../interfaces/pessoa/dadospessoatoken.interface";
 
 type User = {
     id: number,
@@ -13,25 +14,25 @@ type User = {
 
 type AuthState = {
     isAuthenticated: boolean,
-    user: User | null
+    dadosUsuario: IDadosPessoaToken | null
 };
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  user: null,
+  dadosUsuario: null,
 };
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuth(state,action: PayloadAction<User>) {
+        setAuth(state,action: PayloadAction<IDadosPessoaToken>) {
             state.isAuthenticated = true;
-            state.user = action.payload;
+            state.dadosUsuario = action.payload;
         },
         logout(state) {
             state.isAuthenticated = false;
-            state.user = null;
+            state.dadosUsuario = null;
         }
     }
 });

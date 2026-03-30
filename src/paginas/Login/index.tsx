@@ -1,5 +1,6 @@
 import { useState, useEffect, ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import CryptoJS from 'crypto-js';
@@ -8,6 +9,7 @@ import { IRootResponse } from '../../interfaces/link/rootresponse.interface';
 import { IDadosPessoaToken } from '../../interfaces/pessoa/dadospessoatoken.interface';
 import { ITokenResponse } from '../../interfaces/pessoa/token.interface';
 import { authService } from '../../service/auth';
+import { setAuth } from '../../redux/auth/slice';
 
 const Login = (): null => {
 
@@ -19,11 +21,12 @@ const Login = (): null => {
     const [password] = useState<string>('ZTmgTeTXlP373rI');
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-         let params: URLSearchParams  = new URLSearchParams(window.location.search);
+    useEffect(() => {        
+        let params: URLSearchParams  = new URLSearchParams(window.location.search);
 
-         if(params.size === 0) {   
+        if(params.size === 0) {   
             let codeVerifier = generateRandomString();
             sessionStorage.setItem("codeVerifier", codeVerifier);
 
@@ -44,7 +47,7 @@ const Login = (): null => {
                                      
                     //sessionStorage.setItem('token', token.access_token);
                     //sessionStorage.setItem('refresh_token',token.refresh_token!);
-                    let urls = await listarUrls();
+                    let urls = await listarUrls(token.access_token);
                     let dadosToken = await buscarDadosToken(token.access_token);
 
                     //sessionStorage.setItem('urls',JSON.stringify(urls._links));
@@ -52,7 +55,10 @@ const Login = (): null => {
 
                     authService.setAuth(token.access_token,token.refresh_token!,dadosToken, urls._links);
 
+                    dispatch(setAuth(dadosToken));
+
                     navigate('/', {replace: true});
+                   // window.location.href = 'http://localhost:3000/';
                 } 
              }
 
@@ -106,10 +112,10 @@ const Login = (): null => {
         return response;
     }
 
-    const listarUrls = async(): Promise<IRootResponse> => {
+    const listarUrls = async(token: string): Promise<IRootResponse> => {
         const result = await axios.get(urlPadrao,{
                             headers: {
-                                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                "Authorization": `Bearer ${token}` ,
                             }
                         })
                         .then((response) => {                                                   
