@@ -1,20 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IDadosPessoaToken } from "../../interfaces/pessoa/dadospessoatoken.interface";
-
-type User = {
-    id: number,
-    nome: string,
-    email: string,
-    altura: number,
-    endereco: string,
-    senha: string,
-    dataCadastro: string,
-    dataAtualizacao: string
-};
+import { IPessoa } from "../../interfaces/pessoa/pessoa.interface";
 
 type AuthState = {
     isAuthenticated: boolean,
-    dadosUsuario: IDadosPessoaToken | null
+    dadosUsuario: IPessoa | null
 };
 
 const initialState: AuthState = {
@@ -26,7 +16,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuth(state,action: PayloadAction<IDadosPessoaToken>) {
+        setAuth(state,action: PayloadAction<IPessoa>) {
             state.isAuthenticated = true;
             state.dadosUsuario = action.payload;
         },

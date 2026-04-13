@@ -33,7 +33,7 @@ const EditarPessoa = (): ReactElement => {
     const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
     const buscarDados = async(): Promise<void> => {
-        let dados = await buscar(parseInt(id!));
+        let dados = await buscar();
     
         if(typeof dados === 'string') {
             toast.error(dados);  
@@ -41,7 +41,7 @@ const EditarPessoa = (): ReactElement => {
         } else {                
             setNome(dados.nome);
             setEmail(dados.email);
-            setAltura(dados.altura.toFixed(2));
+            setAltura(Number(dados.altura.toFixed(2)));
             setEndereco(dados.endereco);
             setSenha(dados.senha);
             setDataCadastro(dados.dataCadastro);             

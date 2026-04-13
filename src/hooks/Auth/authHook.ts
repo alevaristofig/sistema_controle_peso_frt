@@ -10,7 +10,7 @@ export const useAuth = () => {
     useEffect(() => {
         const dadosUsuario = authService.getUser();
 
-        if(dadosUsuario && !dadosUsuario.isAuthenticated) {            
+        if(dadosUsuario && !auth.isAuthenticated) {            
             dispatch(setAuth(dadosUsuario));
         }
 

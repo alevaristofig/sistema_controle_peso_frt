@@ -14,22 +14,17 @@ const usePessoa = () => {
     const [removertoken] = useState<string>('removertoken');
 
     const buscar = async(): Promise<IPessoa> => {  
-        
-        if (!url || !dadosPessoa?.id) {
-            throw new Error('Dados insuficientes para buscar pessoa');
-        }
 
         try {
-                const response = await axios.get<IPessoa>(`${url.pessoas.href}/${dadosPessoa.id}`,{
+                const response = await axios.get<IPessoa>(`${url?.pessoas.href}/12`,{
                                 headers: {
                                     "Authorization": `Bearer ${token}` ,
                                 }
                             });
 
                 return response.data;
-        } catch(error : any) {
-            throw new Error(
-                
+        } catch(error : any) {            
+            throw new Error(                
                 error.response?.data?.userMessage 
                     ?? 'Ocorreu um erro interno inesperado no sistema.'
                         + 'Tente novamente e se o problema persistir, entre em contato com o administrador do sistema');
