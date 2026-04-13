@@ -1,35 +1,43 @@
 import { useState } from "react";
+import { authService } from "../../service/auth";
 
 import axios from "axios";
+import { IPessoaResponse } from "../../interfaces/pessoa/pessoaresponse.interface";
+import { IPessoa } from "../../interfaces/pessoa/pessoa.interface";
+import { IApiLinks } from "../../interfaces/link/apilinks.interface";
 
 const usePessoa = () => {
 
-    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
-   // const [urlSemAutenticacao] = useState('http://localhost:8080/v1');
+    const [url] = useState<IApiLinks | null>(authService.getUrls());
+    const [dadosPessoa] = useState<IPessoa | null>(authService.getUser());
+    const [token] = useState(authService.getToken());
     const [removertoken] = useState<string>('removertoken');
 
-    const buscar = async(id: number) => {
-        const response = await axios.get(`${url.pessoas.href}/${id}`,{
-                            headers: {
-                                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
-                            }
-                            })
-                            .then((response) => {                                                                 
-                                return response.data;
-                            })
-                            .catch((error) => {   
-                                if(typeof error.response.data.userMessage == 'undefined') {
-                                    return 'Ocorreu um erro interno inesperado no sistema.'
-                                    + 'Tente novamente e se o problema persistir, entre em contato com o administrador do sistema';
+    const buscar = async(): Promise<IPessoa> => {  
+        
+        if (!url || !dadosPessoa?.id) {
+            throw new Error('Dados insuficientes para buscar pessoa');
+        }
+
+        try {
+                const response = await axios.get<IPessoa>(`${url.pessoas.href}/${dadosPessoa.id}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${token}` ,
                                 }
-                                                        
-                                return error.response.data.userMessage
                             });
-        return response;
+
+                return response.data;
+        } catch(error : any) {
+            throw new Error(
+                
+                error.response?.data?.userMessage 
+                    ?? 'Ocorreu um erro interno inesperado no sistema.'
+                        + 'Tente novamente e se o problema persistir, entre em contato com o administrador do sistema');
+        }
     }
 
     const removerToken = async(token: string): Promise<void> => {
-        await axios.delete(`${url.pessoas.href}/${removertoken}/${token}`);
+        await axios.delete(`${url?.pessoas.href}/${removertoken}/${token}`);
     }
 
     return { buscar, removerToken }

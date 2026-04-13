@@ -1,5 +1,5 @@
 import { ReactElement, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 
@@ -24,7 +24,6 @@ import { ITreino } from "../../interfaces/treino/treino.interface";
 
 import styles from './Home.module.css';
 
-
 const Home = (): ReactElement  => {
 
     const dispatch = useDispatch();
@@ -33,9 +32,6 @@ const Home = (): ReactElement  => {
     const { buscar } = usePessoa();    
     const { listarQuantidadeTreinos } = useTreino();
 
-    const navigate = useNavigate();
-
-    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
     const [buscarError,setBuscarErro] = useState<boolean>(false);
     const [nome,setNome] = useState<string>('');
     const [altura,setAltura] = useState<number>();
@@ -51,16 +47,16 @@ const Home = (): ReactElement  => {
     const IconeGuia = MdLibraryBooks as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
 
-    const buscarDados = async() => {
-        let dados = await buscar(dadosPessoa.id);
+    const buscarDados = async(): Promise<void> => {
+        try {
+            let dados = await buscar();
 
-        if(typeof dados === 'string') {
-            toast.error(dados);  
-            setBuscarErro(true);       
-        } else {                
             setNome(dados.nome);               
             setAltura(dados.altura);   
-            setEndereco(dados.endereco);             
+            setEndereco(dados.endereco);   
+        } catch(error : any) {
+             toast.error(error.message);
+            setBuscarErro(true);
         }
     }
 
@@ -80,14 +76,10 @@ const Home = (): ReactElement  => {
         }        
     }
 
-    useEffect(() => {  
-        console.log('entrou')          
-        /*if(sessionStorage.getItem('token') === null || sessionStorage.getItem('token') === undefined) {           
-            navigate('/login');
-        }*/
+    useEffect(() => {            
 
-       /* buscarDados();
-        buscarQuantidadeTreinoFeito('S');
+        buscarDados();
+       /* buscarQuantidadeTreinoFeito('S');
         buscarQuantidadeTreinoNaoFeito('N');
         dispatch(buscarPrimeiroPeso());
         dispatch(buscarUltimoPeso());*/

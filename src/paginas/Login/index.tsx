@@ -44,21 +44,15 @@ const Login = (): null => {
                 let token = await gerarAccessToken(params.get('code')!);
 
                 if(token.access_token !== '') { 
-                                     
-                    //sessionStorage.setItem('token', token.access_token);
-                    //sessionStorage.setItem('refresh_token',token.refresh_token!);
+                                                                             
                     let urls = await listarUrls(token.access_token);
-                    let dadosToken = await buscarDadosToken(token.access_token);
-
-                    //sessionStorage.setItem('urls',JSON.stringify(urls._links));
-                    //sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
+                    let dadosToken = await buscarDadosToken(token.access_token);                                
 
                     authService.setAuth(token.access_token,token.refresh_token!,dadosToken, urls._links);
 
                     dispatch(setAuth(dadosToken));
 
                     navigate('/', {replace: true});
-                   // window.location.href = 'http://localhost:3000/';
                 } 
              }
 
