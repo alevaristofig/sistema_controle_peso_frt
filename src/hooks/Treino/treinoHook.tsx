@@ -2,26 +2,28 @@ import { useState } from 'react';
 
 import axios from 'axios';
 import { ITreino } from '../../interfaces/treino/treino.interface';
+import { IApiLinks } from '../../interfaces/link/apilinks.interface';
+import { authService } from '../../service/auth';
+import { IPessoa } from '../../interfaces/pessoa/pessoa.interface';
 
 const useTreino = () => {
 
-    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')!));
+    const [url] = useState<IApiLinks | null>(authService.getUrls());
+    const [dadosPessoa] = useState<IPessoa | null>(authService.getUser());
+    const [token] = useState(authService.getToken());
     const [urlListarTreinos] = useState('listartreinos');
-    const [pessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')!));
 
     const listarQuantidadeTreinos = async(treino: string): Promise<ITreino | false> => {
-        const response = await axios.get(`${url.pessoaexercicio.href}/${urlListarTreinos}/${pessoa.id}/${treino}`,{
-                            headers: {
-                                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
-                            }
-                            })
-                            .then((response) => {                                                                 
-                                return response.data;
-                            })
-                            .catch((error) => {   
-                                return false;
-                            });
-        return response;
+        try {
+            const response = await axios.get(`${url?.pessoaexercicio.href}/${urlListarTreinos}/${dadosPessoa?.id}/${treino}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${token}` ,
+                                }
+                            });                            
+            return response.data;
+        } catch(error: any) {
+             throw new Error(error.response?.data?.userMessage);
+        }        
     }
 
     return { listarQuantidadeTreinos };

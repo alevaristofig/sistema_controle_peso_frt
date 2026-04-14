@@ -16,7 +16,7 @@ const usePessoa = () => {
     const buscar = async(): Promise<IPessoa> => {  
 
         try {
-                const response = await axios.get<IPessoa>(`${url?.pessoas.href}/12`,{
+                const response = await axios.get<IPessoa>(`${url?.pessoas.href}/${dadosPessoa?.id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${token}` ,
                                 }

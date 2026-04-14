@@ -36,6 +36,8 @@ const Home = (): ReactElement  => {
     const [nome,setNome] = useState<string>('');
     const [altura,setAltura] = useState<number>();
     const [endereco,setEndereco] = useState<string>('');
+    const [treinosFeito] = useState<string>('S');
+    const [treinosNaoFeito] = useState<string>('N');
     const [treinosFeitos,setTreinosFeitos] = useState<ITreino[]>([]);
     const [treinosNaoFeitos,setTreinosNaoFeitos] = useState<ITreino[]>([]);
     const [urlGuia] = useState<string>('https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf');
@@ -60,16 +62,16 @@ const Home = (): ReactElement  => {
         }
     }
 
-    const buscarQuantidadeTreinoFeito = async(treino: string): Promise<void> => {
-        let dados = await listarQuantidadeTreinos(treino);
+    const buscarQuantidadeTreinoFeito = async(): Promise<void> => {
+        let dados = await listarQuantidadeTreinos(treinosFeito);
 
         if(dados) {
             setTreinosFeitos([dados]);
         }        
     }
 
-    const buscarQuantidadeTreinoNaoFeito = async(treino: string): Promise<void> => {
-        let dados = await listarQuantidadeTreinos(treino);
+    const buscarQuantidadeTreinoNaoFeito = async(): Promise<void> => {
+        let dados = await listarQuantidadeTreinos(treinosNaoFeito);
 
         if(dados) {
             setTreinosNaoFeitos([dados]);
@@ -79,19 +81,16 @@ const Home = (): ReactElement  => {
     useEffect(() => {            
 
         buscarDados();
-       /* buscarQuantidadeTreinoFeito('S');
-        buscarQuantidadeTreinoNaoFeito('N');
+        buscarQuantidadeTreinoFeito();
+        buscarQuantidadeTreinoNaoFeito();
         dispatch(buscarPrimeiroPeso());
-        dispatch(buscarUltimoPeso());*/
+        dispatch(buscarUltimoPeso());
     },[]);
 
     return(
         <>
             <Cabecalho />
             <div className={styles.content}>
-                <Titulo nome="Home">
-                    <IconeHome color="#fff" fontSize={24} />
-                </Titulo>
                 <div className="container py-4">
                     {
                         buscarError
@@ -124,11 +123,11 @@ const Home = (): ReactElement  => {
                                                 <span className='ms-2 fst-italic'>Não existem registros de pesos para exibir</span>
                                             :
                                                 <>
-                                                    <span className='ms-2'>Peso Inicial: {primeiroPeso!.valor}</span>
-                                                    <span className='ms-2'>Peso Atual: {ultimoPeso!.valor}</span>
+                                                    <span className='ms-2'>Peso Inicial: {primeiroPeso && primeiroPeso.valor}</span>
+                                                    <span className='ms-2'>Peso Atual: {ultimoPeso && ultimoPeso.valor}</span>
                                                     <span className='ms-2'>
                                                         {
-                                                            primeiroPeso.valor - ultimoPeso!.valor > 0
+                                                            primeiroPeso!.valor - ultimoPeso!.valor > 0
                                                             ?
                                                                 <label>Perdeu: {(primeiroPeso.valor - ultimoPeso!.valor).toFixed(2)}</label>
                                                             :
@@ -170,7 +169,7 @@ const Home = (): ReactElement  => {
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <IconeGuia color="#000" fontSize={24} className='float-start' />  
                                         <span className='ms-2 float-start'>   
-                                            <a className='linkGuia' href={urlGuia} target='_blank'>
+                                            <a className='linkGuia link-underline-info' href={urlGuia} target='_blank'>
                                                 Guia Alimentar Para a População Brasileira
                                             </a>
                                         </span> 

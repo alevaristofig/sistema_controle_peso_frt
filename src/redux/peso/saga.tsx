@@ -8,8 +8,8 @@ import { revalidarToken, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, bus
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
-import { IPesoState } from '../../interfaces/peso/peso-state.interface';
 import { IPesoResponse } from '../../interfaces/peso/pesoresponse.interface';
+import { authService } from '../../service/auth';
 
 
 const setUrl: ISessaoPeso = {
@@ -75,11 +75,12 @@ console.log(action.payload.dados)
 
 function* buscarPrimeiroPeso(action: AnyAction) {
     try {   
-        let urls = setUrl; 
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser();
 
-        const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.primeiroPeso}/${urls.pessoa.id}`,{
+        const response: AxiosResponse<IPeso> = yield call(axios.get,`${url?.pesos.href}/buscarprimeiropeso/${dadosPessoa?.id}`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                "Authorization": `Bearer ${authService.getToken()}` ,
             }
         });
 
@@ -92,11 +93,12 @@ function* buscarPrimeiroPeso(action: AnyAction) {
 function* buscarUltimoPeso(action: AnyAction) {
     try {   
 
-        let urls = setUrl; 
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser();
 
-        const response: AxiosResponse<IPeso> = yield call(axios.get,`${urls.url.pesos.href}/${urls.ultimoPeso}/${urls.pessoa.id}`,{
+        const response: AxiosResponse<IPeso> = yield call(axios.get,`${url?.pesos.href}/buscarultimopeso/${dadosPessoa?.id}`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                "Authorization": `Bearer ${authService.getToken()}` ,
             }
         });
 
