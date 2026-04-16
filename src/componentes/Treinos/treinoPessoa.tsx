@@ -14,7 +14,7 @@ const TreinoPessoa: React.FC<ITreinoPessoa> = ({treinoFeitosDados, treinoNaoFeit
                     treinoNaoFeitosDados.map((t,i) => {
                         return (
                             <>
-                                <span className='ms-2 fst-italic'>{}:</span>
+                                <span className='ms-2 fst-italic'></span>
                                     <span className='ms-2' >
                                         <label>Feitos: 0 | 
                                         Não Feitos: {}                                    

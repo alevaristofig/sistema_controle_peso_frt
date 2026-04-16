@@ -16,9 +16,9 @@ import { buscarPrimeiroPeso, buscarUltimoPeso } from "../../redux/peso/slice";
 import usePessoa from "../../hooks/Pessoa/pessoaHook";
 import useTreino from "../../hooks/Treino/treinoHook";
 
+import HomePeso from "../../componentes/Home/home-peso";
 import TreinoPessoa from '../../componentes/Treinos/treinoPessoa';
 import Cabecalho from "../../componentes/Cabecalho";
-import Titulo from "../../componentes/Titulo";
 
 import { ITreino } from "../../interfaces/treino/treino.interface";
 
@@ -42,9 +42,7 @@ const Home = (): ReactElement  => {
     const [treinosNaoFeitos,setTreinosNaoFeitos] = useState<ITreino[]>([]);
     const [urlGuia] = useState<string>('https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf');
 
-    const IconeHome = FiHome as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePerson = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
-    const IconePeso = LiaWeightHangingSolid as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconePeso2 = GiWeightLiftingUp as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconeGuia = MdLibraryBooks as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
 
@@ -116,37 +114,11 @@ const Home = (): ReactElement  => {
                                 </div>
                                 <div className='row'>
                                     <div className="text-body-secondary pt-3 col marginLinha">
-                                        <IconePeso color="#000" fontSize={24} />
-                                        {
-                                            primeiroPeso === null
-                                            ?
-                                                <span className='ms-2 fst-italic'>Não existem registros de pesos para exibir</span>
-                                            :
-                                                <>
-                                                    <span className='ms-2'>Peso Inicial: {primeiroPeso && primeiroPeso.valor}</span>
-                                                    <span className='ms-2'>Peso Atual: {ultimoPeso && ultimoPeso.valor}</span>
-                                                    <span className='ms-2'>
-                                                        {
-                                                            primeiroPeso!.valor - ultimoPeso!.valor > 0
-                                                            ?
-                                                                <label>Perdeu: {(primeiroPeso.valor - ultimoPeso!.valor).toFixed(2)}</label>
-                                                            :
-                                                                <label>Ganhou: {(primeiroPeso.valor - ultimoPeso!.valor).toFixed(2)}</label>
-                                                        }
-                                                    </span>
-                                                    <span className='ms-4'>IMC Inicial: {primeiroPeso.imc}</span>
-                                                    <span className='ms-2'>IMC Atual: {ultimoPeso!.imc}</span>
-                                                    <span className='ms-2'>
-                                                        {
-                                                            primeiroPeso.imc - ultimoPeso!.imc > 0
-                                                            ?
-                                                                <label>Perdeu: {(primeiroPeso.imc - ultimoPeso!.imc).toFixed(2)}</label>
-                                                            :
-                                                                <label>Ganhou: {(primeiroPeso.imc - ultimoPeso!.imc).toFixed(2)}</label>
-                                                        }
-                                                    </span>
-                                                </>
-                                        }
+                                        {   primeiroPeso 
+                                            && ultimoPeso 
+                                            &&  
+                                            <HomePeso primeiroPeso={primeiroPeso} ultimoPeso={ultimoPeso}/>
+                                        }                                        
                                         <span className='ms-3 mb-2 float-end'>
                                             <Link to={`/peso/0`} className="btn btn-info text-white">Ver Pesos</Link>
                                         </span>

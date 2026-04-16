@@ -73,7 +73,7 @@ console.log(action.payload.dados)
         }  
 }
 
-function* buscarPrimeiroPeso(action: AnyAction) {
+function* buscarPrimeiroPeso(): Generator<any, void, AxiosResponse<IPeso>> {
     try {   
         let url = authService.getUrls();
         let dadosPessoa = authService.getUser();
