@@ -1,5 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { Link } from 'react-router-dom';
+
+import { authService } from '../../service/auth';
 
 import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
@@ -15,6 +17,7 @@ import styles from './Cabecalho.module.css';
 import avatarImg from '../../assets/coracao.jpeg';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import { IPessoa } from "../../interfaces/pessoa/pessoa.interface";
 
 const Cabecalho = (): ReactElement => {
 
@@ -27,6 +30,8 @@ const Cabecalho = (): ReactElement => {
     const IconeDieta = BiFoodMenu as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconeHistoricoMedico = CiMedicalClipboard as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
     const IconeLogout = TbLogout2 as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+
+    const [dadosPessoa] = useState<IPessoa | null>(authService.getUser());
     
 
     return(
@@ -40,7 +45,7 @@ const Cabecalho = (): ReactElement => {
                     <IconeHome color="#fff" fontSize={24} /> Home
                 </Link>
 
-                <Link to="/pessoa">
+                <Link to={`/editarpessoa/${dadosPessoa?.id}`}>
                     <IconePessoa color="#fff" fontSize={24} /> Pessoa
                 </Link>
 

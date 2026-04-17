@@ -3,8 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 
-import { VscPerson } from "react-icons/vsc";
-
 import { atualizar } from "../../redux/pessoa/slice";
 
 import usePessoa from "../../hooks/Pessoa/pessoaHook";
@@ -30,8 +28,6 @@ const EditarPessoa = (): ReactElement => {
     const [dataCadastro,setDataCadastro] = useState<Date>();
     const [buscarError,setBuscarErro] = useState<boolean>(false);
 
-    const IconePessoa = VscPerson as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
-
     const buscarDados = async(): Promise<void> => {
         let dados = await buscar();
     
@@ -49,12 +45,7 @@ const EditarPessoa = (): ReactElement => {
     }
 
     useEffect(() => {
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
-
         buscarDados();
-
     },[]);
 
     const atualizarDados = (e: FormEvent<HTMLFormElement>): void => {

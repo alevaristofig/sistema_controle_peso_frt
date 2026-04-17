@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 
-import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
-import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { GiWeightLiftingUp } from 'react-icons/gi';
 import { MdLibraryBooks } from 'react-icons/md';
 
@@ -22,7 +20,10 @@ import Cabecalho from "../../componentes/Cabecalho";
 
 import { ITreino } from "../../interfaces/treino/treino.interface";
 
+import { authService } from '../../service/auth';
+
 import styles from './Home.module.css';
+import { IPessoa } from "../../interfaces/pessoa/pessoa.interface";
 
 const Home = (): ReactElement  => {
 
@@ -32,6 +33,7 @@ const Home = (): ReactElement  => {
     const { buscar } = usePessoa();    
     const { listarQuantidadeTreinos } = useTreino();
 
+    const [dadosPessoa] = useState<IPessoa | null>(authService.getUser());
     const [buscarError,setBuscarErro] = useState<boolean>(false);
     const [nome,setNome] = useState<string>('');
     const [altura,setAltura] = useState<number>();
@@ -107,7 +109,7 @@ const Home = (): ReactElement  => {
                                         <span className='ms-2'>{altura}</span>
                                         <span className='ms-3'>{endereco}</span>
                                         <span className='ms-3 mb-2 float-end'>
-                                            <Link to={`/pessoadados/1`} className="btn btn-info text-white">Editar</Link>
+                                            <Link to={`/editarpessoa/${dadosPessoa?.id}`} className="btn btn-info text-white">Editar</Link>
                                         </span>
                                     </div>
                                     <hr />                                    

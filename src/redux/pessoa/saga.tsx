@@ -9,6 +9,8 @@ import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
 import { IPessoa } from '../../interfaces/pessoa/pessoa.interface';
 import { IPessoaResponse } from '../../interfaces/pessoa/pessoaresponse.interface';
 
+import { authService } from '../../service/auth';
+
 const setUrl: ISessaoPessoa = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
     pessoa: JSON.parse(sessionStorage.getItem('dadosPessoa')!)
@@ -17,11 +19,12 @@ const setUrl: ISessaoPessoa = {
 function* listar(): Generator<any, void, AxiosResponse<IPessoaResponse>> {
     try {
 
-        let urls = setUrl;   
-console.log('entrou saga', urls)
-        const response = yield call(axios.get,`${urls.url.pessoas.href}`,{
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser();  
+
+        const response = yield call(axios.get,`${url?.pessoas.href}`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+                "Authorization": `Bearer ${authService.getToken()}`
             }
         });
 
