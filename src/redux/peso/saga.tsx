@@ -22,11 +22,12 @@ const setUrl: ISessaoPeso = {
 
 function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
     try {      
-        let urls = setUrl;  
-   
-        const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${urls.url.pesos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser();  
+   console.log('entrou')
+        const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${url?.pesos.href}/listar/${dadosPessoa?.id}?page=${action.payload.page}`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                "Authorization": `Bearer ${authService.getToken()}` ,
             }
         });
     

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDadosPessoaToken } from "../../interfaces/pessoa/dadospessoatoken.interface";
 import { IPessoa } from "../../interfaces/pessoa/pessoa.interface";
+import { authService } from "../../service/auth";
 
 type AuthState = {
     isAuthenticated: boolean,
@@ -8,7 +8,7 @@ type AuthState = {
 };
 
 const initialState: AuthState = {
-  isAuthenticated: false,
+  isAuthenticated: !!authService.getUser(),
   dadosUsuario: null,
 };
 

@@ -7,7 +7,6 @@ import { RootState } from "../../redux/root-reducer";
 import { listar, buscarPrimeiroPeso, buscarUltimoPeso, apagar } from "../../redux/peso/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
-import Titulo from "../../componentes/Titulo";
 import Paginacao from '../../componentes/Paginacao';
 
 import styles from '../Home/Home.module.css';
@@ -16,17 +15,11 @@ const Peso = (): ReactElement => {
 
     const dispatch = useDispatch();
 
-    const { loading, pesos, primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso); 
+    const { pesos, primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso); 
 
     const { page } = useParams();
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
-
         dispatch(listar({
             'page': page
         }));
