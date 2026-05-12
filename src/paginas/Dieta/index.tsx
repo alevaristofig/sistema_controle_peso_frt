@@ -1,5 +1,5 @@
 import { ReactElement, useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -18,16 +18,10 @@ const Dieta = (): ReactElement => {
     const { page } = useParams();
    
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const { loading, dietas } = useSelector((state: RootState) => state.dieta);    
 
     useEffect(() => {
-
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
-
         dispatch(listar({
             'page': page
         }));

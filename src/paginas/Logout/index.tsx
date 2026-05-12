@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import usePessoa from "../../hooks/Pessoa/pessoaHook";
+import { authService } from "../../service/auth";
 
 const Logout = (): null => {
 
@@ -12,15 +13,11 @@ const Logout = (): null => {
     const [urlLogout] = useState<string>("http://localhost:8080");
 
     useEffect(() => {
-
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
     
         async function remover() {
-                removerToken(sessionStorage.getItem('token')!);
-                sessionStorage.removeItem('token');
-                sessionStorage.removeItem('urls');
+                removerToken(authService.getToken()!);
+
+                authService.logout();
     
                 window.location.href = `${urlLogout}/logout`;
             }

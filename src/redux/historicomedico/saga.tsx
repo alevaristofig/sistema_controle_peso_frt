@@ -6,6 +6,7 @@ import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoHistoricoMedico } from '../../interfaces/sessao/sessao-historicomedico.interface';
 import { IHistoricoMedicoResponse } from '../../interfaces/historicomedico/historicomedico-response.interface';
+import { authService } from '../../service/auth';
 
 const setUrl: ISessaoHistoricoMedico = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -15,11 +16,12 @@ const setUrl: ISessaoHistoricoMedico = {
 
 function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IHistoricoMedicoResponse>> {
     try {
-        let urls = setUrl;  
+            let url = authService.getUrls();
+            let dadosPessoa = authService.getUser();
 
-        const response: AxiosResponse<IHistoricoMedicoResponse>= yield call(axios.get,`${urls.url.historicomedico.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
+        const response: AxiosResponse<IHistoricoMedicoResponse>= yield call(axios.get,`${url?.historicomedico.href}/listarhistoricomedicopaginacao/${dadosPessoa?.id}?page=${action.payload.page}`,{
                             headers: {
-                                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                "Authorization": `Bearer ${authService.getToken()}` ,
                             }
         });
 

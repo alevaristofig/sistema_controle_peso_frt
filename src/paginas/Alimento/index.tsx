@@ -1,5 +1,5 @@
 import { useEffect, useState, ReactElement } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -15,17 +15,12 @@ import styles from '../Home/Home.module.css';
 const Alimento = (): ReactElement => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const { modalToken, loading, alimentos } = useSelector((state: RootState) => state.alimento); 
 
     const { page } = useParams();
 
     useEffect(() => {
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
-
         dispatch(listar({
              'page': page
         }));

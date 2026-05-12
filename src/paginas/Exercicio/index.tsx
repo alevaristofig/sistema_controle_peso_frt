@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -20,13 +20,7 @@ const Exercicio = (): ReactElement => {
 
     const { page } = useParams();
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
-
         dispatch(listar({
             'page': page
         }));

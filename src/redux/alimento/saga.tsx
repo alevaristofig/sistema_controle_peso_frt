@@ -8,6 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 import { ISessaoAlimento } from '../../interfaces/sessao/sessao-alimento.interface';
 import { IAlimentoResponse } from '../../interfaces/alimento/alimento-response.interface';
 import { IAlimento } from '../../interfaces/alimento/alimento.interface';
+import { authService } from '../../service/auth';
 
 const setUrl: ISessaoAlimento = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -19,11 +20,12 @@ const setUrl: ISessaoAlimento = {
 function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IAlimentoResponse>> {
     try {
 
-        let urls = setUrl; 
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser();  
 
-        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${url?.alimentos.href}/listaralimentospaginacao/${dadosPessoa?.id}?page=${action.payload.page}`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+                "Authorization": `Bearer ${authService.getToken()}`
             }
         });
       

@@ -8,6 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
 import { ISessaoExercicio } from '../../interfaces/sessao/sessao-exercicio.interface';
 import { IExercicioResponse } from '../../interfaces/exercicio/exercicioresponse.interface';
+import { authService } from '../../service/auth';
 
 const setUrl: ISessaoExercicio = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -18,11 +19,12 @@ const setUrl: ISessaoExercicio = {
 
 function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IExercicioResponse>> {
     try {
-        let urls = setUrl;  
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser(); 
 
-        const response: AxiosResponse<IExercicioResponse>= yield call(axios.get,`${urls.url.exercicios.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
+        const response: AxiosResponse<IExercicioResponse>= yield call(axios.get,`${url?.exercicios.href}/listarexerciciospaginacao/${dadosPessoa?.id}?page=${action.payload.page}`,{
                             headers: {
-                                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                "Authorization": `Bearer ${authService.getToken()}` ,
                             }
         });
 

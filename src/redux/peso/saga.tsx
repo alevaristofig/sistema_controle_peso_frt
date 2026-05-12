@@ -24,7 +24,7 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
     try {      
         let url = authService.getUrls();
         let dadosPessoa = authService.getUser();  
-   console.log('entrou')
+   
         const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${url?.pesos.href}/listar/${dadosPessoa?.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${authService.getToken()}` ,

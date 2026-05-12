@@ -1,5 +1,5 @@
 import { ReactElement, useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -16,17 +16,11 @@ const HistoricoMedico = (): ReactElement => {
 
     const { page } = useParams();
    
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const dispatch = useDispatch();    
 
     const { loading, historicosMedicos, modalToken } = useSelector((state: RootState) => state.historicoMedico); 
 
     useEffect(() => {
-    
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
-        }
-    
         dispatch(listar({
             'page': page
         }));
