@@ -48,6 +48,26 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
         }
 }
 
+function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
+    try {      
+        let url = authService.getUrls();        
+   
+        const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${url?.pesos.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${authService.getToken()}` ,
+            }
+        });
+           
+        yield put(listarSucesso(response.data));
+    } catch(error: any) {    
+             if(error.response.status === 401) {
+                yield put(revalidarToken());
+            } else {        
+                yield put(listarError(error.response.data.userMessage));
+            }
+        }
+}
+
 function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
     try {
         let urls = setUrl; 
@@ -160,6 +180,7 @@ export default all([
     takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso),
     takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso),
     takeEvery('peso/listar',listar),
+    takeEvery('peso/buscar',buscar),
     takeEvery('peso/salvar',salvar),
     takeEvery('peso/atualizar',atualizar),
     takeEvery('peso/apagar',apagar),
