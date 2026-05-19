@@ -57,14 +57,14 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
                 id: urls.pessoa.id
             }
         }
-console.log(action.payload.dados)
-       /* yield call(axios.post,`${urls.url.pesos.href}`,action.payload.dados,{
+
+        yield call(axios.post,`${urls.url.pesos.href}`,action.payload.dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`
             }
         }); 
 
-        yield put(salvarSucesso());*/
+        yield put(salvarSucesso());
     } catch(error: any) {        
             if(error.response.status === 401) {            
                 yield put(revalidarToken());
@@ -73,6 +73,35 @@ console.log(action.payload.dados)
             }        
         }  
 }
+
+function* atualizar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
+    try {
+        let urls = setUrl; 
+        
+        let dados = {
+            'valor': action.payload.valor,
+            'imc': action.payload.imc,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao,
+            'pessoa': action.payload.pessoa
+        };
+
+        yield call(axios.put,`${urls.url.pesos.href}/${action.payload.id}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+            }
+        }); 
+
+        yield put(salvarSucesso());
+    } catch(error: any) {        
+            if(error.response.status === 401) {            
+                yield put(revalidarToken());
+            } else {
+                yield put(salvarError(error.response.data.userMessage));
+            }        
+        }  
+}
+
 
 function* buscarPrimeiroPeso(): Generator<any, void, AxiosResponse<IPeso>> {
     try {   
@@ -132,5 +161,6 @@ export default all([
     takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso),
     takeEvery('peso/listar',listar),
     takeEvery('peso/salvar',salvar),
+    takeEvery('peso/atualizar',atualizar),
     takeEvery('peso/apagar',apagar),
 ])

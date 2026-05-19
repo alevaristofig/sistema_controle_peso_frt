@@ -42,6 +42,17 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
+         atualizar(state,action) {
+            state.loading = true;            
+        },
+        atualizarSucesso(state) {
+            state.loading = false;
+            toast.success("Peso atualizado com Sucesso!");
+        },
+        atualizarError(state,action) {
+            state.loading = false;
+            toast.error(action.payload);
+        },
         buscarPrimeiroPeso: (state) => {            
             state.loading = true;
         },
@@ -84,6 +95,6 @@ export const pesoSlice = createSlice({
 export const { revalidarToken, buscarPrimeiroPeso, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, 
                buscarUltimoPeso, buscarUltimoPesoSucesso, buscarUltimoPesoError, listar,
                listarSucesso, listarError, apagar, apgarSucesso, apgarError, salvar,
-               salvarSucesso, salvarError } = pesoSlice.actions;
+               salvarSucesso, salvarError, atualizar, atualizarSucesso, atualizarError } = pesoSlice.actions;
 
 export default pesoSlice.reducer;

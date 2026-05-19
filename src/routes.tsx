@@ -5,6 +5,7 @@ import Home from './paginas/Home';
 import EditarPessoa from './paginas/Pessoa/editarPessoa';
 import Peso from './paginas/Peso';
 import CadastroPeso from './paginas/Peso/cadastroPeso';
+import EditarPeso from './paginas/Peso/editarPeso';
 import Exercicio from './paginas/Exercicio';
 import CadastroExecicio from './paginas/Exercicio/cadastroExecicio';
 import Treino from './paginas/Treino';
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         {
             path: '/cadastropeso',
             element: <CadastroPeso />
+        },
+        {
+            path: '/editarpeso/:id',
+            element: <EditarPeso />
         },
         {
             path: '/exercicio/:page',

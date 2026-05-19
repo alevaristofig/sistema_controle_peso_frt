@@ -15,7 +15,7 @@ import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 
-const CadastroPeso = (): ReactElement => {
+const EditarPeso = (): ReactElement => {
 
     const dispatch = useDispatch();
 
@@ -124,4 +124,4 @@ const CadastroPeso = (): ReactElement => {
     )
 }
 
-export default CadastroPeso;
+export default EditarPeso;
