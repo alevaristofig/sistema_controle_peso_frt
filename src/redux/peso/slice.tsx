@@ -12,7 +12,7 @@ const initialState: IPesoState = {
     },
     primeiroPeso: null,
     ultimoPeso: null,
-    modalToken: false,
+    revalidarToken: false,
     loading: false
 }
 
@@ -29,18 +29,18 @@ export const pesoSlice = createSlice({
         },
         listarError(state, action) {
             state.loading = false;  
-            toast.error("Ocorreu um erro ao listar os Pesos!");         
+            toast.error(action.payload);         
         },
         buscar: (state,action) => {                        
             state.loading = true;
         },
-        buscarSucesso(state,action) {
+        buscarSucesso(state,action) {           
             state.loading = false;
-            state.pesos = action.payload;
+            state.pesos.dados[0] = action.payload;
         },
         buscarError(state, action) {
             state.loading = false;  
-            toast.error("Ocorreu um erro ao listar os Pesos!");         
+            toast.error(action.payload);         
         },
         salvar(state,action) {
             state.loading = true;
@@ -97,8 +97,8 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.success("Ocorreu um erro ao apagar o peso!");
         },
-        revalidarToken(state) {   
-            state.modalToken = true;                           
+        revalidarToken(state) {               
+            state.revalidarToken = true;                           
         },
     }
 })

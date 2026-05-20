@@ -1,12 +1,10 @@
 import { ReactElement, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { InputMask } from "@react-input/mask";
-import { TextField } from '@mui/material';
-
 
 import { RootState } from "../../redux/root-reducer";
-import { salvar } from "../../redux/peso/slice";
+import { salvar, buscar } from "../../redux/peso/slice";
 
 import usePeso from "../../hooks/Peso/pesoHook";
 
@@ -18,13 +16,35 @@ import styles from '../Home/Home.module.css';
 const EditarPeso = (): ReactElement => {
 
     const dispatch = useDispatch();
+    const { loading, pesos, revalidarToken } = useSelector((state: RootState) => state.peso);
 
     const [pesoValor,setPesoValor] = useState<number>(0.00);
     const [imc,setImc] = useState<number>(0.00);
     const [dataCadastro,setDataCadastro] = useState('');
     const [dataAtualizacao,setDataAtualizacao] = useState<string>("");
+    const { id } = useParams();
 
     const { formatarPeso } = usePeso();
+
+    useEffect(() => {    
+        if (id && (!pesos.dados || pesos.dados.length === 0)) {
+            dispatch(buscar({ id }));
+            return;
+        }
+
+        // Quando os dados chegarem, popula os states
+        if (pesos.dados && pesos.dados.length > 0) {
+            const pesoData = pesos.dados[0];
+
+            setPesoValor(pesoData.valor);
+            setImc(pesoData.imc);
+            setDataCadastro(
+                new Date(pesoData.dataCadastro)
+                    .toISOString()
+                    .split('T')[0]
+            );
+        }
+    }, [id, pesos.dados, dispatch])
 
     const mascaraPeso = (peso: string): void => {  
 
@@ -72,6 +92,13 @@ const EditarPeso = (): ReactElement => {
     return(
         <>
             <Cabecalho />
+            {
+                revalidarToken
+                ?
+                    <ModalToken />
+                :
+                    ''
+            }
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
@@ -84,7 +111,8 @@ const EditarPeso = (): ReactElement => {
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
                                 <input 
                                     type='text'                                     
-                                    className="form-control"                                                                                                                                                                                           
+                                    className="form-control"   
+                                    value={pesoValor}                                                                                                                                                                                        
                                     onChange={(e) => mascaraPeso(e.target.value)} 
                                     onBlur={(e) => calcularImc(e.target.value)}
                                     required
@@ -109,6 +137,7 @@ const EditarPeso = (): ReactElement => {
                                 <input 
                                     type="date"  
                                     className="form-control"
+                                    value={dataCadastro}
                                     onChange={ e => setDataCadastro(e.target.value)}/>                            
                             </div>
                         </div>

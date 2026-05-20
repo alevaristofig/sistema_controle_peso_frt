@@ -4,7 +4,8 @@ import { AnyAction } from 'redux-saga';
 import axios, { AxiosResponse } from 'axios';
 
 import { revalidarToken, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError, buscarUltimoPesoSucesso, buscarUltimoPesoError,
-         listarSucesso, listarError, apgarSucesso, apgarError, salvarSucesso, salvarError } from './slice';
+         listarSucesso, listarError, apgarSucesso, apgarError, salvarSucesso, salvarError, 
+         buscarSucesso} from './slice';
 
 import { IPeso } from '../../interfaces/peso/peso.interface';
 import { ISessaoPeso } from '../../interfaces/sessao/sessao-peso.interface';
@@ -48,24 +49,23 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoRes
         }
 }
 
-function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {
+function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IPeso>> {
     try {      
         let url = authService.getUrls();        
    
-        const response: AxiosResponse<IPesoResponse> = yield call(axios.get,`${url?.pesos.href}/${action.payload.id}`,{
+        const response: AxiosResponse<IPeso> = yield call(axios.get,`${url?.pesos.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${authService.getToken()}` ,
             }
-        });
-           
-        yield put(listarSucesso(response.data));
-    } catch(error: any) {    
-             if(error.response.status === 401) {
-                yield put(revalidarToken());
-            } else {        
-                yield put(listarError(error.response.data.userMessage));
-            }
+        });           
+        yield put(buscarSucesso(response.data));
+    } catch(error: any) {            
+        if(error.response.status === 401) {                      
+            yield put(revalidarToken());
+        } else {        
+            yield put(listarError(error.response.data.userMessage));
         }
+    }
 }
 
 function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IPesoResponse>> {

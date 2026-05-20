@@ -8,6 +8,6 @@ export interface IPesoState {
     },
     primeiroPeso: IPeso | null,
     ultimoPeso: IPeso | null,
-    modalToken: boolean,
+    revalidarToken: boolean,
     loading: boolean
 }

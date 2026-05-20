@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from "axios";
+import { authService } from '../../service/auth';
 
 const useToken = () => {
 
     const [clientId] = useState<string>('sisetemacontrolepesobackend');
     const [password] = useState<string>('ZTmgTeTXlP373rI');
-   // const [url] = useState(JSON.parse(sessionStorage.getItem("urls"))); 
     
     const revalidarToken = async (): Promise<void> => {
         let data = {
             grant_type: 'refresh_token',
-            refresh_token: sessionStorage.getItem('refresh_token')
+            refresh_token: authService.getRefreshToken()
         }
 
         await axios.post(`http://localhost:8080/oauth2/token`,data,{
@@ -23,9 +23,12 @@ const useToken = () => {
                         password: password
                     } 
                 })
-                .then((response) => {                                    
-                    sessionStorage.removeItem('token');
-                    sessionStorage.setItem('token',response.data.access_token);
+                .then((response) => {   
+                    authService.setAuth(response.data.access_token,
+                        response.data.refresh_token!,
+                        authService.getUser(),
+                        authService.getUrls()
+                    );                                 
 
                     window.location.reload();
                 })

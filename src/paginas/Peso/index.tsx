@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
@@ -8,6 +8,7 @@ import { listar, buscarPrimeiroPeso, buscarUltimoPeso, apagar } from "../../redu
 
 import Cabecalho from "../../componentes/Cabecalho";
 import Paginacao from '../../componentes/Paginacao';
+import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 
@@ -15,7 +16,7 @@ const Peso = (): ReactElement => {
 
     const dispatch = useDispatch();
 
-    const { pesos, primeiroPeso, ultimoPeso } = useSelector((state: RootState) => state.peso); 
+    const { pesos, primeiroPeso, ultimoPeso, revalidarToken } = useSelector((state: RootState) => state.peso); 
 
     const { page } = useParams();
 
@@ -44,6 +45,10 @@ const Peso = (): ReactElement => {
     return(
         <>
             <Cabecalho />
+            {
+                revalidarToken &&  <ModalToken />
+                
+            }
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
