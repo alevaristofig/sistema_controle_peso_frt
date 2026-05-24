@@ -7,5 +7,6 @@ export interface IAlimentoState {
         url: string
     },
     modalToken: boolean,
+    revalidarToken: boolean,
     loading: boolean
 }

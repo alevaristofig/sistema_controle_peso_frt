@@ -2,7 +2,7 @@ import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
 import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError, listarSemPaginacaoSucesso,
-         listarSemPaginacaoError, atualizarSucesso, atualizarError } from './slice';
+         listarSemPaginacaoError, buscarSucesso, buscarError, atualizarSucesso, atualizarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoAlimento } from '../../interfaces/sessao/sessao-alimento.interface';
@@ -43,6 +43,25 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
         } else {        
             yield put(listarError(error.response.data.userMessage));
         }                 
+    }
+}
+
+function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IAlimento>> {
+    try {      
+        let url = authService.getUrls();        
+   
+        const response: AxiosResponse<IAlimento> = yield call(axios.get,`${url?.alimentos.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${authService.getToken()}` ,
+            }
+        });           
+        yield put(buscarSucesso(response.data));
+    } catch(error: any) {            
+        if(error.response.status === 401) {                      
+            yield put(revalidarToken());
+        } else {        
+            yield put(buscarError(error.response.data.userMessage));
+        }
     }
 }
 
@@ -134,4 +153,5 @@ export default all([
     takeEvery('alimento/salvar', salvar),
     takeEvery('alimento/listarSemPaginacao', listarSemPaginacao),
     takeEvery('alimento/atualizar', atualizar),
+    takeEvery('alimento/buscar', buscar),
 ]);

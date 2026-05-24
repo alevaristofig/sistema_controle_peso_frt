@@ -9,6 +9,7 @@ const initialState: IAlimentoState = {
         url: ''
     },
     modalToken: false,
+    revalidarToken: false,
     loading: false
 }
 
@@ -41,6 +42,18 @@ export const alimentoSlice = createSlice({
         salvar: (state,action) => {
             state.loading = true;
         },
+        buscar: (state,action) => {                        
+            state.loading = true;
+            state.alimentos.dados = [];
+        },
+        buscarSucesso(state,action) {           
+            state.loading = false;
+            state.alimentos.dados[0] = action.payload;
+        },
+        buscarError(state, action) {
+            state.loading = false;  
+            toast.error(action.payload);         
+        },
         salvarSucesso: (state) => {           
             state.loading = false;
             toast.success("Alimento cadastrado com Sucesso!");
@@ -69,6 +82,7 @@ export const alimentoSlice = createSlice({
 
 export const { revalidarToken, listar, listarSucesso, listarError,
                salvar, salvarSucesso, salvarError, listarSemPaginacao, listarSemPaginacaoSucesso,
-               listarSemPaginacaoError, atualizar, atualizarSucesso, atualizarError } = alimentoSlice.actions;
+               listarSemPaginacaoError, buscar, buscarSucesso, buscarError, atualizar, 
+               atualizarSucesso, atualizarError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;

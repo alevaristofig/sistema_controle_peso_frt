@@ -1,7 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router';
 import { ToastContainer } from "react-toastify";
 
+import { RootState } from "../../redux/root-reducer";
+import { buscar } from '../../redux/alimento/slice';
 import useAlimento from '../../hooks/Alimento/alimentoHook';
 
 import Cabecalho from "../../componentes/Cabecalho";
@@ -12,43 +15,50 @@ import styles from '../Home/Home.module.css';
 
 const EditarAlimento = (): ReactElement => {
 
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const { buscar, formatarCaloria } = useAlimento();
+    const dispatch = useDispatch();
+    const { loading, alimentos, revalidarToken } = useSelector((state: RootState) => state.alimento);
 
     const [nome,setNome] = useState<string>('');
     const [quantidade,setQuantidade] = useState<number>();
     const [caloria,setCaloria] = useState<number | string>();
-    //const [dataCadastro,setDataCadastro] = useState('');
-    //const [buscarError,setBuscarErro] = useState(false);   
 
-    const buscarAlimento =  async () => {
-        let resp =  await buscar(parseInt(id!));
-
-        setNome(resp.nome);
-        setQuantidade(parseInt(resp.quantidade));
-        setCaloria(resp.calorias);
-    }
+    const { formatarCaloria } = useAlimento();
+    const { id } = useParams();
 
     const mascaraCaloria = (calorias: string): void => {
         setCaloria(formatarCaloria(calorias));
     }
 
-    useEffect(() => {
-    
-        if(sessionStorage.getItem('token') == null) {           
-            navigate('/login');
+    useEffect(() => { 
+        const alimentoAtual = alimentos.dados?.[0];
+        
+        if (!loading && Number(alimentoAtual?.id) !== Number(id)) {
+            dispatch(buscar({ id }));
+            return;
         }  
         
-        buscarAlimento();
-    
-    },[]);
+         // Quando os dados chegarem, popula os states
+        if (alimentos.dados && alimentos.dados.length > 0) {
+            const alimentoData = alimentos.dados[0];
+
+            setNome(alimentoData.nome);
+            setQuantidade(parseInt(alimentoData.quantidade));
+            setCaloria(alimentoData.calorias);
+        }
+    },[id, alimentos.dados, dispatch]);
 
     const salvarAlimento = (): void => {}
 
     return(
         <>
             <Cabecalho />
+            {
+                revalidarToken
+                ?
+                    <ModalToken />
+                :
+                    ''
+            }
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
