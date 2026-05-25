@@ -75,7 +75,7 @@ export const alimentoSlice = createSlice({
         },
         revalidarToken(state) { 
             state.loading = false;                        
-            state.modalToken = true;                           
+            state.revalidarToken = true;                            
         }
     }
 });

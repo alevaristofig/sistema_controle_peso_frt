@@ -1,23 +1,42 @@
 import { ReactElement, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from 'react-router';
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
-import { salvar } from "../../redux/historicomedico/slice";
+import { salvar, buscar } from "../../redux/historicomedico/slice";
 
 import Cabecalho from "../../componentes/Cabecalho";
 import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 
-const CadastroHistoricoMedico = (): ReactElement => {
+const EditarHistoricoMedico = (): ReactElement => {
 
     const dispatch = useDispatch();
-    const { modalToken, loading } = useSelector((state: RootState) => state.historicoMedico);
-
+    const { modalToken, historicosMedicos, loading } = useSelector((state: RootState) => state.historicoMedico);
+    const { id } = useParams();
 
     const [descricao,setDescricao] = useState<string>('');
     const [remedio,setRemedio] = useState<string>('');
+
+    
+    useEffect(() => { 
+        const historicosMedicosAtual = historicosMedicos.dados?.[0];
+            
+            if (!loading && Number(historicosMedicosAtual?.id) !== Number(id)) {
+                dispatch(buscar({ id }));
+                return;
+            }  
+            
+             // Quando os dados chegarem, popula os states
+            if (historicosMedicos.dados && historicosMedicos.dados.length > 0) {
+                const historicoMedicoData = historicosMedicos.dados[0];
+    
+                setDescricao(historicoMedicoData.descricao);
+                setRemedio(historicoMedicoData.remedio);
+            }
+        },[id, historicosMedicos.dados, dispatch]);
 
     const salvarHistoricoMedico = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -89,4 +108,4 @@ const CadastroHistoricoMedico = (): ReactElement => {
     )
 }
 
-export default CadastroHistoricoMedico;
+export default EditarHistoricoMedico;

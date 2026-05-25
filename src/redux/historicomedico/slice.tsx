@@ -10,6 +10,7 @@ const initialState: IHistoricoMedicoState = {
         url: ''
     },   
     modalToken: false,
+    revalidarToken: false,
     loading: false
 }
 
@@ -28,6 +29,18 @@ export const historicoMedicoSlice = createSlice({
             state.loading = false;  
             toast.error(action.payload);         
         },
+        buscar: (state,action) => {                        
+            state.loading = true;
+            state.historicosMedicos.dados = [];
+        },
+        buscarSucesso(state,action) {           
+            state.loading = false;
+            state.historicosMedicos.dados[0] = action.payload;
+        },
+        buscarError(state, action) {
+            state.loading = false;  
+            toast.error(action.payload);         
+        },
         salvar: (state,action) => {
             state.loading = true;
         },
@@ -40,11 +53,12 @@ export const historicoMedicoSlice = createSlice({
             toast.error(action.payload);
         },
         revalidarToken(state) {              
-            state.modalToken = true;                           
+            state.revalidarToken = true;                           
         }
     }
 });
 
-export const { revalidarToken, listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError } = historicoMedicoSlice.actions;
+export const { revalidarToken, listar, listarSucesso, listarError, buscar, buscarSucesso, buscarError,
+               salvar, salvarSucesso, salvarError } = historicoMedicoSlice.actions;
 
 export default historicoMedicoSlice.reducer;

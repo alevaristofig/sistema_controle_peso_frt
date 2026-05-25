@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError } from './slice';
+import { revalidarToken, listarSucesso, listarError, buscarSucesso, buscarError, salvarSucesso, salvarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoHistoricoMedico } from '../../interfaces/sessao/sessao-historicomedico.interface';
@@ -42,6 +42,25 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IHistori
     }    
 }
 
+function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IHistoricoMedicoResponse>> {
+    try {      
+        let url = authService.getUrls();        
+   
+        const response: AxiosResponse<IHistoricoMedicoResponse> = yield call(axios.get,`${url?.historicomedico.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${authService.getToken()}` ,
+            }
+        });           
+        yield put(buscarSucesso(response.data));
+    } catch(error: any) {            
+        if(error.response.status === 401) {                      
+            yield put(revalidarToken());
+        } else {        
+            yield put(buscarError(error.response.data.userMessage));
+        }
+    }
+}
+
 function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IHistoricoMedicoResponse>> {
     try {
 
@@ -73,5 +92,6 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<IHistori
 
 export default all([
     takeEvery('historicomedico/listar', listar),
-    takeEvery('historicomedico/salvar', salvar),
+    takeEvery('historicomedico/salvar', salvar),    
+    takeEvery('historicomedico/buscar', buscar),
 ]);

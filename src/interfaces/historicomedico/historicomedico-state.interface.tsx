@@ -7,5 +7,6 @@ export interface IHistoricoMedicoState {
         url: string
     },
     modalToken: boolean,
+    revalidarToken: boolean,
     loading: boolean
 }

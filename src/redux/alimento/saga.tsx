@@ -57,7 +57,7 @@ function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
         });           
         yield put(buscarSucesso(response.data));
     } catch(error: any) {            
-        if(error.response.status === 401) {                      
+        if(error.response.status === 401) {                                 
             yield put(revalidarToken());
         } else {        
             yield put(buscarError(error.response.data.userMessage));
