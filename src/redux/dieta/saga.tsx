@@ -1,7 +1,8 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
-import { revalidarToken, listarSucesso, listarError, salvarSucesso, salvarError, salvarDietaAlimentoSucesso,
+import { revalidarToken, listarSucesso, listarError, buscarSucesso, buscarError, salvarSucesso, 
+         salvarError, salvarDietaAlimentoSucesso,
          salvarDietaAlimentoError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
@@ -43,6 +44,25 @@ function* listar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaRe
         } else {        
             yield put(listarError(error.response.data.userMessage));
         } 
+    }
+}
+
+function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IDietaResponse>> {
+    try {      
+        let url = authService.getUrls();        
+   
+        const response: AxiosResponse<IDietaResponse> = yield call(axios.get,`${url?.dietas.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${authService.getToken()}` ,
+            }
+        });           
+        yield put(buscarSucesso(response.data));
+    } catch(error: any) {            
+        if(error.response.status === 401) {                      
+            yield put(revalidarToken());
+        } else {        
+            yield put(buscarError(error.response.data.userMessage));
+        }
     }
 }
 
@@ -112,4 +132,5 @@ export default all([
     takeEvery('dieta/listar', listar),
     takeEvery('dieta/salvar', salvar),
     takeEvery('dieta/salvarDietaAlimento', salvarDietaAlimento),
+    takeEvery('dieta/buscar', buscar),
 ]);

@@ -6,6 +6,6 @@ export interface IDietaState {
         paginacao: any,
         url: string
     },
-    modalToken:boolean,
+    revalidarToken: boolean,
     loading: boolean
 }

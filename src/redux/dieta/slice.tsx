@@ -8,7 +8,7 @@ const initialState: IDietaState  = {
         paginacao: null,
         url: ''
     },    
-    modalToken: false,
+    revalidarToken: false,
     loading: false
 }
 
@@ -24,6 +24,18 @@ export const dietaSlice = createSlice({
             state.dietas = action.payload;
         },
         listarError(state,action) {
+            state.loading = false;  
+            toast.error(action.payload);         
+        },
+        buscar: (state,action) => {                        
+            state.loading = true;
+            state.dietas.dados = [];
+        },
+        buscarSucesso(state,action) {           
+            state.loading = false;
+            state.dietas.dados[0] = action.payload;
+        },
+        buscarError(state, action) {
             state.loading = false;  
             toast.error(action.payload);         
         },
@@ -50,12 +62,13 @@ export const dietaSlice = createSlice({
             toast.error(action.payload);
         },
         revalidarToken(state) {   
-            state.modalToken = true;                           
+           state.revalidarToken = true;                             
         },
     }
 });
 
-export const { revalidarToken, listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
+export const { revalidarToken, listar, listarSucesso, listarError, buscar, buscarSucesso, buscarError,
+               salvar, salvarSucesso, salvarError,
                salvarDietaAlimento, salvarDietaAlimentoSucesso, salvarDietaAlimentoError } = dietaSlice.actions;
 
 export default dietaSlice.reducer;

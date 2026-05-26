@@ -68,11 +68,11 @@ function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IAliment
 function* listarSemPaginacao(): Generator<any, void, AxiosResponse<IAlimentoResponse>> {
     try {
 
-        let urls = setUrl; 
+        let url = authService.getUrls();
 
-        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listarsempaginacao}`,{
+        const response = yield call(axios.get,`${url?.alimentos.href}/listaralimentossempaginacao`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+                "Authorization": `Bearer ${authService.getToken()}`
             }
         });
 
