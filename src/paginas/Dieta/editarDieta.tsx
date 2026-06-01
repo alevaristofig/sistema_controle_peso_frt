@@ -14,6 +14,7 @@ import ModalToken from '../../componentes/Token';
 
 import styles from '../Home/Home.module.css';
 import { IAlimentoId } from '../../interfaces/alimento/alimento-id.interface';
+import { IAlimento } from '../../interfaces/alimento/alimento.interface';
 
 const EditarDieta = (): ReactElement => {
 
@@ -23,24 +24,44 @@ const EditarDieta = (): ReactElement => {
     const { id } = useParams();
 
     const [nome,setNome] = useState<string>('');
-    const [alimentosDieta,setAlimentosDieta] = useState<IAlimentoId[]>([]);
+    const [isChecked,setIsChecked] = useState([]);
 
     useEffect(() => { 
         const dietaAtual = dietas.dados?.[0];
                 
         if (!loading && Number(dietaAtual?.id) !== Number(id)) {
             dispatch(buscar({ id }));
+            dispatch(listarSemPaginacao());
             return;
         }  
         
             // Quando os dados chegarem, popula os states
-        if (dietas.dados && dietas.dados.length > 0) {
+        if (dietas.dados && dietas.dados.length > 0
+            &&  alimentos.dados && alimentos.dados.length > 0
+        ) {
+            console.log(dietas.dados);
             const dietaData = dietas.dados[0];
+            const dadosAlimentos = alimentos.dados;
 
-            setNome(dietaData.nome);
-            setAlimentosDieta(dietaData.alimentos || []);
+            setNome(dietaData.nome); 
+            
+             dadosAlimentos.forEach((e,i) => {                  
+                if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
+                    isChecked[i] = true;
+
+                    let dados = {
+                        'idAlimento': e.id,
+                    };
+
+                    alimentosDieta.push(dados);
+                } else {
+                    isChecked[i] = false;
+                }
+            });
         }
-    },[]);
+    },[id, alimentos.dados, dietas.dados, dispatch]);
+
+    const registrarAlimentos = (e: React.ChangeEvent<HTMLInputElement>): void => {}
 
     const salvarDados = (): void => {}
 
@@ -106,7 +127,9 @@ const EditarDieta = (): ReactElement => {
                                                                             className='form-check-input' 
                                                                             type='checkbox' 
                                                                             value={a.id} 
-                                                                            onChange={registrarAlimentos}
+                                                                            id={String(a.id)}                                                                                        
+                                                                            defaultChecked={isChecked[i]}
+                                                                            onChange={(e) => registrarValoresTreino(e)}
                                                                         /> 
                                                                         <label className="form-check-label" htmlFor="inlineCheckbox1">{a.nome} - {a.quantidade}</label>
                                                                     </div>   

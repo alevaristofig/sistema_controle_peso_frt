@@ -37,7 +37,7 @@ const EditarAlimento = (): ReactElement => {
             return;
         }  
         
-         // Quando os dados chegarem, popula os states
+        // Quando os dados chegarem, popula os states
         if (alimentos.dados && alimentos.dados.length > 0) {
             const alimentoData = alimentos.dados[0];
 
