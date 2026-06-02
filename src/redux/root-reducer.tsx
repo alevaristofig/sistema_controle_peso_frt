@@ -7,6 +7,7 @@ import  treinoSlice  from "./treino/slice";
 import  alimentoSlice from "./alimento/slice";
 import  dietaSlice  from "./dieta/slice";
 import  historicoMedicoSlice from './historicomedico/slice';
+import  alimentodietaSlice from './alimentodieta/slice';
 import  authSlice from './auth/slice';
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     alimento: alimentoSlice,
     dieta: dietaSlice,
     historicoMedico: historicoMedicoSlice,
+    alimentodieta: alimentodietaSlice,
     auth: authSlice,
 })
 

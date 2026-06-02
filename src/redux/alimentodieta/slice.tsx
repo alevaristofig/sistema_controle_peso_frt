@@ -15,16 +15,16 @@ const initialState: IAlimentoDietaState = {
 }
 
 export const alimentoDietaSlice = createSlice({
-    name: 'aliementodieta',
+    name: 'alimentodieta',
     initialState,
     reducers: {
-        buscar: (state,action) => {                        
+        buscar: (state,action) => {                                          
             state.loading = true;
             state.aliementosDieta.dados = [];
         },
         buscarSucesso(state,action) {           
             state.loading = false;
-            state.aliementosDieta.dados[0] = action.payload;
+            state.aliementosDieta.dados = action.payload;
         },
         buscarError(state, action) {
             state.loading = false;  

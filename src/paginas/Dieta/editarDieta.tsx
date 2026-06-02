@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
 import { buscar } from '../../redux/dieta/slice';
+import  { buscar as buscarAlimentoDieta } from '../../redux/alimentodieta/slice';
 import { listarSemPaginacao } from '../../redux/alimento/slice';
 
 import useDieta from '../../hooks/Dieta/dietaHook';
@@ -21,10 +22,11 @@ const EditarDieta = (): ReactElement => {
     const dispatch = useDispatch();
     const { loading, dietas, revalidarToken } = useSelector((state: RootState) => state.dieta);
     const { alimentos } = useSelector((state: RootState) => state.alimento);
+    const { aliementosDieta } = useSelector((state: RootState) => state.alimentodieta);
     const { id } = useParams();
 
     const [nome,setNome] = useState<string>('');
-    const [isChecked,setIsChecked] = useState([]);
+    const [isChecked,setIsChecked] = useState<boolean[]>([]);
 
     useEffect(() => { 
         const dietaAtual = dietas.dados?.[0];
@@ -32,36 +34,37 @@ const EditarDieta = (): ReactElement => {
         if (!loading && Number(dietaAtual?.id) !== Number(id)) {
             dispatch(buscar({ id }));
             dispatch(listarSemPaginacao());
+            dispatch(buscarAlimentoDieta({ id }));
             return;
         }  
         
-            // Quando os dados chegarem, popula os states
+        // Quando os dados chegarem, popula os states
         if (dietas.dados && dietas.dados.length > 0
             &&  alimentos.dados && alimentos.dados.length > 0
-        ) {
-            console.log(dietas.dados);
+            && aliementosDieta.dados && aliementosDieta.dados.length > 0
+        ) {            
             const dietaData = dietas.dados[0];
             const dadosAlimentos = alimentos.dados;
+            const dadosAlimentosDieta = aliementosDieta.dados;
 
             setNome(dietaData.nome); 
-            
-             dadosAlimentos.forEach((e,i) => {                  
-                if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
-                    isChecked[i] = true;
+           // console.log('array',alimentos.dados);
 
-                    let dados = {
-                        'idAlimento': e.id,
-                    };
-
-                    alimentosDieta.push(dados);
-                } else {
-                    isChecked[i] = false;
+            const checkedStates = Array(dadosAlimentos.length).fill(false);
+            dadosAlimentosDieta.forEach((d) => {                  
+                const index = dadosAlimentos.findIndex((a) => d.alimento.id === a.id);
+                if (index !== -1) {
+                    checkedStates[index] = true;
                 }
             });
+
+            setIsChecked(checkedStates);
         }
-    },[id, alimentos.dados, dietas.dados, dispatch]);
+    },[id, alimentos.dados, dietas.dados, aliementosDieta.dados, dispatch]);
 
     const registrarAlimentos = (e: React.ChangeEvent<HTMLInputElement>): void => {}
+
+    const registrarValoresTreino = (): void => {}
 
     const salvarDados = (): void => {}
 
@@ -115,7 +118,7 @@ const EditarDieta = (): ReactElement => {
                                                 <label className="form-label">Alimentos</label>
                                             </div>
                                         </div>
-                                        <div className="row mt-3">
+                                        <div className="row mt-3">                                            
                                              {
                                                 alimentos.dados.map((a,i) => {
                                                     return(                                                        
@@ -129,7 +132,7 @@ const EditarDieta = (): ReactElement => {
                                                                             value={a.id} 
                                                                             id={String(a.id)}                                                                                        
                                                                             defaultChecked={isChecked[i]}
-                                                                            onChange={(e) => registrarValoresTreino(e)}
+                                                                            onChange={(e) => registrarValoresTreino()}
                                                                         /> 
                                                                         <label className="form-check-label" htmlFor="inlineCheckbox1">{a.nome} - {a.quantidade}</label>
                                                                     </div>   

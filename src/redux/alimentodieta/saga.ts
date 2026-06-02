@@ -8,14 +8,15 @@ import { authService } from '../../service/auth';
 import { IAlimentoDietaResponse } from '../../interfaces/alimentoDieta/alimentodieta-response.interface';
 
 function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IAlimentoDietaResponse>> {
-    try {      
+    try {             
         let url = authService.getUrls();        
    
         const response: AxiosResponse<IAlimentoDietaResponse> = yield call(axios.get,`${url?.alimentodieta.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${authService.getToken()}` ,
             }
-        });           
+        });         
+       
         yield put(buscarSucesso(response.data));
     } catch(error: any) {            
         if(error.response.status === 401) {                      

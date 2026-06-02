@@ -7,6 +7,7 @@ import treino from '../redux/treino/saga';
 import alimento from '../redux/alimento/saga';
 import dieta from '../redux/dieta/saga';
 import historicoMedico from '../redux/historicomedico/saga';
+import alimentoDieta from '../redux/alimentodieta/saga';
 
 export default function* rootSaga() {
     yield all([
@@ -17,5 +18,6 @@ export default function* rootSaga() {
         alimento,
         dieta,
         historicoMedico,
+        alimentoDieta,
     ])
 }
