@@ -2,13 +2,14 @@ import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
 import { revalidarToken, listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError,
-         salvarSucesso, salvarError } from './slice';
+         salvarSucesso, salvarError, buscarSucesso, buscarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
 import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
 import { ISessaoExercicio } from '../../interfaces/sessao/sessao-exercicio.interface';
 import { IExercicioResponse } from '../../interfaces/exercicio/exercicioresponse.interface';
 import { authService } from '../../service/auth';
+import { IExercicio } from '../../interfaces/exercicio/exercicio.interface';
 
 const setUrl: ISessaoExercicio = {
     url: JSON.parse(sessionStorage.getItem('urls')!),
@@ -66,6 +67,28 @@ function* listarSemPaginacao() {
     }    
 }
 
+function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IExercicio>> {
+    try {
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser(); 
+
+        const response: AxiosResponse<IExercicio>= yield call(axios.get,`${url?.exercicios.href}/${action.payload.id}`,{
+                            headers: {
+                                "Authorization": `Bearer ${authService.getToken()}` ,
+                            }
+        });
+
+
+        yield put(buscarSucesso(response.data));
+    } catch(error: any) {
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(buscarError(error.response.data.userMessage));
+        } 
+    }    
+}
+
 function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
     try {
 
@@ -102,5 +125,6 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
 export default all([
     takeEvery('exercicio/listar', listar),
     takeEvery('exercicio/listarSemPaginacao', listarSemPaginacao),
+    takeEvery('exercicio/buscar', buscar),
     takeEvery('exercicio/salvar', salvar),
 ]);
