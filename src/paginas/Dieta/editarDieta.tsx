@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 
