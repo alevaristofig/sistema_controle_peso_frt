@@ -61,6 +61,17 @@ export const exercicioSlice = createSlice({
             state.loading = false;
             toast.error(action.payload);
         },
+        atualizar(state,action) {
+            state.loading = true;
+        },
+        atualizarSucesso(state) {
+            state.loading = false;
+            toast.success("Exercício atualizado com Sucesso!");
+        },
+        atualizarError(state,action) {
+            state.loading = false;
+            toast.error(action.payload);
+        },
         revalidarToken(state) {   
             state.modalToken = true;                           
         },
@@ -69,6 +80,7 @@ export const exercicioSlice = createSlice({
 
 export const { revalidarToken, listar, listarSucesso, listarError, listarSemPaginacao, 
                listarSemPaginacaoSucesso, listarSemPaginacaoError, salvar, salvarSucesso,
-               salvarError, buscar, buscarSucesso, buscarError } = exercicioSlice.actions;
+               salvarError, buscar, buscarSucesso, buscarError, atualizar, atualizarSucesso, 
+               atualizarError } = exercicioSlice.actions;
 
 export default exercicioSlice.reducer;

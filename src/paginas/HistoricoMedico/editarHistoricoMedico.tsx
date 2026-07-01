@@ -1,6 +1,6 @@
 import { ReactElement, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import { ToastContainer } from "react-toastify";
 
 import { RootState } from "../../redux/root-reducer";
@@ -17,26 +17,26 @@ const EditarHistoricoMedico = (): ReactElement => {
     const { modalToken, historicosMedicos, loading } = useSelector((state: RootState) => state.historicoMedico);
     const { id } = useParams();
 
-    const [descricao,setDescricao] = useState<string>('');
-    const [remedio,setRemedio] = useState<string>('');
+    const [descricao, setDescricao] = useState<string>('');
+    const [remedio, setRemedio] = useState<string>('');
 
-    
-    useEffect(() => { 
+
+    useEffect(() => {
         const historicosMedicosAtual = historicosMedicos.dados?.[0];
-            
-            if (!loading && Number(historicosMedicosAtual?.id) !== Number(id)) {
-                dispatch(buscar({ id }));
-                return;
-            }  
-            
-             // Quando os dados chegarem, popula os states
-            if (historicosMedicos.dados && historicosMedicos.dados.length > 0) {
-                const historicoMedicoData = historicosMedicos.dados[0];
-    
-                setDescricao(historicoMedicoData.descricao);
-                setRemedio(historicoMedicoData.remedio);
-            }
-        },[id, historicosMedicos.dados, dispatch]);
+
+        if (!loading && Number(historicosMedicosAtual?.id) !== Number(id)) {
+            dispatch(buscar({ id }));
+            return;
+        }
+
+        // Quando os dados chegarem, popula os states
+        if (historicosMedicos.dados && historicosMedicos.dados.length > 0) {
+            const historicoMedicoData = historicosMedicos.dados[0];
+
+            setDescricao(historicoMedicoData.descricao);
+            setRemedio(historicoMedicoData.remedio);
+        }
+    }, [id, historicosMedicos.dados, dispatch]);
 
     const salvarHistoricoMedico = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -54,7 +54,7 @@ const EditarHistoricoMedico = (): ReactElement => {
         setRemedio('');
     }
 
-    return(
+    return (
         <>
             <Cabecalho />
             {
@@ -67,19 +67,19 @@ const EditarHistoricoMedico = (): ReactElement => {
             <div className={styles.content}>
                 <div>
                     <ToastContainer />
-                </div> 
+                </div>
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarHistoricoMedico}>
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Descrição</label>
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
-                                <input 
+                                <input
                                     type='text'
-                                    className="form-control" 
-                                    value={descricao}                                 
-                                    onChange={(e) => setDescricao(e.target.value)} 
-                                    required 
+                                    className="form-control"
+                                    value={descricao}
+                                    onChange={(e) => setDescricao(e.target.value)}
+                                    required
                                 />
                             </div>
                         </div>
@@ -87,12 +87,12 @@ const EditarHistoricoMedico = (): ReactElement => {
                             <div className="col">
                                 <label className="form-label">Remédio</label>
                                 <label className={`form-label ${styles.obrigatorio}`}>*</label>
-                                <input 
+                                <input
                                     type='text'
-                                    className="form-control" 
-                                    value={remedio}                                 
-                                    onChange={(e) => setRemedio(e.target.value)} 
-                                    required 
+                                    className="form-control"
+                                    value={remedio}
+                                    onChange={(e) => setRemedio(e.target.value)}
+                                    required
                                 />
                             </div>
                         </div>

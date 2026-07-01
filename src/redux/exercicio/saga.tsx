@@ -2,10 +2,9 @@ import { all, takeEvery, put, call } from 'redux-saga/effects';
 import { AnyAction } from 'redux-saga';
 
 import { revalidarToken, listarSucesso, listarError, listarSemPaginacaoSucesso, listarSemPaginacaoError,
-         salvarSucesso, salvarError, buscarSucesso, buscarError } from './slice';
+         salvarSucesso, salvarError, buscarSucesso, buscarError, atualizarSucesso, atualizarError } from './slice';
 
 import axios, { AxiosResponse } from 'axios';
-import { ISessaoPessoa } from '../../interfaces/sessao/sessao-pessoa.interface';
 import { ISessaoExercicio } from '../../interfaces/sessao/sessao-exercicio.interface';
 import { IExercicioResponse } from '../../interfaces/exercicio/exercicioresponse.interface';
 import { authService } from '../../service/auth';
@@ -92,7 +91,8 @@ function* buscar(action: AnyAction): Generator<any, void, AxiosResponse<IExercic
 function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
     try {
 
-        let urls = setUrl; 
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser(); 
 
         let dados = {
             'nome': action.payload.nome,
@@ -101,13 +101,13 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
             'dataCadastro': action.payload.dataCadastro,
             'dataAtualizar': action.payload.dataAtualizar,
             'pessoa': {
-                'id': urls.pessoa.id
+                'id': dadosPessoa?.id
             }         
         }
 
-        yield call(axios.post,`${urls.url.exercicios.href}`,dados,{
+        yield call(axios.post,`${url?.exercicios.href}`,dados,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}`
+                "Authorization": `Bearer ${authService.getToken()}`
             }
         });
 
@@ -122,9 +122,44 @@ function* salvar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
     }
 }
 
+function* atualizar(action: AnyAction): Generator<any, void, AxiosResponse<void>> {
+    try {
+
+        let url = authService.getUrls();
+        let dadosPessoa = authService.getUser(); 
+
+        let dados = {
+            'nome': action.payload.nome,
+            'frequencia': action.payload.frequencia,
+            'tempo': action.payload.tempo,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizar': action.payload.dataAtualizar,
+            'pessoa': {
+                'id': dadosPessoa?.id
+            }         
+        }
+
+        yield call(axios.put,`${url?.exercicios.href}/${action.payload.id}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${authService.getToken()}`
+            }
+        });
+
+        yield put(atualizarSucesso());
+
+    } catch(error: any) {               
+        if(error.response.status === 401) {
+            yield put(revalidarToken());
+        } else {        
+            yield put(atualizarError(error.response.data.userMessage));
+        }                 
+    }
+}
+
 export default all([
     takeEvery('exercicio/listar', listar),
     takeEvery('exercicio/listarSemPaginacao', listarSemPaginacao),
     takeEvery('exercicio/buscar', buscar),
     takeEvery('exercicio/salvar', salvar),
+    takeEvery('exercicio/atualizar', atualizar)
 ]);
